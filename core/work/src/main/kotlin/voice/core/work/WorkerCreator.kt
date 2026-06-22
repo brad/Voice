@@ -5,5 +5,8 @@ import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
 
 public interface WorkerCreator {
-  public fun create(context: Context, parameters: WorkerParameters): ListenableWorker
+  public fun create(
+    context: Context,
+    parameters: WorkerParameters,
+  ): ListenableWorker
 }
