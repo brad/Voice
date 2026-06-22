@@ -28,6 +28,27 @@ public interface StoreModule {
 
   @Provides
   @SingleIn(AppScope::class)
+  @GeminiApiKeyStore
+  private fun geminiApiKey(factory: VoiceDataStoreFactory): DataStore<String> {
+    return factory.string("geminiApiKey", defaultValue = "")
+  }
+
+  @Provides
+  @SingleIn(AppScope::class)
+  @GeminiAnalysisModelStore
+  private fun geminiAnalysisModel(factory: VoiceDataStoreFactory): DataStore<String> {
+    return factory.string("geminiAnalysisModel", defaultValue = "gemini-1.5-flash")
+  }
+
+  @Provides
+  @SingleIn(AppScope::class)
+  @GeminiGenerationModelStore
+  private fun geminiGenerationModel(factory: VoiceDataStoreFactory): DataStore<String> {
+    return factory.string("geminiGenerationModel", defaultValue = "gemini-3.1-flash-tts-preview")
+  }
+
+  @Provides
+  @SingleIn(AppScope::class)
   private fun sharedPreferences(context: Application): SharedPreferences {
     return context.getSharedPreferences(
       "${context.packageName}_preferences",
