@@ -23,6 +23,9 @@ import voice.core.data.sleeptimer.SleepTimerPreference
 import voice.core.data.store.AnalyticsConsentStore
 import voice.core.data.store.AutoRewindAmountStore
 import voice.core.data.store.DeveloperMenuUnlockedStore
+import voice.core.data.store.GeminiAnalysisModelStore
+import voice.core.data.store.GeminiApiKeyStore
+import voice.core.data.store.GeminiGenerationModelStore
 import voice.core.data.store.GridModeStore
 import voice.core.data.store.SeekTimeStore
 import voice.core.data.store.SleepTimerPreferenceStore
@@ -60,6 +63,12 @@ class SettingsViewModel(
   @DeveloperMenuUnlockedStore
   private val developerMenuUnlockedStore: DataStore<Boolean>,
   private val dynamicColorAvailability: DynamicColorAvailability,
+  @GeminiApiKeyStore
+  private val geminiApiKeyStore: DataStore<String>,
+  @GeminiAnalysisModelStore
+  private val geminiAnalysisModelStore: DataStore<String>,
+  @GeminiGenerationModelStore
+  private val geminiGenerationModelStore: DataStore<String>,
   dispatcherProvider: DispatcherProvider,
 ) : SettingsListener {
 
@@ -87,6 +96,10 @@ class SettingsViewModel(
     val showThemeColorSchemePref = remember {
       dynamicColorAvailability.isSupported()
     }
+    val geminiApiKey by remember { geminiApiKeyStore.data }.collectAsState(initial = "")
+    val geminiAnalysisModel by remember { geminiAnalysisModelStore.data }.collectAsState(initial = "gemini-1.5-flash")
+    val geminiGenerationModel by remember { geminiGenerationModelStore.data }.collectAsState(initial = "gemini-3.1-flash-tts-preview")
+
     return SettingsViewState(
       themeMode = themeMode,
       themeColorScheme = themeColorScheme,
@@ -110,6 +123,9 @@ class SettingsViewModel(
       showDeveloperMenu = showDeveloperMenu,
       showSupportDevelopment = appInfoProvider.supportDevelopmentIncluded,
       kioskMode = kioskMode,
+      geminiApiKey = geminiApiKey,
+      geminiAnalysisModel = geminiAnalysisModel,
+      geminiGenerationModel = geminiGenerationModel,
     )
   }
 
@@ -259,5 +275,35 @@ class SettingsViewModel(
 
   override fun openDeveloperMenu() {
     navigator.goTo(Destination.DeveloperSettings)
+  }
+
+  override fun onGeminiApiKeyRowClick() {
+    dialog.value = SettingsViewState.Dialog.GeminiApiKey
+  }
+
+  override fun setGeminiApiKey(apiKey: String) {
+    mainScope.launch {
+      geminiApiKeyStore.updateData { apiKey }
+    }
+  }
+
+  override fun onGeminiAnalysisModelRowClick() {
+    dialog.value = SettingsViewState.Dialog.GeminiAnalysisModel
+  }
+
+  override fun setGeminiAnalysisModel(model: String) {
+    mainScope.launch {
+      geminiAnalysisModelStore.updateData { model }
+    }
+  }
+
+  override fun onGeminiGenerationModelRowClick() {
+    dialog.value = SettingsViewState.Dialog.GeminiGenerationModel
+  }
+
+  override fun setGeminiGenerationModel(model: String) {
+    mainScope.launch {
+      geminiGenerationModelStore.updateData { model }
+    }
   }
 }

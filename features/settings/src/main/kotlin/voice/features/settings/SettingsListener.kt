@@ -31,6 +31,13 @@ interface SettingsListener {
 
   fun openDeveloperMenu()
 
+  fun onGeminiApiKeyRowClick()
+  fun setGeminiApiKey(apiKey: String)
+  fun onGeminiAnalysisModelRowClick()
+  fun setGeminiAnalysisModel(model: String)
+  fun onGeminiGenerationModelRowClick()
+  fun setGeminiGenerationModel(model: String)
+
   companion object {
     fun noop() = object : SettingsListener {
       override fun close() {}
@@ -57,6 +64,12 @@ interface SettingsListener {
       override fun openFolderPicker() {}
       override fun onAppVersionClick() {}
       override fun openDeveloperMenu() {}
+      override fun onGeminiApiKeyRowClick() {}
+      override fun setGeminiApiKey(apiKey: String) {}
+      override fun onGeminiAnalysisModelRowClick() {}
+      override fun setGeminiAnalysisModel(model: String) {}
+      override fun onGeminiGenerationModelRowClick() {}
+      override fun setGeminiGenerationModel(model: String) {}
     }
   }
 }

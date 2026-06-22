@@ -41,6 +41,9 @@ class SettingsViewModelTest {
   private val sleepTimerPreferenceStore = MemoryDataStore(SleepTimerPreference.Default)
   private val analyticsConsentStore = MemoryDataStore(false)
   private val developerMenuUnlockedStore = MemoryDataStore(false)
+  private val geminiApiKeyStore = MemoryDataStore("")
+  private val geminiAnalysisModelStore = MemoryDataStore("gemini-1.5-flash")
+  private val geminiGenerationModelStore = MemoryDataStore("gemini-3.1-flash-tts-preview")
   private val navigator = mockk<Navigator> {
     every { goTo(any()) } just Runs
   }
@@ -72,6 +75,9 @@ class SettingsViewModelTest {
     kioskModeFeatureFlag = kioskModeFeatureFlag,
     developerMenuUnlockedStore = developerMenuUnlockedStore,
     dynamicColorAvailability = dynamicColorAvailability,
+    geminiApiKeyStore = geminiApiKeyStore,
+    geminiAnalysisModelStore = geminiAnalysisModelStore,
+    geminiGenerationModelStore = geminiGenerationModelStore,
     dispatcherProvider = DispatcherProvider(scope.coroutineContext, scope.coroutineContext, scope.coroutineContext),
   )
 
@@ -225,6 +231,42 @@ class SettingsViewModelTest {
       awaitItem().let {
         assertEquals(expected = true, actual = it.kioskMode)
       }
+    }
+  }
+
+  @Test
+  fun `gemini api key changes update view state`() = scope.runTest {
+    backgroundScope.launchMolecule(RecompositionMode.Immediate) {
+      viewModel.viewState()
+    }.test {
+      assertEquals(expected = "", actual = awaitItem().geminiApiKey)
+
+      viewModel.setGeminiApiKey("new-key")
+      assertEquals(expected = "new-key", actual = awaitItem().geminiApiKey)
+    }
+  }
+
+  @Test
+  fun `gemini analysis model changes update view state`() = scope.runTest {
+    backgroundScope.launchMolecule(RecompositionMode.Immediate) {
+      viewModel.viewState()
+    }.test {
+      assertEquals(expected = "gemini-1.5-flash", actual = awaitItem().geminiAnalysisModel)
+
+      viewModel.setGeminiAnalysisModel("gemini-2.0-pro")
+      assertEquals(expected = "gemini-2.0-pro", actual = awaitItem().geminiAnalysisModel)
+    }
+  }
+
+  @Test
+  fun `gemini generation model changes update view state`() = scope.runTest {
+    backgroundScope.launchMolecule(RecompositionMode.Immediate) {
+      viewModel.viewState()
+    }.test {
+      assertEquals(expected = "gemini-3.1-flash-tts-preview", actual = awaitItem().geminiGenerationModel)
+
+      viewModel.setGeminiGenerationModel("gemini-4.0-ultra")
+      assertEquals(expected = "gemini-4.0-ultra", actual = awaitItem().geminiGenerationModel)
     }
   }
 }

@@ -19,6 +19,9 @@ data class SettingsViewState(
   val showDeveloperMenu: Boolean,
   val showSupportDevelopment: Boolean,
   val kioskMode: Boolean,
+  val geminiApiKey: String,
+  val geminiAnalysisModel: String,
+  val geminiGenerationModel: String,
 ) {
 
   enum class Dialog {
@@ -26,6 +29,9 @@ data class SettingsViewState(
     SeekTime,
     Theme,
     ColorScheme,
+    GeminiApiKey,
+    GeminiAnalysisModel,
+    GeminiGenerationModel,
   }
 
   companion object {
@@ -45,6 +51,9 @@ data class SettingsViewState(
         showDeveloperMenu = true,
         showSupportDevelopment = true,
         kioskMode = false,
+        geminiApiKey = "AIza...",
+        geminiAnalysisModel = "gemini-1.5-flash",
+        geminiGenerationModel = "gemini-3.1-flash-tts-preview",
       )
     }
   }
