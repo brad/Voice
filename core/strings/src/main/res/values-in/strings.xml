@@ -141,4 +141,10 @@
     <string name="sleep_timer.dialog.action.increment">Lebih lama</string>
     <string name="sleep_timer.dialog.title">Selamat beristirahat! 🌙</string>
     <string name="sleep_timer.end_of_chapter">Akhir Bab</string>
+    <string name="settings.gemini.api_key.title">Kunci API Gemini</string>
+    <string name="settings.gemini.api_key.summary">Kunci API untuk layanan AI Gemini</string>
+    <string name="settings.gemini.analysis_model.title">Model analisis Gemini</string>
+    <string name="settings.gemini.analysis_model.summary">Model yang digunakan untuk analisis buku</string>
+    <string name="settings.gemini.generation_model.title">Model generasi Gemini</string>
+    <string name="settings.gemini.generation_model.summary">Model yang digunakan untuk pembuatan audio</string>
 </resources>

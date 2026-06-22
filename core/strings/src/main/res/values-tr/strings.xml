@@ -144,4 +144,10 @@
     <string name="sleep_timer.dialog.action.increment">Daha uzun</string>
     <string name="sleep_timer.dialog.title">Tatlı rüyalar! 🌙</string>
     <string name="sleep_timer.end_of_chapter">Bölüm Sonu</string>
+    <string name="settings.gemini.api_key.title">Gemini API anahtarı</string>
+    <string name="settings.gemini.api_key.summary">Gemini AI hizmetleri için API anahtarı</string>
+    <string name="settings.gemini.analysis_model.title">Gemini analiz modeli</string>
+    <string name="settings.gemini.analysis_model.summary">Kitap analizi için kullanılan model</string>
+    <string name="settings.gemini.generation_model.title">Gemini oluşturma modeli</string>
+    <string name="settings.gemini.generation_model.summary">Ses oluşturma için kullanılan model</string>
 </resources>

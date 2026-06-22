@@ -163,6 +163,60 @@ private fun Settings(
         AutoSleepTimerCard(viewState.autoSleepTimer, listener)
       }
 
+      item {
+        ListItem(
+          modifier = Modifier.clickable { listener.onGeminiApiKeyRowClick() },
+          leadingContent = {
+            Icon(
+              imageVector = VoiceIcons.Settings,
+              contentDescription = stringResource(StringsR.string.settings_gemini_api_key_title),
+            )
+          },
+          headlineContent = {
+            Text(stringResource(StringsR.string.settings_gemini_api_key_title))
+          },
+          supportingContent = {
+            Text(stringResource(StringsR.string.settings_gemini_api_key_summary))
+          },
+        )
+      }
+
+      item {
+        ListItem(
+          modifier = Modifier.clickable { listener.onGeminiAnalysisModelRowClick() },
+          leadingContent = {
+            Icon(
+              imageVector = VoiceIcons.Settings,
+              contentDescription = stringResource(StringsR.string.settings_gemini_analysis_model_title),
+            )
+          },
+          headlineContent = {
+            Text(stringResource(StringsR.string.settings_gemini_analysis_model_title))
+          },
+          supportingContent = {
+            Text(stringResource(StringsR.string.settings_gemini_analysis_model_summary))
+          },
+        )
+      }
+
+      item {
+        ListItem(
+          modifier = Modifier.clickable { listener.onGeminiGenerationModelRowClick() },
+          leadingContent = {
+            Icon(
+              imageVector = VoiceIcons.Settings,
+              contentDescription = stringResource(StringsR.string.settings_gemini_generation_model_title),
+            )
+          },
+          headlineContent = {
+            Text(stringResource(StringsR.string.settings_gemini_generation_model_title))
+          },
+          supportingContent = {
+            Text(stringResource(StringsR.string.settings_gemini_generation_model_summary))
+          },
+        )
+      }
+
       if (viewState.showSupportDevelopment) {
         item {
           ListItem(
@@ -376,6 +430,30 @@ private fun Dialog(
       ThemeColorSchemeDialog(
         selectedThemeColorScheme = viewState.themeColorScheme,
         onThemeColorSchemeSelect = listener::setThemeColorScheme,
+        onDismiss = listener::dismissDialog,
+      )
+    }
+    SettingsViewState.Dialog.GeminiApiKey -> {
+      StringSettingDialog(
+        title = stringResource(StringsR.string.settings_gemini_api_key_title),
+        initialValue = viewState.geminiApiKey,
+        onConfirm = listener::setGeminiApiKey,
+        onDismiss = listener::dismissDialog,
+      )
+    }
+    SettingsViewState.Dialog.GeminiAnalysisModel -> {
+      StringSettingDialog(
+        title = stringResource(StringsR.string.settings_gemini_analysis_model_title),
+        initialValue = viewState.geminiAnalysisModel,
+        onConfirm = listener::setGeminiAnalysisModel,
+        onDismiss = listener::dismissDialog,
+      )
+    }
+    SettingsViewState.Dialog.GeminiGenerationModel -> {
+      StringSettingDialog(
+        title = stringResource(StringsR.string.settings_gemini_generation_model_title),
+        initialValue = viewState.geminiGenerationModel,
+        onConfirm = listener::setGeminiGenerationModel,
         onDismiss = listener::dismissDialog,
       )
     }

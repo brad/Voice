@@ -144,4 +144,10 @@
     <string name="sleep_timer.dialog.action.increment">Prus longu</string>
     <string name="sleep_timer.dialog.title">Bona note! 🌙</string>
     <string name="sleep_timer.end_of_chapter">Fine de capìtulu</string>
+    <string name="settings.gemini.api_key.title">Clave API de Gemini</string>
+    <string name="settings.gemini.api_key.summary">Clave API pro sos servìtzios de IA de Gemini</string>
+    <string name="settings.gemini.analysis_model.title">Modellu de analisì de Gemini</string>
+    <string name="settings.gemini.analysis_model.summary">Modellu impreadu pro s\'analisi de sos libros</string>
+    <string name="settings.gemini.generation_model.title">Modellu de generatzione de Gemini</string>
+    <string name="settings.gemini.generation_model.summary">Modellu impreadu pro sa generatzione de àudio</string>
 </resources>

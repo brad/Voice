@@ -6,7 +6,7 @@ This roadmap outlines the steps to implement auto-builds in CI and a feature to 
 - [x] **Auto-build APK in CI**: Modified `.github/workflows/ci.yml` to build and upload debug APKs on pushes to the `develop` branch.
 - [x] **EPUB Library Integration**: Integrate `epublib` and create `:core:epub` for text extraction.
 - [x] **Gemini API Client**: Create `:core:gemini` with a Retrofit client supporting 529 error retries and `Retry-After` headers.
-- [ ] **Settings & Persistence**: Add DataStore persistence and UI for Gemini API Key and model selection.
+- [x] **Settings & Persistence**: Add DataStore persistence and UI for Gemini API Key and model selection.
 
 ## Phase 2: Background Processing & WorkManager
 - [ ] **Setup WorkManager**: Integrate `androidx.work:work-runtime-ktx` and configure it within the app's DI.

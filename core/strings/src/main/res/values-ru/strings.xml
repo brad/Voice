@@ -150,4 +150,10 @@
     <string name="sleep_timer.dialog.action.increment">Дольше</string>
     <string name="sleep_timer.dialog.title">Приятных снов! 🌙</string>
     <string name="sleep_timer.end_of_chapter">Конец главы</string>
+    <string name="settings.gemini.api_key.title">Ключ API Gemini</string>
+    <string name="settings.gemini.api_key.summary">Ключ API для сервисов ИИ Gemini</string>
+    <string name="settings.gemini.analysis_model.title">Модель анализа Gemini</string>
+    <string name="settings.gemini.analysis_model.summary">Модель, используемая для анализа книг</string>
+    <string name="settings.gemini.generation_model.title">Модель генерации Gemini</string>
+    <string name="settings.gemini.generation_model.summary">Модель, используемая для генерации аудио</string>
 </resources>

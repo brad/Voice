@@ -101,4 +101,10 @@
     <string name="settings.support.suggest_idea.title">विचार सुझाव गर्नुहोस्</string>
     <string name="shortcut.play_current.short_label">हालको प्ले गर्नुहोस्</string>
     <string name="sleep_timer.action.open">सुत्ने-टाइमर</string>
+    <string name="settings.gemini.api_key.title">Gemini API कुञ्जी</string>
+    <string name="settings.gemini.api_key.summary">Gemini AI सेवाहरूका लागि API कुञ्जी</string>
+    <string name="settings.gemini.analysis_model.title">Gemini विश्लेषण मोडेल</string>
+    <string name="settings.gemini.analysis_model.summary">पुस्तक विश्लेषणका लागि प्रयोग हुने मोडेल</string>
+    <string name="settings.gemini.generation_model.title">Gemini जेनेरेशन मोडेल</string>
+    <string name="settings.gemini.generation_model.summary">अडियो जेनेरेशनका लागि प्रयोग हुने मोडेल</string>
 </resources>

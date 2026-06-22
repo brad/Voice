@@ -111,4 +111,10 @@
     <string name="sleep_timer.dialog.action.decrement">Mai scurtă</string>
     <string name="sleep_timer.dialog.action.increment">Mai lungă</string>
     <string name="sleep_timer.dialog.title">Vise plăcute! 🌙</string>
+    <string name="settings.gemini.api_key.title">Cheie API Gemini</string>
+    <string name="settings.gemini.api_key.summary">Cheie API pentru serviciile AI Gemini</string>
+    <string name="settings.gemini.analysis_model.title">Model de analiză Gemini</string>
+    <string name="settings.gemini.analysis_model.summary">Model folosit pentru analiza cărților</string>
+    <string name="settings.gemini.generation_model.title">Model de generare Gemini</string>
+    <string name="settings.gemini.generation_model.summary">Model folosit pentru generarea audio</string>
 </resources>
