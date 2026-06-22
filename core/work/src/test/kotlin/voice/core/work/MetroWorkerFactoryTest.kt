@@ -15,7 +15,10 @@ class MetroWorkerFactoryTest {
   fun `factory should return worker when creator is provided`() {
     val dummyWorkerName = DummyWorker::class.java.name
     val creator = object : WorkerCreator {
-      override fun create(context: Context, parameters: WorkerParameters): ListenableWorker {
+      override fun create(
+        context: Context,
+        parameters: WorkerParameters,
+      ): ListenableWorker {
         return DummyWorker(context, parameters)
       }
     }
@@ -24,7 +27,7 @@ class MetroWorkerFactoryTest {
     val worker = factory.createWorker(
       mockk(relaxed = true),
       dummyWorkerName,
-      mockk(relaxed = true)
+      mockk(relaxed = true),
     )
 
     assertNotNull(worker)
@@ -37,13 +40,16 @@ class MetroWorkerFactoryTest {
     val worker = factory.createWorker(
       mockk(relaxed = true),
       "UnknownWorker",
-      mockk(relaxed = true)
+      mockk(relaxed = true),
     )
 
     assertNull(worker)
   }
 
-  class DummyWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
+  class DummyWorker(
+    context: Context,
+    params: WorkerParameters,
+  ) : Worker(context, params) {
     override fun doWork(): Result = Result.success()
   }
 }
