@@ -13,7 +13,7 @@ This roadmap outlines the steps to implement auto-builds in CI and a feature to 
 - [ ] **Analysis Worker**: Implement a resumable background worker that:
     - Extracts text from EPUB chapters.
     - Sends text to Gemini for character identification (name, gender, age, energy/personality).
-    - Persists character data in a Room database.
+    - Persists character data and default generation settings in a Room database.
 - [ ] **Generation Worker**: Implement a resumable background worker that:
     - Maps characters to specific Gemini pre-built voices.
     - Applies "tuning" (via prompts or configuration) to match character traits.
@@ -25,10 +25,13 @@ This roadmap outlines the steps to implement auto-builds in CI and a feature to 
 - [ ] **Voice Mapping Logic**: Implement an intelligent mapping system:
     - Assign pre-built voices (Kore, Aoide, etc.) based on gender/age.
     - Implement "tuning" logic to vary speed, pitch, or energy for reused voices.
+- [ ] **Generation Settings Defaults**: Extend analysis output so it pre-populates reasonable defaults for generation settings such as character voice assignments, custom word pronunciations, and other tuning controls before generation starts.
 - [ ] **Database Schema**: Design Room tables for `Character`, `VoiceMapping`, and `GenerationProgress`.
 
 ## Phase 4: UI & Library Integration
 - [ ] **EPUB Import Flow**: Add an "Import EPUB" button to the library.
+- [ ] **Generation Settings UI**: Add a screen where users can review and tune generation settings before starting generation, including voice assignments, pronunciation overrides, and similar per-book controls.
+- [ ] **Generation Locking & Restart UX**: Disable generation settings once generation has started, and provide a clear way to discard in-progress generation and restart if the user wants to change locked settings.
 - [ ] **Progress Tracking UI**: Create a screen to monitor analysis and generation status (resumable).
 - [ ] **Library Registration**: Automatically register the final generated audio files as a playable Audiobook in the existing library.
 - [ ] **Error Handling UI**: Notify users of persistent API failures or missing API keys.
