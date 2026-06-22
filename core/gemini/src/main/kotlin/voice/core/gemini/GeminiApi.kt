@@ -23,9 +23,7 @@ data class GenerateContentRequest(
 )
 
 @Serializable
-data class Content(
-  val parts: List<Part>,
-)
+data class Content(val parts: List<Part>)
 
 @Serializable
 data class Part(
@@ -48,19 +46,13 @@ data class GenerationConfig(
 )
 
 @Serializable
-data class SpeechConfig(
-  val voiceConfig: VoiceConfig,
-)
+data class SpeechConfig(val voiceConfig: VoiceConfig)
 
 @Serializable
-data class VoiceConfig(
-  val prebuiltVoiceConfig: PrebuiltVoiceConfig,
-)
+data class VoiceConfig(val prebuiltVoiceConfig: PrebuiltVoiceConfig)
 
 @Serializable
-data class PrebuiltVoiceConfig(
-  val voiceName: String,
-)
+data class PrebuiltVoiceConfig(val voiceName: String)
 
 @Serializable
 data class ResponseSchema(
@@ -78,11 +70,7 @@ data class SchemaProperty(
 )
 
 @Serializable
-data class GenerateContentResponse(
-  val candidates: List<Candidate>,
-)
+data class GenerateContentResponse(val candidates: List<Candidate>)
 
 @Serializable
-data class Candidate(
-  val content: Content,
-)
+data class Candidate(val content: Content)

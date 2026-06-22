@@ -23,4 +23,7 @@ data class EpubBookData(
   val title: String,
   val chapters: List<EpubChapter>,
 )
-data class EpubChapter(val title: String, val content: String)
+data class EpubChapter(
+  val title: String,
+  val content: String,
+)
