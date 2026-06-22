@@ -153,4 +153,10 @@
     <string name="sleep_timer.dialog.action.increment">Níos faide</string>
     <string name="sleep_timer.dialog.title">Codladh sámh! 🌙</string>
     <string name="sleep_timer.end_of_chapter">Deireadh na Caibidle</string>
+    <string name="settings.gemini.api_key.title" translatable="false">Gemini API Key</string>
+    <string name="settings.gemini.api_key.summary" translatable="false">API Key for Gemini AI services</string>
+    <string name="settings.gemini.analysis_model.title" translatable="false">Analysis Model</string>
+    <string name="settings.gemini.analysis_model.summary" translatable="false">Model used for book analysis</string>
+    <string name="settings.gemini.generation_model.title" translatable="false">Generation Model</string>
+    <string name="settings.gemini.generation_model.summary" translatable="false">Model used for audio generation</string>
 </resources>
