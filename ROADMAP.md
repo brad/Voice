@@ -10,8 +10,8 @@ This roadmap outlines the steps to implement auto-builds in CI and a feature to 
 
 ## Phase 2: Background Processing & WorkManager
 - [x] **Setup WorkManager**: Integrate `androidx.work:work-runtime-ktx` and configure it within the app's DI.
-- [ ] **Database Schema (Initial)**: Design and implement Room tables for `Character`, `VoiceMapping`, `WordPronunciation` (stores custom pronunciations for unusual names/words), and `GenerationProgress` so downstream workers have a stable persistence contract.
-- [ ] **Character Extraction Prompting**: Refine prompts to get structured JSON from Gemini with character metadata that can be persisted by the analysis pipeline.
+- [x] **Database Schema (Initial)**: Design and implement Room tables for `Character`, `VoiceMapping`, `WordPronunciation` (stores custom pronunciations for unusual names/words), and `GenerationProgress` so downstream workers have a stable persistence contract.
+- [x] **Character Extraction Prompting**: Refine prompts to get structured JSON from Gemini with character metadata that can be persisted by the analysis pipeline.
 - [ ] **Analysis Worker**: Implement a resumable background worker that:
     - Extracts text from EPUB chapters.
     - Sends text to Gemini for character identification (name, gender, age, energy/personality).

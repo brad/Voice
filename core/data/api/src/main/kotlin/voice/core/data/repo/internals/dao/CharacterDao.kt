@@ -7,12 +7,15 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import voice.core.data.BookId
 import voice.core.data.Character
+import kotlinx.coroutines.flow.Flow
 import kotlin.uuid.Uuid
 
 @Dao
 public interface CharacterDao {
   @Query("SELECT * FROM characters WHERE bookId = :bookId")
   public suspend fun charactersForBook(bookId: BookId): List<Character>
+  @Query("SELECT * FROM characters WHERE bookId = :bookId")
+  public fun flowCharactersForBook(bookId: BookId): Flow<List<Character>>
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   public suspend fun insert(character: Character)
