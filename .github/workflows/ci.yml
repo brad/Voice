@@ -32,6 +32,21 @@ jobs:
       - uses: ./.github/actions/build_setup
       - name: Check locale config
         run: ./scripts/check_locale_config.main.kts
+      - name: Create signing files
+        if: github.event_name == 'push' && github.ref_name == 'develop'
+        shell: bash
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_STORE_PASSWORD: ${{ secrets.ANDROID_STORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > signing/signing.keystore
+          cat > signing/signing.properties <<EOF
+          STORE_PASSWORD=$ANDROID_STORE_PASSWORD
+          KEY_ALIAS=$ANDROID_KEY_ALIAS
+          KEY_PASSWORD=$ANDROID_KEY_PASSWORD
+          EOF
       - name: Tests + Formatting + Build
         run: ./gradlew voiceUnitTest lintKotlin :app:assembleFreeDebug
       - name: Publish JUnit Report
