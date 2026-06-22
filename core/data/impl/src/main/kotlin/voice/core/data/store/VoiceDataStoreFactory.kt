@@ -59,4 +59,17 @@ internal class VoiceDataStoreFactory(
       migrations = migrations,
     )
   }
+
+  fun string(
+    fileName: String,
+    defaultValue: String,
+    migrations: List<DataMigration<String>> = emptyList(),
+  ): DataStore<String> {
+    return create(
+      serializer = String.serializer(),
+      defaultValue = defaultValue,
+      fileName = fileName,
+      migrations = migrations,
+    )
+  }
 }

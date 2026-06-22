@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, develop ]
   pull_request:
   workflow_call: { }
 
@@ -40,6 +40,12 @@ jobs:
         with:
           report_paths: '**/test-results/**/TEST-*.xml'
           check_name: "Unit Tests"
+      - name: Upload APK
+        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+        uses: actions/upload-artifact@v7
+        with:
+          name: voice-debug-apk
+          path: app/build/outputs/apk/free/debug/*.apk
 
   instrumentation:
     # Temporarily disable
