@@ -112,10 +112,10 @@
     <string name="sleep_timer.dialog.action.decrement">أقصر</string>
     <string name="sleep_timer.dialog.action.increment">أطول</string>
     <string name="sleep_timer.dialog.title">أحلام سعيدة! 🌙</string>
-    <string name="settings.gemini.api_key.title" translatable="false">Gemini API Key</string>
-    <string name="settings.gemini.api_key.summary" translatable="false">API Key for Gemini AI services</string>
-    <string name="settings.gemini.analysis_model.title" translatable="false">Analysis Model</string>
-    <string name="settings.gemini.analysis_model.summary" translatable="false">Model used for book analysis</string>
-    <string name="settings.gemini.generation_model.title" translatable="false">Generation Model</string>
-    <string name="settings.gemini.generation_model.summary" translatable="false">Model used for audio generation</string>
+    <string name="settings.gemini.api_key.title">مفتاح Gemini API</string>
+    <string name="settings.gemini.api_key.summary">مفتاح API لخدمات Gemini للذكاء الاصطناعي</string>
+    <string name="settings.gemini.analysis_model.title">نموذج تحليل Gemini</string>
+    <string name="settings.gemini.analysis_model.summary">النموذج المستخدم لتحليل الكتب</string>
+    <string name="settings.gemini.generation_model.title">نموذج التوليد Gemini</string>
+    <string name="settings.gemini.generation_model.summary">النموذج المستخدم لإنشاء الصوت</string>
 </resources>

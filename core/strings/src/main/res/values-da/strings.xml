@@ -108,10 +108,10 @@
     <string name="sleep_timer.dialog.action.decrement">Kortere</string>
     <string name="sleep_timer.dialog.action.increment">Længre</string>
     <string name="sleep_timer.dialog.title">Sov godt! 🌙</string>
-    <string name="settings.gemini.api_key.title" translatable="false">Gemini API Key</string>
-    <string name="settings.gemini.api_key.summary" translatable="false">API Key for Gemini AI services</string>
-    <string name="settings.gemini.analysis_model.title" translatable="false">Analysis Model</string>
-    <string name="settings.gemini.analysis_model.summary" translatable="false">Model used for book analysis</string>
-    <string name="settings.gemini.generation_model.title" translatable="false">Generation Model</string>
-    <string name="settings.gemini.generation_model.summary" translatable="false">Model used for audio generation</string>
+    <string name="settings.gemini.api_key.title">Gemini API-nøgle</string>
+    <string name="settings.gemini.api_key.summary">API-nøgle til Gemini AI-tjenester</string>
+    <string name="settings.gemini.analysis_model.title">Gemini-analysemodel</string>
+    <string name="settings.gemini.analysis_model.summary">Model, der bruges til boganalyse</string>
+    <string name="settings.gemini.generation_model.title">Gemini-genereringsmodel</string>
+    <string name="settings.gemini.generation_model.summary">Model, der bruges til lydgenerering</string>
 </resources>

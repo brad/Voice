@@ -144,10 +144,10 @@
     <string name="sleep_timer.dialog.action.increment">Подолго</string>
     <string name="sleep_timer.dialog.title">Слатки соништа! 🌙</string>
     <string name="sleep_timer.end_of_chapter">Крај на поглавје</string>
-    <string name="settings.gemini.api_key.title" translatable="false">Gemini API Key</string>
-    <string name="settings.gemini.api_key.summary" translatable="false">API Key for Gemini AI services</string>
-    <string name="settings.gemini.analysis_model.title" translatable="false">Analysis Model</string>
-    <string name="settings.gemini.analysis_model.summary" translatable="false">Model used for book analysis</string>
-    <string name="settings.gemini.generation_model.title" translatable="false">Generation Model</string>
-    <string name="settings.gemini.generation_model.summary" translatable="false">Model used for audio generation</string>
+    <string name="settings.gemini.api_key.title">Gemini API-клуч</string>
+    <string name="settings.gemini.api_key.summary">API-клуч за Gemini AI услуги</string>
+    <string name="settings.gemini.analysis_model.title">Модел за анализа на Gemini</string>
+    <string name="settings.gemini.analysis_model.summary">Модел што се користи за анализа на книги</string>
+    <string name="settings.gemini.generation_model.title">Модел за генерирање на Gemini</string>
+    <string name="settings.gemini.generation_model.summary">Модел што се користи за генерирање аудио</string>
 </resources>

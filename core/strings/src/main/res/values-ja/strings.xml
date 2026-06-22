@@ -141,10 +141,10 @@
     <string name="sleep_timer.dialog.action.increment">長くする</string>
     <string name="sleep_timer.dialog.title">おやすみなさい！ 🌙</string>
     <string name="sleep_timer.end_of_chapter">チャプターの終わり</string>
-    <string name="settings.gemini.api_key.title" translatable="false">Gemini API Key</string>
-    <string name="settings.gemini.api_key.summary" translatable="false">API Key for Gemini AI services</string>
-    <string name="settings.gemini.analysis_model.title" translatable="false">Analysis Model</string>
-    <string name="settings.gemini.analysis_model.summary" translatable="false">Model used for book analysis</string>
-    <string name="settings.gemini.generation_model.title" translatable="false">Generation Model</string>
-    <string name="settings.gemini.generation_model.summary" translatable="false">Model used for audio generation</string>
+    <string name="settings.gemini.api_key.title">Gemini API キー</string>
+    <string name="settings.gemini.api_key.summary">Gemini AI サービス用の API キー</string>
+    <string name="settings.gemini.analysis_model.title">Gemini 分析モデル</string>
+    <string name="settings.gemini.analysis_model.summary">書籍の分析に使用するモデル</string>
+    <string name="settings.gemini.generation_model.title">Gemini 生成モデル</string>
+    <string name="settings.gemini.generation_model.summary">音声生成に使用するモデル</string>
 </resources>

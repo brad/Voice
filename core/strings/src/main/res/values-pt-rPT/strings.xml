@@ -147,10 +147,10 @@
     <string name="sleep_timer.dialog.action.increment">Mais longo</string>
     <string name="sleep_timer.dialog.title">Bons sonhos! 🌙</string>
     <string name="sleep_timer.end_of_chapter">Fim do capítulo</string>
-    <string name="settings.gemini.api_key.title" translatable="false">Gemini API Key</string>
-    <string name="settings.gemini.api_key.summary" translatable="false">API Key for Gemini AI services</string>
-    <string name="settings.gemini.analysis_model.title" translatable="false">Analysis Model</string>
-    <string name="settings.gemini.analysis_model.summary" translatable="false">Model used for book analysis</string>
-    <string name="settings.gemini.generation_model.title" translatable="false">Generation Model</string>
-    <string name="settings.gemini.generation_model.summary" translatable="false">Model used for audio generation</string>
+    <string name="settings.gemini.api_key.title">Chave da API do Gemini</string>
+    <string name="settings.gemini.api_key.summary">Chave da API para os serviços de IA do Gemini</string>
+    <string name="settings.gemini.analysis_model.title">Modelo de análise do Gemini</string>
+    <string name="settings.gemini.analysis_model.summary">Modelo utilizado para a análise de livros</string>
+    <string name="settings.gemini.generation_model.title">Modelo de geração do Gemini</string>
+    <string name="settings.gemini.generation_model.summary">Modelo utilizado para a geração de áudio</string>
 </resources>
