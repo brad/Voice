@@ -9,7 +9,7 @@ This roadmap outlines the steps to implement auto-builds in CI and a feature to 
 - [x] **Settings & Persistence**: Add DataStore persistence and UI for Gemini API Key and model selection.
 
 ## Phase 2: Background Processing & WorkManager
-- [ ] **Setup WorkManager**: Integrate `androidx.work:work-runtime-ktx` and configure it within the app's DI.
+- [x] **Setup WorkManager**: Integrate `androidx.work:work-runtime-ktx` and configure it within the app's DI.
 - [ ] **Analysis Worker**: Implement a resumable background worker that:
     - Extracts text from EPUB chapters.
     - Sends text to Gemini for character identification (name, gender, age, energy/personality).
