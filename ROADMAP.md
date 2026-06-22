@@ -26,7 +26,7 @@ This roadmap outlines the steps to implement auto-builds in CI and a feature to 
     - Assign pre-built voices (Kore, Aoide, etc.) based on gender/age.
     - Implement "tuning" logic to vary speed, pitch, or energy for reused voices.
 - [ ] **Generation Settings Defaults**: Extend analysis output so it pre-populates reasonable defaults for generation settings such as character voice assignments, custom word pronunciations, and other tuning controls before generation starts.
-- [ ] **Database Schema**: Design Room tables for `Character`, `VoiceMapping`, and `GenerationProgress`.
+- [ ] **Database Schema**: Design Room tables for `Character`, `VoiceMapping`, `WordPronunciation` (stores custom pronunciations for unusual names/words), and `GenerationProgress`.
 
 ## Phase 4: UI & Library Integration
 - [ ] **EPUB Import Flow**: Add an "Import EPUB" button to the library.
