@@ -10,14 +10,10 @@ import voice.core.data.repo.internals.dao.WordPronunciationDao
 
 @SingleIn(AppScope::class)
 @ContributesBinding(AppScope::class)
-public class WordPronunciationRepositoryImpl(
-  private val dao: WordPronunciationDao,
-) : WordPronunciationRepository {
-  override suspend fun pronunciationsForBook(bookId: BookId): List<WordPronunciation> =
-    dao.pronunciationsForBook(bookId)
+public class WordPronunciationRepositoryImpl(private val dao: WordPronunciationDao) : WordPronunciationRepository {
+  override suspend fun pronunciationsForBook(bookId: BookId): List<WordPronunciation> = dao.pronunciationsForBook(bookId)
 
-  override fun flowPronunciationsForBook(bookId: BookId): Flow<List<WordPronunciation>> =
-    dao.flowPronunciationsForBook(bookId)
+  override fun flowPronunciationsForBook(bookId: BookId): Flow<List<WordPronunciation>> = dao.flowPronunciationsForBook(bookId)
 
   override suspend fun insert(pronunciation: WordPronunciation): Unit = dao.insert(pronunciation)
 

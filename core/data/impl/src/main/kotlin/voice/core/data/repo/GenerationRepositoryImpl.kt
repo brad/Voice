@@ -10,14 +10,10 @@ import voice.core.data.repo.internals.dao.GenerationProgressDao
 
 @SingleIn(AppScope::class)
 @ContributesBinding(AppScope::class)
-public class GenerationRepositoryImpl(
-  private val dao: GenerationProgressDao,
-) : GenerationRepository {
-  override suspend fun progressForBook(bookId: BookId): GenerationProgress? =
-    dao.progressForBook(bookId)
+public class GenerationRepositoryImpl(private val dao: GenerationProgressDao) : GenerationRepository {
+  override suspend fun progressForBook(bookId: BookId): GenerationProgress? = dao.progressForBook(bookId)
 
-  override fun flowProgressForBook(bookId: BookId): Flow<GenerationProgress?> =
-    dao.flowProgressForBook(bookId)
+  override fun flowProgressForBook(bookId: BookId): Flow<GenerationProgress?> = dao.flowProgressForBook(bookId)
 
   override suspend fun insert(progress: GenerationProgress): Unit = dao.insert(progress)
 

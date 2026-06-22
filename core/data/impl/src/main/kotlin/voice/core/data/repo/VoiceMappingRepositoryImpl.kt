@@ -11,17 +11,12 @@ import kotlin.uuid.Uuid
 
 @SingleIn(AppScope::class)
 @ContributesBinding(AppScope::class)
-public class VoiceMappingRepositoryImpl(
-  private val dao: VoiceMappingDao,
-) : VoiceMappingRepository {
-  override suspend fun mappingForCharacter(characterId: Uuid): VoiceMapping? =
-    dao.mappingForCharacter(characterId)
+public class VoiceMappingRepositoryImpl(private val dao: VoiceMappingDao) : VoiceMappingRepository {
+  override suspend fun mappingForCharacter(characterId: Uuid): VoiceMapping? = dao.mappingForCharacter(characterId)
 
-  override suspend fun mappingsForBook(bookId: BookId): List<VoiceMapping> =
-    dao.mappingsForBook(bookId)
+  override suspend fun mappingsForBook(bookId: BookId): List<VoiceMapping> = dao.mappingsForBook(bookId)
 
-  override fun flowMappingsForBook(bookId: BookId): Flow<List<VoiceMapping>> =
-    dao.flowMappingsForBook(bookId)
+  override fun flowMappingsForBook(bookId: BookId): Flow<List<VoiceMapping>> = dao.flowMappingsForBook(bookId)
 
   override suspend fun insert(mapping: VoiceMapping): Unit = dao.insert(mapping)
 

@@ -10,14 +10,10 @@ import voice.core.data.repo.internals.dao.CharacterDao
 
 @SingleIn(AppScope::class)
 @ContributesBinding(AppScope::class)
-public class CharacterRepositoryImpl(
-  private val dao: CharacterDao,
-) : CharacterRepository {
-  override fun flowCharactersForBook(bookId: BookId): Flow<List<Character>> =
-    dao.flowCharactersForBook(bookId)
+public class CharacterRepositoryImpl(private val dao: CharacterDao) : CharacterRepository {
+  override fun flowCharactersForBook(bookId: BookId): Flow<List<Character>> = dao.flowCharactersForBook(bookId)
 
-  override suspend fun charactersForBook(bookId: BookId): List<Character> =
-    dao.charactersForBook(bookId)
+  override suspend fun charactersForBook(bookId: BookId): List<Character> = dao.charactersForBook(bookId)
 
   override suspend fun insert(character: Character): Unit = dao.insert(character)
 
