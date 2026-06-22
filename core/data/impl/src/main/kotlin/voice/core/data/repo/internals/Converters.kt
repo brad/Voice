@@ -8,6 +8,7 @@ import kotlinx.serialization.json.Json
 import voice.core.data.BookId
 import voice.core.data.Bookmark
 import voice.core.data.ChapterId
+import voice.core.data.GenerationStatus
 import voice.core.data.MarkData
 import java.io.File
 import java.time.Instant
@@ -78,4 +79,10 @@ internal class Converters {
 
   @TypeConverter
   fun fromBookmarkId(id: Bookmark.Id): String = id.value.toString()
+
+  @TypeConverter
+  fun fromGenerationStatus(status: GenerationStatus): String = status.name
+
+  @TypeConverter
+  fun toGenerationStatus(value: String): GenerationStatus = GenerationStatus.valueOf(value)
 }
