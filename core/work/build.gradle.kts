@@ -21,6 +21,6 @@ dependencies {
   implementation(libs.datastore)
 
   testImplementation(libs.bundles.testing.jvm)
-  testImplementation("androidx.work:work-testing:2.11.2")
+  testImplementation(libs.work.testing)
   testImplementation(libs.retrofit.core)
 }
