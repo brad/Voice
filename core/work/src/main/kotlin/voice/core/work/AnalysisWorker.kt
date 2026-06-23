@@ -14,10 +14,13 @@ import voice.core.data.BookId
 import voice.core.data.Character
 import voice.core.data.GenerationProgress
 import voice.core.data.GenerationStatus
+import voice.core.data.VoiceMapping
+import voice.core.data.WordPronunciation
 import voice.core.data.repo.AnalysisProgressRepository
 import voice.core.data.repo.CharacterRepository
 import voice.core.data.repo.GenerationRepository
 import voice.core.data.repo.VoiceMappingRepository
+import voice.core.data.repo.WordPronunciationRepository
 import voice.core.epub.EpubExtractor
 import voice.core.gemini.Content
 import voice.core.gemini.GeminiAnalysisPrompts
@@ -37,6 +40,7 @@ public class AnalysisWorker(
   private val analysisProgressRepository: AnalysisProgressRepository,
   private val generationRepository: GenerationRepository,
   private val voiceMappingRepository: VoiceMappingRepository,
+  private val wordPronunciationRepository: WordPronunciationRepository,
   private val geminiApi: GeminiApi,
   private val apiKeyStore: DataStore<String>,
   private val modelStore: DataStore<String>,
@@ -115,7 +119,7 @@ public class AnalysisWorker(
         val responseText = response.candidates.firstOrNull()?.content?.parts?.firstOrNull()?.text
           ?: throw Exception("Empty response from Gemini")
 
-        val extracted = Json.decodeFromString<ExtractedCharacters>(responseText)
+        val extracted = Json.decodeFromString<ExtractedData>(responseText)
 
         characterRepository.deleteForBook(bookId)
         val newCharacters = extracted.characters.map {
@@ -132,9 +136,24 @@ public class AnalysisWorker(
         characterRepository.insertAll(newCharacters)
         currentCharacters = newCharacters
 
+        // Extract and insert pronunciations (they are incremental for this chunk)
+        val newPronunciations = extracted.pronunciations.map {
+          WordPronunciation(
+            id = Uuid.random(),
+            bookId = bookId,
+            word = it.word,
+            phonetic = it.phonetic,
+          )
+        }
+        wordPronunciationRepository.insertAll(newPronunciations)
+
         // Update voice mappings
         voiceMappingRepository.deleteForBook(bookId)
-        val newMappings = newCharacters.map { VoiceMapper.mapToVoice(it) }
+        val newMappings = mutableListOf<VoiceMapping>()
+        for (char in newCharacters) {
+          val mapping = VoiceMapper.mapToVoice(char, newMappings)
+          newMappings.add(mapping)
+        }
         voiceMappingRepository.insertAll(newMappings)
 
         analysisProgressRepository.insert(
@@ -178,7 +197,16 @@ public class AnalysisWorker(
   )
 
   @Serializable
-  private data class ExtractedCharacters(val characters: List<SerializableCharacter>)
+  private data class SerializablePronunciation(
+    val word: String,
+    val phonetic: String,
+  )
+
+  @Serializable
+  private data class ExtractedData(
+    val characters: List<SerializableCharacter>,
+    val pronunciations: List<SerializablePronunciation> = emptyList(),
+  )
 
   public companion object {
     public const val KEY_BOOK_ID: String = "book_id"
@@ -189,6 +217,7 @@ public class AnalysisWorker(
     private val analysisProgressRepository: AnalysisProgressRepository,
     private val generationRepository: GenerationRepository,
     private val voiceMappingRepository: VoiceMappingRepository,
+    private val wordPronunciationRepository: WordPronunciationRepository,
     private val geminiApi: GeminiApi,
     private val apiKeyStore: DataStore<String>,
     private val modelStore: DataStore<String>,
@@ -204,6 +233,7 @@ public class AnalysisWorker(
         analysisProgressRepository,
         generationRepository,
         voiceMappingRepository,
+        wordPronunciationRepository,
         geminiApi,
         apiKeyStore,
         modelStore,

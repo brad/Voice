@@ -1,9 +1,11 @@
 package voice.core.work
 
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
 import org.junit.Test
 import voice.core.data.BookId
 import voice.core.data.Character
+import voice.core.data.VoiceMapping
 import kotlin.uuid.Uuid
 
 class VoiceMapperTest {
@@ -21,6 +23,7 @@ class VoiceMapperTest {
     )
     val mapping = VoiceMapper.mapToVoice(character)
     assertEquals("Kore", mapping.voiceName)
+    assertEquals(1.0f, mapping.pitch)
   }
 
   @Test
@@ -96,5 +99,36 @@ class VoiceMapperTest {
     )
     val mapping = VoiceMapper.mapToVoice(character)
     assertEquals("Fenrir", mapping.voiceName)
+  }
+
+  @Test
+  fun `test voice reuse varies pitch`() {
+    val bookId = BookId("test")
+    val char1 = Character(
+      id = Uuid.random(),
+      bookId = bookId,
+      name = "Alice",
+      gender = "Female",
+      age = "Adult",
+      energy = "Medium",
+      personality = "Kind",
+    )
+    val mapping1 = VoiceMapper.mapToVoice(char1)
+    assertEquals("Kore", mapping1.voiceName)
+    assertEquals(1.0f, mapping1.pitch)
+
+    val char2 = Character(
+      id = Uuid.random(),
+      bookId = bookId,
+      name = "Eve",
+      gender = "Female",
+      age = "Adult",
+      energy = "Medium",
+      personality = "Shy",
+    )
+    val mapping2 = VoiceMapper.mapToVoice(char2, listOf(mapping1))
+    assertEquals("Kore", mapping2.voiceName)
+    assertNotEquals(mapping1.pitch, mapping2.pitch)
+    assertEquals(1.1f, mapping2.pitch)
   }
 }
