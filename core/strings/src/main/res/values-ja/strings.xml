@@ -57,6 +57,7 @@
     <string name="library.category.current.title">現在</string>
     <string name="library.category.not_started.title">未再生</string>
     <string name="library.empty.add_first_book">オーディオブックのフォルダーを追加して、聴き始めましょう！</string>
+    <string name="library.import_epub">電子書籍をインポート</string>
     <string name="library.folders.title">オーディオブック フォルダー</string>
     <string name="library.folders.moved.dialog.title">オーディオブックフォルダーを移動しました</string>
     <string name="library.folders.moved.dialog.message">オーディオブックフォルダーは設定で管理できるようになりました。</string>

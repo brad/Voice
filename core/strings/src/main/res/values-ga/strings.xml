@@ -69,6 +69,7 @@
     <string name="library.category.current.title">Reatha</string>
     <string name="library.category.not_started.title">Níl tosnaithe go fóill</string>
     <string name="library.empty.add_first_book">Cuirimis d’fhillteán closleabhar leis ionas gur féidir leat tosú ag éisteacht!</string>
+    <string name="library.import_epub">Iompórtáil ríomhleabhar</string>
     <string name="library.folders.title">Fillteáin na closleabhar</string>
     <string name="library.folders.moved.dialog.title">Bogadh fillteáin closleabhar</string>
     <string name="library.folders.moved.dialog.message">Is féidir leat fillteáin closleabhar a bhainistiú anois sna Sainroghanna.</string>

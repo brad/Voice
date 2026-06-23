@@ -63,6 +63,7 @@
     <string name="library.category.current.title">נוכחי</string>
     <string name="library.category.not_started.title">לא שמעתי עדיין</string>
     <string name="library.empty.add_first_book">בואו נוסיף את תיקיית הקולספר שלכם כדי שתוכלו להתחיל להאזין!</string>
+    <string name="library.import_epub">ייבא ספר אלקטרוני</string>
     <string name="library.folders.title">תיקיית קולספר</string>
     <string name="library.folders.moved.dialog.title">תיקיות ספרי השמע הועברו</string>
     <string name="library.folders.moved.dialog.message">כעת ניתן לנהל תיקיות ספרי שמע בהעדפות.</string>

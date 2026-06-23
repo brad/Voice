@@ -62,6 +62,7 @@
     <string name="library.category.current.title">Cărți în lectură</string>
     <string name="library.category.not_started.title">Cărți neascultate încă</string>
     <string name="library.empty.add_first_book">Adaugă directorul cu cărțile tale și poți să începi!</string>
+    <string name="library.import_epub">Importă eBook</string>
     <string name="library.folders.title">Directoare cărți</string>
     <string name="library.search.hint">Ce anume căutați?</string>
     <string name="library.storage_permission_bug.action">Acordă permisiune</string>
