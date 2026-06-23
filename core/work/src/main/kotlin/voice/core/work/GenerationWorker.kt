@@ -112,13 +112,17 @@ public class GenerationWorker(
           val mapping = mappings.find { it.characterId == char.id }
           val tuning = if (mapping != null) {
             " (Speed: ${mapping.speed}, Pitch: ${mapping.pitch}, Energy: ${mapping.energy})"
-          } else ""
+          } else {
+            ""
+          }
           "- ${char.name}: ${char.personality ?: "Narrator"}$tuning"
         }
 
         val pronunciationInstructions = if (pronunciations.isNotEmpty()) {
           "\n\nPronunciation Guide:\n" + pronunciations.joinToString("\n") { "${it.word} -> ${it.phonetic}" }
-        } else ""
+        } else {
+          ""
+        }
 
         val speakerPrompt = """
           Perform a multi-speaker TTS generation for the following book excerpt.
@@ -135,8 +139,8 @@ public class GenerationWorker(
           SpeakerVoiceConfig(
             speaker = character?.name ?: "Narrator",
             voiceConfig = VoiceConfig(
-              prebuiltVoiceConfig = PrebuiltVoiceConfig(voiceName = mapping.voiceName)
-            )
+              prebuiltVoiceConfig = PrebuiltVoiceConfig(voiceName = mapping.voiceName),
+            ),
           )
         }
 
@@ -145,9 +149,9 @@ public class GenerationWorker(
           generationConfig = GenerationConfig(
             responseModalities = listOf("AUDIO"),
             speechConfig = SpeechConfig(
-              multiSpeakerVoiceConfig = MultiSpeakerVoiceConfig(speakerVoiceConfigs)
-            )
-          )
+              multiSpeakerVoiceConfig = MultiSpeakerVoiceConfig(speakerVoiceConfigs),
+            ),
+          ),
         )
 
         try {
@@ -155,7 +159,7 @@ public class GenerationWorker(
           val audioData = response.candidates.firstOrNull()?.content?.parts?.firstOrNull()?.inlineData?.data
             ?: throw Exception("No audio data in response")
 
-          val chunkFile = File(outputDir, "ch_${chapterIdx}_chunk_${chunkIdx}.raw")
+          val chunkFile = File(outputDir, "ch_${chapterIdx}_chunk_$chunkIdx.raw")
           FileOutputStream(chunkFile).use { fos ->
             fos.write(Base64.decode(audioData, Base64.DEFAULT))
           }
@@ -168,8 +172,8 @@ public class GenerationWorker(
               chapterIndex = chapterIdx,
               chunkIndex = chunkIdx + 1,
               totalChunks = totalChunks,
-              lastUpdated = Instant.now()
-            )
+              lastUpdated = Instant.now(),
+            ),
           )
         } catch (e: Exception) {
           Logger.e(e, "Error generating audio for chapter $chapterIdx chunk $chunkIdx")
@@ -179,7 +183,7 @@ public class GenerationWorker(
 
       // Merge chunks into chapter WAV
       if (chapterChunks.isNotEmpty()) {
-        val chapterFile = File(outputDir, "chapter_${chapterIdx}.wav")
+        val chapterFile = File(outputDir, "chapter_$chapterIdx.wav")
         mergePcmFilesToWav(chapterChunks, chapterFile)
         chapterChunks.forEach { it.delete() }
       }
@@ -189,7 +193,10 @@ public class GenerationWorker(
     return Result.success()
   }
 
-  private fun mergePcmFilesToWav(pcmFiles: List<File>, outputFile: File) {
+  private fun mergePcmFilesToWav(
+    pcmFiles: List<File>,
+    outputFile: File,
+  ) {
     // Basic WAV header for 24kHz, 16-bit, mono PCM (common Gemini TTS output)
     val sampleRate = 24000
     val channels = 1
@@ -233,21 +240,24 @@ public class GenerationWorker(
     (value and 0xff).toByte(),
     (value shr 8 and 0xff).toByte(),
     (value shr 16 and 0xff).toByte(),
-    (value shr 24 and 0xff).toByte()
+    (value shr 24 and 0xff).toByte(),
   )
 
   private fun shortToByteArray(value: Short): ByteArray = byteArrayOf(
     (value.toInt() and 0xff).toByte(),
-    (value.toInt() shr 8 and 0xff).toByte()
+    (value.toInt() shr 8 and 0xff).toByte(),
   )
 
-  private suspend fun updateStatus(bookId: BookId, status: GenerationStatus) {
+  private suspend fun updateStatus(
+    bookId: BookId,
+    status: GenerationStatus,
+  ) {
     generationRepository.insert(
       GenerationProgress(
         bookId = bookId,
         status = status,
-        lastUpdated = Instant.now()
-      )
+        lastUpdated = Instant.now(),
+      ),
     )
   }
 
@@ -265,11 +275,14 @@ public class GenerationWorker(
     private val apiKeyStore: DataStore<String>,
     private val modelStore: DataStore<String>,
   ) : WorkerCreator {
-    override fun create(context: Context, parameters: WorkerParameters): ListenableWorker {
+    override fun create(
+      context: Context,
+      parameters: WorkerParameters,
+    ): ListenableWorker {
       return GenerationWorker(
         context, parameters, characterRepository, voiceMappingRepository,
         wordPronunciationRepository, audioGenerationProgressRepository,
-        generationRepository, geminiApi, apiKeyStore, modelStore
+        generationRepository, geminiApi, apiKeyStore, modelStore,
       )
     }
   }
