@@ -2,13 +2,13 @@ package voice.core.data.repo.internals
 
 import android.content.Context
 import androidx.room.Room
-import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.Provides
 import dev.zacsweers.metro.SingleIn
 import voice.core.data.repo.internals.dao.AnalysisProgressDao
+import voice.core.data.repo.internals.dao.AudioGenerationProgressDao
 import voice.core.data.repo.internals.dao.BookContentDao
 import voice.core.data.repo.internals.dao.BookmarkDao
 import voice.core.data.repo.internals.dao.ChapterDao
@@ -22,43 +22,45 @@ import voice.core.data.repo.internals.dao.WordPronunciationDao
 public interface PersistenceModule {
 
   @Provides
-  private fun chapterDao(appDb: AppDb): ChapterDao = appDb.chapterDao()
-
-  @Provides
-  private fun bookContentDao(appDb: AppDb): BookContentDao = appDb.bookContentDao()
-
-  @Provides
-  private fun bookmarkDao(appDb: AppDb): BookmarkDao = appDb.bookmarkDao()
-
-  @Provides
-  private fun recentBookSearchDao(appDb: AppDb): RecentBookSearchDao = appDb.recentBookSearchDao()
-
-  @Provides
-  private fun characterDao(appDb: AppDb): CharacterDao = appDb.characterDao()
-
-  @Provides
-  private fun voiceMappingDao(appDb: AppDb): VoiceMappingDao = appDb.voiceMappingDao()
-
-  @Provides
-  private fun wordPronunciationDao(appDb: AppDb): WordPronunciationDao = appDb.wordPronunciationDao()
-
-  @Provides
-  private fun generationProgressDao(appDb: AppDb): GenerationProgressDao = appDb.generationProgressDao()
-
-  @Provides
-  private fun analysisProgressDao(appDb: AppDb): AnalysisProgressDao = appDb.analysisProgressDao()
-
-  @Provides
   @SingleIn(AppScope::class)
-  private fun appDb(
+  public fun provideAppDb(
     context: Context,
-    migrations: Set<@JvmSuppressWildcards Migration>,
+    migrations: Set<Migration>,
   ): AppDb {
-    return Room.databaseBuilder(context, AppDb::class.java, AppDb.DATABASE_NAME)
-      .addMigrations(*migrations.toTypedArray())
-      .build()
+    return Room.databaseBuilder(
+      context,
+      AppDb::class.java,
+      AppDb.DATABASE_NAME,
+    ).addMigrations(*migrations.toTypedArray()).build()
   }
 
   @Provides
-  private fun bindRoomDatabase(appDb: AppDb): RoomDatabase = appDb
+  public fun provideChapterDao(db: AppDb): ChapterDao = db.chapterDao()
+
+  @Provides
+  public fun provideBookContentDao(db: AppDb): BookContentDao = db.bookContentDao()
+
+  @Provides
+  public fun provideBookmarkDao(db: AppDb): BookmarkDao = db.bookmarkDao()
+
+  @Provides
+  public fun provideRecentBookSearchDao(db: AppDb): RecentBookSearchDao = db.recentBookSearchDao()
+
+  @Provides
+  public fun provideCharacterDao(db: AppDb): CharacterDao = db.characterDao()
+
+  @Provides
+  public fun provideVoiceMappingDao(db: AppDb): VoiceMappingDao = db.voiceMappingDao()
+
+  @Provides
+  public fun provideWordPronunciationDao(db: AppDb): WordPronunciationDao = db.wordPronunciationDao()
+
+  @Provides
+  public fun provideGenerationProgressDao(db: AppDb): GenerationProgressDao = db.generationProgressDao()
+
+  @Provides
+  public fun provideAnalysisProgressDao(db: AppDb): AnalysisProgressDao = db.analysisProgressDao()
+
+  @Provides
+  public fun provideAudioGenerationProgressDao(db: AppDb): AudioGenerationProgressDao = db.audioGenerationProgressDao()
 }

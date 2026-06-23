@@ -24,6 +24,7 @@ class VoiceMapperTest {
     val mapping = VoiceMapper.mapToVoice(character)
     assertEquals("Kore", mapping.voiceName)
     assertEquals(1.0f, mapping.pitch)
+    assertEquals(1.0f, mapping.speed)
   }
 
   @Test
@@ -39,6 +40,8 @@ class VoiceMapperTest {
     )
     val mapping = VoiceMapper.mapToVoice(character)
     assertEquals("Aoide", mapping.voiceName)
+    assertEquals(0.95f, mapping.speed)
+    assertEquals(0.9f, mapping.energy)
   }
 
   @Test
@@ -69,6 +72,8 @@ class VoiceMapperTest {
     )
     val mapping = VoiceMapper.mapToVoice(character)
     assertEquals("Puck", mapping.voiceName)
+    assertEquals(1.05f, mapping.speed)
+    assertEquals(1.1f, mapping.energy)
   }
 
   @Test
@@ -84,6 +89,8 @@ class VoiceMapperTest {
     )
     val mapping = VoiceMapper.mapToVoice(character)
     assertEquals("Puck", mapping.voiceName)
+    assertEquals(1.05f, mapping.pitch)
+    assertEquals(1.02f, mapping.speed)
   }
 
   @Test
@@ -99,6 +106,26 @@ class VoiceMapperTest {
     )
     val mapping = VoiceMapper.mapToVoice(character)
     assertEquals("Fenrir", mapping.voiceName)
+    assertEquals(0.9f, mapping.speed, 0.001f)
+    assertEquals(0.95f, mapping.pitch, 0.001f)
+  }
+
+  @Test
+  fun `test narrator mapping`() {
+    val character = Character(
+      id = Uuid.random(),
+      bookId = BookId("test"),
+      name = "Narrator",
+      gender = null,
+      age = null,
+      energy = null,
+      personality = null,
+    )
+    val mapping = VoiceMapper.mapToVoice(character)
+    assertEquals("Charon", mapping.voiceName)
+    assertEquals(1.0f, mapping.speed)
+    assertEquals(1.0f, mapping.pitch)
+    assertEquals(1.0f, mapping.energy)
   }
 
   @Test
@@ -129,6 +156,6 @@ class VoiceMapperTest {
     val mapping2 = VoiceMapper.mapToVoice(char2, listOf(mapping1))
     assertEquals("Kore", mapping2.voiceName)
     assertNotEquals(mapping1.pitch, mapping2.pitch)
-    assertEquals(1.1f, mapping2.pitch)
+    assertEquals(1.05f, mapping2.pitch)
   }
 }

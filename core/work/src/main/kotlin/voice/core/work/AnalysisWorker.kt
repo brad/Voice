@@ -132,7 +132,23 @@ public class AnalysisWorker(
             energy = it.energy,
             personality = it.personality,
           )
+        }.toMutableList()
+
+        // Ensure Narrator is present
+        if (newCharacters.none { it.name.lowercase() == "narrator" }) {
+          newCharacters.add(
+            Character(
+              id = Uuid.random(),
+              bookId = bookId,
+              name = "Narrator",
+              gender = "Neutral",
+              age = "Adult",
+              energy = "Medium",
+              personality = "Objective",
+            ),
+          )
         }
+
         characterRepository.insertAll(newCharacters)
         currentCharacters = newCharacters
 
