@@ -17,7 +17,7 @@ class VoiceMapperTest {
       gender = "Female",
       age = "Adult",
       energy = "Medium",
-      personality = "Kind"
+      personality = "Kind",
     )
     val mapping = VoiceMapper.mapToVoice(character)
     assertEquals("Kore", mapping.voiceName)
@@ -32,7 +32,7 @@ class VoiceMapperTest {
       gender = "Female",
       age = "Adult",
       energy = "Low",
-      personality = "Calm"
+      personality = "Calm",
     )
     val mapping = VoiceMapper.mapToVoice(character)
     assertEquals("Aoide", mapping.voiceName)
@@ -47,7 +47,7 @@ class VoiceMapperTest {
       gender = "Male",
       age = "Adult",
       energy = "Medium",
-      personality = "Strong"
+      personality = "Strong",
     )
     val mapping = VoiceMapper.mapToVoice(character)
     assertEquals("Charon", mapping.voiceName)
@@ -62,7 +62,7 @@ class VoiceMapperTest {
       gender = "Male",
       age = "Adult",
       energy = "High",
-      personality = "Excited"
+      personality = "Excited",
     )
     val mapping = VoiceMapper.mapToVoice(character)
     assertEquals("Puck", mapping.voiceName)
@@ -77,7 +77,7 @@ class VoiceMapperTest {
       gender = "Male",
       age = "Child",
       energy = "Medium",
-      personality = "Playful"
+      personality = "Playful",
     )
     val mapping = VoiceMapper.mapToVoice(character)
     assertEquals("Puck", mapping.voiceName)
@@ -92,7 +92,7 @@ class VoiceMapperTest {
       gender = "Male",
       age = "Elderly",
       energy = "Low",
-      personality = "Wise"
+      personality = "Wise",
     )
     val mapping = VoiceMapper.mapToVoice(character)
     assertEquals("Fenrir", mapping.voiceName)

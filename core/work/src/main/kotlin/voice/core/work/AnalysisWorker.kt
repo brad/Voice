@@ -155,7 +155,10 @@ public class AnalysisWorker(
     return Result.success()
   }
 
-  private suspend fun updateStatus(bookId: BookId, status: GenerationStatus) {
+  private suspend fun updateStatus(
+    bookId: BookId,
+    status: GenerationStatus,
+  ) {
     generationRepository.insert(
       GenerationProgress(
         bookId = bookId,
