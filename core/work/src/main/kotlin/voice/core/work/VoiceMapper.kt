@@ -12,7 +12,10 @@ internal object VoiceMapper {
   private const val VOICE_CHARON = "Charon"
   private const val VOICE_FENRIR = "Fenrir"
 
-  fun mapToVoice(character: Character): VoiceMapping {
+  fun mapToVoice(
+    character: Character,
+    existingMappings: List<VoiceMapping> = emptyList(),
+  ): VoiceMapping {
     val gender = character.gender?.lowercase() ?: "unknown"
     val age = character.age?.lowercase() ?: "adult"
     val energy = character.energy?.lowercase() ?: "medium"
@@ -40,12 +43,22 @@ internal object VoiceMapper {
       }
     }
 
+    val usageCount = existingMappings.count { it.voiceName == voiceName }
+    val pitch = when (usageCount % 5) {
+      0 -> 1.0f
+      1 -> 1.1f
+      2 -> 0.9f
+      3 -> 1.05f
+      4 -> 0.95f
+      else -> 1.0f
+    }
+
     return VoiceMapping(
       id = Uuid.random(),
       characterId = character.id,
       voiceName = voiceName,
       speed = 1.0f,
-      pitch = 1.0f,
+      pitch = pitch,
       energy = 1.0f,
     )
   }

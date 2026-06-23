@@ -20,6 +20,7 @@ import voice.core.data.repo.AnalysisProgressRepository
 import voice.core.data.repo.CharacterRepository
 import voice.core.data.repo.GenerationRepository
 import voice.core.data.repo.VoiceMappingRepository
+import voice.core.data.repo.WordPronunciationRepository
 import voice.core.gemini.GeminiApi
 
 @RunWith(RobolectricTestRunner::class)
@@ -30,6 +31,7 @@ class AnalysisWorkerTest {
   private val analysisProgressRepository: AnalysisProgressRepository = mockk(relaxed = true)
   private val generationRepository: GenerationRepository = mockk(relaxed = true)
   private val voiceMappingRepository: VoiceMappingRepository = mockk(relaxed = true)
+  private val wordPronunciationRepository: WordPronunciationRepository = mockk(relaxed = true)
   private val geminiApi: GeminiApi = mockk()
   private val apiKeyStore: DataStore<String> = mockk()
   private val modelStore: DataStore<String> = mockk()
@@ -57,6 +59,7 @@ class AnalysisWorkerTest {
             analysisProgressRepository,
             generationRepository,
             voiceMappingRepository,
+            wordPronunciationRepository,
             geminiApi,
             apiKeyStore,
             modelStore,
@@ -85,6 +88,7 @@ class AnalysisWorkerTest {
             analysisProgressRepository,
             generationRepository,
             voiceMappingRepository,
+            wordPronunciationRepository,
             geminiApi,
             apiKeyStore,
             modelStore,
