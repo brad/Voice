@@ -16,20 +16,24 @@ internal object VoiceMapper {
     character: Character,
     existingMappings: List<VoiceMapping> = emptyList(),
   ): VoiceMapping {
+    val name = character.name.lowercase()
     val gender = character.gender?.lowercase() ?: "unknown"
     val age = character.age?.lowercase() ?: "adult"
-    val energy = character.energy?.lowercase() ?: "medium"
+    val energyTrait = character.energy?.lowercase() ?: "medium"
+
+    val isNarrator = name == "narrator"
 
     val voiceName = when {
+      isNarrator -> VOICE_CHARON
       gender.contains("female") || gender.contains("woman") || gender.contains("girl") -> {
         when {
-          energy.contains("low") -> VOICE_AOIDE
+          energyTrait.contains("low") -> VOICE_AOIDE
           else -> VOICE_KORE
         }
       }
       gender.contains("male") || gender.contains("man") || gender.contains("boy") -> {
         when {
-          age.contains("child") || age.contains("teen") || energy.contains("high") -> VOICE_PUCK
+          age.contains("child") || age.contains("teen") || energyTrait.contains("high") -> VOICE_PUCK
           age.contains("elder") || age.contains("old") -> VOICE_FENRIR
           else -> VOICE_CHARON
         }
@@ -37,29 +41,61 @@ internal object VoiceMapper {
       else -> {
         // Unknown or non-binary
         when {
-          energy.contains("high") -> VOICE_PUCK
+          energyTrait.contains("high") -> VOICE_PUCK
           else -> VOICE_KORE
         }
       }
     }
 
     val usageCount = existingMappings.count { it.voiceName == voiceName }
-    val pitch = when (usageCount % 5) {
+
+    // Vary pitch based on usage count to differentiate characters sharing the same voice
+    val pitchBase = when (usageCount % 5) {
       0 -> 1.0f
-      1 -> 1.1f
-      2 -> 0.9f
-      3 -> 1.05f
-      4 -> 0.95f
+      1 -> 1.05f
+      2 -> 0.95f
+      3 -> 1.02f
+      4 -> 0.98f
       else -> 1.0f
+    }
+
+    var speed = 1.0f
+    var energy = 1.0f
+    var pitch = pitchBase
+
+    if (!isNarrator) {
+      // Apply energy traits
+      when {
+        energyTrait.contains("high") -> {
+          speed += 0.05f
+          energy += 0.1f
+        }
+        energyTrait.contains("low") -> {
+          speed -= 0.05f
+          energy -= 0.1f
+        }
+      }
+
+      // Apply age traits
+      when {
+        age.contains("child") || age.contains("teen") -> {
+          pitch += 0.05f
+          speed += 0.02f
+        }
+        age.contains("elder") || age.contains("old") -> {
+          speed -= 0.05f
+          pitch -= 0.05f
+        }
+      }
     }
 
     return VoiceMapping(
       id = Uuid.random(),
       characterId = character.id,
       voiceName = voiceName,
-      speed = 1.0f,
-      pitch = pitch,
-      energy = 1.0f,
+      speed = speed.coerceIn(0.5f, 2.0f),
+      pitch = pitch.coerceIn(0.5f, 2.0f),
+      energy = energy.coerceIn(0.5f, 2.0f),
     )
   }
 }

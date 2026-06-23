@@ -46,7 +46,21 @@ public data class GenerationConfig(
 )
 
 @Serializable
-public data class SpeechConfig(val voiceConfig: VoiceConfig)
+public data class SpeechConfig(
+  val voiceConfig: VoiceConfig? = null,
+  val multiSpeakerVoiceConfig: MultiSpeakerVoiceConfig? = null,
+)
+
+@Serializable
+public data class MultiSpeakerVoiceConfig(
+  val speakerVoiceConfigs: List<SpeakerVoiceConfig>,
+)
+
+@Serializable
+public data class SpeakerVoiceConfig(
+  val speaker: String,
+  val voiceConfig: VoiceConfig,
+)
 
 @Serializable
 public data class VoiceConfig(val prebuiltVoiceConfig: PrebuiltVoiceConfig)
