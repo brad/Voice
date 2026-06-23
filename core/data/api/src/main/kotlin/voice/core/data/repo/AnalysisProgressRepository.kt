@@ -1,8 +1,8 @@
 package voice.core.data.repo
 
 import kotlinx.coroutines.flow.Flow
-import voice.core.data.BookId
 import voice.core.data.AnalysisProgress
+import voice.core.data.BookId
 
 public interface AnalysisProgressRepository {
   public suspend fun progressForBook(bookId: BookId): AnalysisProgress?

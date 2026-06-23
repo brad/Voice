@@ -4,8 +4,8 @@ import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.SingleIn
 import kotlinx.coroutines.flow.Flow
-import voice.core.data.BookId
 import voice.core.data.AnalysisProgress
+import voice.core.data.BookId
 import voice.core.data.repo.internals.dao.AnalysisProgressDao
 
 @SingleIn(AppScope::class)

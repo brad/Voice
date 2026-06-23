@@ -5,8 +5,8 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
-import voice.core.data.BookId
 import voice.core.data.AnalysisProgress
+import voice.core.data.BookId
 
 @Dao
 public interface AnalysisProgressDao {
