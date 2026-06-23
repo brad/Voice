@@ -3,6 +3,7 @@ package voice.core.data.repo.internals
 import android.content.Context
 import androidx.room.Room
 import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.Provides
 import dev.zacsweers.metro.SingleIn
 import voice.core.data.repo.internals.dao.AnalysisProgressDao
@@ -16,8 +17,8 @@ import voice.core.data.repo.internals.dao.RecentBookSearchDao
 import voice.core.data.repo.internals.dao.VoiceMappingDao
 import voice.core.data.repo.internals.dao.WordPronunciationDao
 
-@dev.zacsweers.metro.Module(AppScope::class)
-public object PersistenceModule {
+@ContributesTo(AppScope::class)
+public interface PersistenceModule {
 
   @Provides
   @SingleIn(AppScope::class)

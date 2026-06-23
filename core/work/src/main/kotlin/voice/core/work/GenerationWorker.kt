@@ -108,12 +108,26 @@ public class GenerationWorker(
         // In a real implementation, we would use Gemini to label the speakers in the text
         // For now, we'll use a simplified approach: wrap text in speaker labels
         // and include mappings in the config.
-        val speakerPrompt = """
-          TTS the following text with appropriate speaker assignments.
-          Characters: ${characters.joinToString(", ") { it.name }}
+        val characterInstructions = characters.joinToString("\n") { char ->
+          val mapping = mappings.find { it.characterId == char.id }
+          val tuning = if (mapping != null) {
+            " (Speed: ${mapping.speed}, Pitch: ${mapping.pitch}, Energy: ${mapping.energy})"
+          } else ""
+          "- ${char.name}: ${char.personality ?: "Narrator"}$tuning"
+        }
 
-          Text:
-          Narrator: ${chunkText}
+        val pronunciationInstructions = if (pronunciations.isNotEmpty()) {
+          "\n\nPronunciation Guide:\n" + pronunciations.joinToString("\n") { "${it.word} -> ${it.phonetic}" }
+        } else ""
+
+        val speakerPrompt = """
+          Perform a multi-speaker TTS generation for the following book excerpt.
+          Identify the speakers (including the Narrator) and assign them the appropriate voices from the configuration.
+          Character Profiles and Voice Tuning:
+          $characterInstructions$pronunciationInstructions
+
+          Excerpt:
+          $chunkText
         """.trimIndent()
 
         val speakerVoiceConfigs = mappings.map { mapping ->

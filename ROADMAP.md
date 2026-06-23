@@ -18,11 +18,11 @@ This roadmap outlines the steps to implement auto-builds in CI and a feature to 
     - Persists character data and default generation settings in the Room schema introduced above.
 
 ## Phase 3: Character & Voice Intelligence
-- [ ] **Voice Mapping Logic**: Implement an intelligent mapping system:
+- [x] **Voice Mapping Logic**: Implement an intelligent mapping system:
     - Assign pre-built voices (Kore, Aoide, etc.) based on gender/age.
     - Implement "tuning" logic to vary speed, pitch, or energy for reused voices.
-- [ ] **Generation Settings Defaults**: Extend analysis output so it pre-populates reasonable defaults for generation settings such as character voice assignments, custom word pronunciations, and other tuning controls before generation starts.
-- [ ] **Generation Worker**: Implement a resumable background worker that:
+- [x] **Generation Settings Defaults**: Extend analysis output so it pre-populates reasonable defaults for generation settings such as character voice assignments, custom word pronunciations, and other tuning controls before generation starts.
+- [x] **Generation Worker**: Implement a resumable background worker that:
     - Maps characters to specific Gemini pre-built voices.
     - Applies "tuning" (via prompts or configuration) to match character traits.
     - Handles chunked TTS generation to avoid API limits.
