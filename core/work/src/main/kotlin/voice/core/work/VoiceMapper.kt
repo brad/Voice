@@ -12,7 +12,10 @@ internal object VoiceMapper {
   private const val VOICE_CHARON = "Charon"
   private const val VOICE_FENRIR = "Fenrir"
 
-  fun mapToVoice(character: Character, existingMappings: List<VoiceMapping> = emptyList()): VoiceMapping {
+  fun mapToVoice(
+    character: Character,
+    existingMappings: List<VoiceMapping> = emptyList(),
+  ): VoiceMapping {
     val gender = character.gender?.lowercase() ?: "unknown"
     val age = character.age?.lowercase() ?: "adult"
     val energy = character.energy?.lowercase() ?: "medium"
