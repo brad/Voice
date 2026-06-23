@@ -2,6 +2,7 @@ package voice.core.data.repo.internals
 
 import android.content.Context
 import androidx.room.Room
+import androidx.room.migration.Migration
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.Provides
@@ -22,12 +23,15 @@ public interface PersistenceModule {
 
   @Provides
   @SingleIn(AppScope::class)
-  public fun provideAppDb(context: Context): AppDb {
+  public fun provideAppDb(
+    context: Context,
+    migrations: Set<Migration>,
+  ): AppDb {
     return Room.databaseBuilder(
       context,
       AppDb::class.java,
       AppDb.DATABASE_NAME,
-    ).build()
+    ).addMigrations(*migrations.toTypedArray()).build()
   }
 
   @Provides
