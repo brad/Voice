@@ -28,6 +28,6 @@ public class AnalysisWorkerCreator(
     analysisProgressRepository,
     geminiApi,
     apiKeyStore,
-    modelStore
+    modelStore,
   )
 }

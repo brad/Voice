@@ -7,6 +7,7 @@ import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
 import androidx.work.testing.TestListenableWorkerBuilder
 import androidx.work.workDataOf
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
@@ -18,7 +19,6 @@ import org.robolectric.RobolectricTestRunner
 import voice.core.data.repo.AnalysisProgressRepository
 import voice.core.data.repo.CharacterRepository
 import voice.core.gemini.GeminiApi
-import io.mockk.every
 
 @RunWith(RobolectricTestRunner::class)
 class AnalysisWorkerTest {
@@ -41,8 +41,20 @@ class AnalysisWorkerTest {
   fun `test worker failure when no bookId`() = runTest {
     val worker = TestListenableWorkerBuilder<AnalysisWorker>(context)
       .setWorkerFactory(object : androidx.work.WorkerFactory() {
-        override fun createWorker(appContext: Context, workerClassName: String, workerParameters: WorkerParameters): ListenableWorker? {
-          return AnalysisWorker(appContext, workerParameters, characterRepository, analysisProgressRepository, geminiApi, apiKeyStore, modelStore)
+        override fun createWorker(
+          appContext: Context,
+          workerClassName: String,
+          workerParameters: WorkerParameters,
+        ): ListenableWorker? {
+          return AnalysisWorker(
+            appContext,
+            workerParameters,
+            characterRepository,
+            analysisProgressRepository,
+            geminiApi,
+            apiKeyStore,
+            modelStore,
+          )
         }
       })
       .build()
@@ -55,17 +67,29 @@ class AnalysisWorkerTest {
   fun `test worker failure when book not found`() = runTest {
     val worker = TestListenableWorkerBuilder<AnalysisWorker>(context)
       .setWorkerFactory(object : androidx.work.WorkerFactory() {
-        override fun createWorker(appContext: Context, workerClassName: String, workerParameters: WorkerParameters): ListenableWorker? {
-          return AnalysisWorker(appContext, workerParameters, characterRepository, analysisProgressRepository, geminiApi, apiKeyStore, modelStore)
+        override fun createWorker(
+          appContext: Context,
+          workerClassName: String,
+          workerParameters: WorkerParameters,
+        ): ListenableWorker? {
+          return AnalysisWorker(
+            appContext,
+            workerParameters,
+            characterRepository,
+            analysisProgressRepository,
+            geminiApi,
+            apiKeyStore,
+            modelStore,
+          )
         }
       })
       .setInputData(workDataOf(AnalysisWorker.KEY_BOOK_ID to "content://non.existent/book.epub"))
       .build()
 
     val result = try {
-       worker.doWork()
+      worker.doWork()
     } catch (e: Exception) {
-       ListenableWorker.Result.failure()
+      ListenableWorker.Result.failure()
     }
     assertEquals(ListenableWorker.Result.failure(), result)
   }

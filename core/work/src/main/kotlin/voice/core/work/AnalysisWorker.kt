@@ -69,21 +69,23 @@ public class AnalysisWorker(
 
     for (i in startChunkIndex until totalChunks) {
       val chunk = chunks[i]
-      val knownCharactersJson = Json.encodeToString(currentCharacters.map {
-        SerializableCharacter(it.name, it.gender, it.age, it.energy, it.personality)
-      })
+      val knownCharactersJson = Json.encodeToString(
+        currentCharacters.map {
+          SerializableCharacter(it.name, it.gender, it.age, it.energy, it.personality)
+        },
+      )
 
       val prompt = GeminiAnalysisPrompts.INCREMENTAL_CHARACTER_EXTRACTION_PROMPT.format(
         knownCharactersJson,
-        chunk
+        chunk,
       )
 
       val request = GenerateContentRequest(
         contents = listOf(Content(parts = listOf(Part(text = prompt)))),
         generationConfig = GenerationConfig(
           responseMimeType = "application/json",
-          responseSchema = GeminiAnalysisPrompts.CHARACTER_EXTRACTION_SCHEMA
-        )
+          responseSchema = GeminiAnalysisPrompts.CHARACTER_EXTRACTION_SCHEMA,
+        ),
       )
 
       try {
@@ -102,7 +104,7 @@ public class AnalysisWorker(
             gender = it.gender,
             age = it.age,
             energy = it.energy,
-            personality = it.personality
+            personality = it.personality,
           )
         }
         characterRepository.insertAll(newCharacters)
@@ -113,8 +115,8 @@ public class AnalysisWorker(
             bookId = bookId,
             currentChunkIndex = i + 1,
             totalChunks = totalChunks,
-            lastUpdated = Instant.now()
-          )
+            lastUpdated = Instant.now(),
+          ),
         )
       } catch (e: Exception) {
         Logger.e(e, "Error during character extraction for chunk $i")
@@ -135,9 +137,7 @@ public class AnalysisWorker(
   )
 
   @Serializable
-  private data class ExtractedCharacters(
-    val characters: List<SerializableCharacter>
-  )
+  private data class ExtractedCharacters(val characters: List<SerializableCharacter>)
 
   public companion object {
     public const val KEY_BOOK_ID: String = "book_id"
@@ -150,7 +150,10 @@ public class AnalysisWorker(
     private val apiKeyStore: DataStore<String>,
     private val modelStore: DataStore<String>,
   ) : WorkerCreator {
-    override fun create(context: Context, parameters: WorkerParameters): ListenableWorker {
+    override fun create(
+      context: Context,
+      parameters: WorkerParameters,
+    ): ListenableWorker {
       return AnalysisWorker(
         context,
         parameters,
@@ -158,7 +161,7 @@ public class AnalysisWorker(
         analysisProgressRepository,
         geminiApi,
         apiKeyStore,
-        modelStore
+        modelStore,
       )
     }
   }
