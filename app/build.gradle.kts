@@ -178,6 +178,7 @@ dependencies {
   implementation(projects.features.bookmark)
   implementation(projects.features.widget)
   implementation(projects.core.work)
+  implementation(projects.core.gemini)
 
   implementation(libs.appCompat)
   implementation(libs.lifecycle.compose)

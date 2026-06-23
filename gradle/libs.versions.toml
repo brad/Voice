@@ -23,6 +23,7 @@ androidx-lifecycle = "2.11.0"
 [libraries]
 epublib = { module = "com.positiondev.epublib:epublib-core", version.ref = "epublib" }
 work-runtime = { module = "androidx.work:work-runtime-ktx", version.ref = "work" }
+work-testing = { module = "androidx.work:work-testing", version.ref = "work" }
 androidPluginForGradle = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 junit = "junit:junit:4.13.2"
 materialKolor = "com.materialkolor:material-kolor:5.0.0-alpha07"

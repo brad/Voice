@@ -3,5 +3,7 @@ plugins {
 }
 
 dependencies {
-  implementation(libs.epublib)
+  implementation(libs.epublib) {
+    exclude(group = "xmlpull", module = "xmlpull")
+  }
 }

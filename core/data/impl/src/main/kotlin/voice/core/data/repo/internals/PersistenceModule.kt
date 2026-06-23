@@ -8,6 +8,7 @@ import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.Provides
 import dev.zacsweers.metro.SingleIn
+import voice.core.data.repo.internals.dao.AnalysisProgressDao
 import voice.core.data.repo.internals.dao.BookContentDao
 import voice.core.data.repo.internals.dao.BookmarkDao
 import voice.core.data.repo.internals.dao.ChapterDao
@@ -43,6 +44,9 @@ public interface PersistenceModule {
 
   @Provides
   private fun generationProgressDao(appDb: AppDb): GenerationProgressDao = appDb.generationProgressDao()
+
+  @Provides
+  private fun analysisProgressDao(appDb: AppDb): AnalysisProgressDao = appDb.analysisProgressDao()
 
   @Provides
   @SingleIn(AppScope::class)

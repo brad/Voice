@@ -4,6 +4,7 @@ import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import voice.core.data.AnalysisProgress
 import voice.core.data.BookContent
 import voice.core.data.Bookmark
 import voice.core.data.Chapter
@@ -12,6 +13,7 @@ import voice.core.data.GenerationProgress
 import voice.core.data.RecentBookSearch
 import voice.core.data.VoiceMapping
 import voice.core.data.WordPronunciation
+import voice.core.data.repo.internals.dao.AnalysisProgressDao
 import voice.core.data.repo.internals.dao.BookContentDao
 import voice.core.data.repo.internals.dao.BookSearchFts
 import voice.core.data.repo.internals.dao.BookmarkDao
@@ -34,6 +36,7 @@ import voice.core.data.repo.internals.migrations.Migration56
     VoiceMapping::class,
     WordPronunciation::class,
     GenerationProgress::class,
+    AnalysisProgress::class,
   ],
   version = AppDb.VERSION,
   autoMigrations = [
@@ -45,6 +48,7 @@ import voice.core.data.repo.internals.migrations.Migration56
     AutoMigration(from = 57, to = 58),
     AutoMigration(from = 58, to = 59),
     AutoMigration(from = 59, to = 60),
+    AutoMigration(from = 60, to = 61),
   ],
 )
 @TypeConverters(Converters::class)
@@ -60,9 +64,10 @@ public abstract class AppDb : RoomDatabase() {
   public abstract fun voiceMappingDao(): VoiceMappingDao
   public abstract fun wordPronunciationDao(): WordPronunciationDao
   public abstract fun generationProgressDao(): GenerationProgressDao
+  public abstract fun analysisProgressDao(): AnalysisProgressDao
 
   internal companion object {
-    const val VERSION = 60
+    const val VERSION = 61
     const val DATABASE_NAME = "autoBookDB"
   }
 }

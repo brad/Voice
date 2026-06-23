@@ -16,7 +16,7 @@ public interface WorkModule {
 
   @Provides
   @SingleIn(AppScope::class)
-  public fun metroWorkerFactory(creators: Map<String, @JvmSuppressWildcards WorkerCreator> = emptyMap()): MetroWorkerFactory {
-    return MetroWorkerFactory(creators)
+  public fun metroWorkerFactory(creators: Set<@JvmSuppressWildcards WorkerCreatorWithClass> = emptySet()): MetroWorkerFactory {
+    return MetroWorkerFactory(creators.associate { it.workerClass.name to it.creator })
   }
 }
