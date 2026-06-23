@@ -21,6 +21,12 @@ This roadmap outlines the steps to implement auto-builds in CI and a feature to 
 - [x] **Voice Mapping Logic**: Implement an intelligent mapping system:
     - Assign pre-built voices (Kore, Aoide, etc.) based on gender/age.
     - Implement "tuning" logic to vary speed, pitch, or energy for reused voices.
+- [ ] **POV-aware Voice Assignment**: Refine analysis to identify and handle narrative point of view (POV) with high consistency.
+    - **First-Person POV**: Detect the POV character. The narrator voice should match the POV character but use a "storyteller" tuning (e.g., more measured, reflective, or formal) compared to their dialogue.
+    - **Third-Person Limited**: Identify the focal character. The narrator remains a distinct voice but should mirror the gender/tone of the focal character's perspective for that section.
+    - **Third-Person Omniscient**: Use a neutral, authoritative narrator voice (e.g., Charon/Fenrir) that is consistent across the entire book.
+    - **Multi-POV Handling**: Detect POV shifts between chapters or sections (common in modern fiction). Dynamically update the narrator's voice or tuning to match the current POV character while maintaining a recognizable "narrative" quality.
+    - **Consistency Logic**: Ensure that narrative voice decisions are stable across chunked analysis. If a character is established as the narrator, that choice must persist throughout the book.
 - [x] **Generation Settings Defaults**: Extend analysis output so it pre-populates reasonable defaults for generation settings such as character voice assignments, custom word pronunciations, and other tuning controls before generation starts.
 - [x] **Generation Worker**: Implement a resumable background worker that:
     - Maps characters to specific Gemini pre-built voices.
@@ -29,7 +35,10 @@ This roadmap outlines the steps to implement auto-builds in CI and a feature to 
     - Manages audio file storage and assembly.
 
 ## Phase 4: UI & Library Integration
-- [ ] **EPUB Import Flow**: Add an "Import EPUB" button to the library.
+- [x] **EPUB Import Flow**: Add an "Import EPUB" button to the library and trigger the analysis worker.
+- [ ] **Audiobook Generation Settings Refinement**:
+    - Consolidate Gemini API settings into a dedicated "Audiobook Generation" section.
+    - Replace free-text model selection with dropdowns populated by real model lists fetched from the Gemini API.
 - [ ] **Generation Settings UI**: Add a screen where users can review and tune generation settings before starting generation, including voice assignments, pronunciation overrides, and similar per-book controls.
 - [ ] **Generation Locking & Restart UX**: Disable generation settings once generation has started, and provide a clear way to discard in-progress generation and restart if the user wants to change locked settings.
 - [ ] **Progress Tracking UI**: Create a screen to monitor analysis and generation status (resumable).
