@@ -52,9 +52,7 @@ public data class SpeechConfig(
 )
 
 @Serializable
-public data class MultiSpeakerVoiceConfig(
-  val speakerVoiceConfigs: List<SpeakerVoiceConfig>,
-)
+public data class MultiSpeakerVoiceConfig(val speakerVoiceConfigs: List<SpeakerVoiceConfig>)
 
 @Serializable
 public data class SpeakerVoiceConfig(

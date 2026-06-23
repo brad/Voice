@@ -145,7 +145,7 @@ public class AnalysisWorker(
               age = "Adult",
               energy = "Medium",
               personality = "Objective",
-            )
+            ),
           )
         }
 
