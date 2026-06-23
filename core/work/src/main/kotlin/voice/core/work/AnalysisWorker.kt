@@ -12,8 +12,12 @@ import kotlinx.serialization.json.Json
 import voice.core.data.AnalysisProgress
 import voice.core.data.BookId
 import voice.core.data.Character
+import voice.core.data.GenerationProgress
+import voice.core.data.GenerationStatus
 import voice.core.data.repo.AnalysisProgressRepository
 import voice.core.data.repo.CharacterRepository
+import voice.core.data.repo.GenerationRepository
+import voice.core.data.repo.VoiceMappingRepository
 import voice.core.epub.EpubExtractor
 import voice.core.gemini.Content
 import voice.core.gemini.GeminiAnalysisPrompts
@@ -31,6 +35,8 @@ public class AnalysisWorker(
   params: WorkerParameters,
   private val characterRepository: CharacterRepository,
   private val analysisProgressRepository: AnalysisProgressRepository,
+  private val generationRepository: GenerationRepository,
+  private val voiceMappingRepository: VoiceMappingRepository,
   private val geminiApi: GeminiApi,
   private val apiKeyStore: DataStore<String>,
   private val modelStore: DataStore<String>,
@@ -46,6 +52,14 @@ public class AnalysisWorker(
       return Result.failure()
     }
 
+    generationRepository.insert(
+      GenerationProgress(
+        bookId = bookId,
+        status = GenerationStatus.ANALYZING,
+        lastUpdated = Instant.now(),
+      ),
+    )
+
     val model = modelStore.data.first().ifBlank { "gemini-1.5-flash" }
     val client = GeminiClient(geminiApi, apiKey)
 
@@ -53,9 +67,17 @@ public class AnalysisWorker(
       applicationContext.contentResolver.openInputStream(bookId.toUri())
     } catch (e: Exception) {
       null
-    } ?: return Result.failure()
+    } ?: run {
+      updateStatus(bookId, GenerationStatus.FAILED)
+      return Result.failure()
+    }
 
-    val epubData = EpubExtractor().extract(inputStream)
+    val epubData = try {
+      EpubExtractor().extract(inputStream)
+    } catch (e: Exception) {
+      updateStatus(bookId, GenerationStatus.FAILED)
+      return Result.failure()
+    }
     val fullText = epubData.chapters.joinToString("\n\n") { it.content }
 
     val chunkSize = 32000
@@ -110,6 +132,11 @@ public class AnalysisWorker(
         characterRepository.insertAll(newCharacters)
         currentCharacters = newCharacters
 
+        // Update voice mappings
+        voiceMappingRepository.deleteForBook(bookId)
+        val newMappings = newCharacters.map { VoiceMapper.mapToVoice(it) }
+        voiceMappingRepository.insertAll(newMappings)
+
         analysisProgressRepository.insert(
           AnalysisProgress(
             bookId = bookId,
@@ -124,7 +151,18 @@ public class AnalysisWorker(
       }
     }
 
+    updateStatus(bookId, GenerationStatus.ANALYZED)
     return Result.success()
+  }
+
+  private suspend fun updateStatus(bookId: BookId, status: GenerationStatus) {
+    generationRepository.insert(
+      GenerationProgress(
+        bookId = bookId,
+        status = status,
+        lastUpdated = Instant.now(),
+      ),
+    )
   }
 
   @Serializable
@@ -146,6 +184,8 @@ public class AnalysisWorker(
   public class Creator(
     private val characterRepository: CharacterRepository,
     private val analysisProgressRepository: AnalysisProgressRepository,
+    private val generationRepository: GenerationRepository,
+    private val voiceMappingRepository: VoiceMappingRepository,
     private val geminiApi: GeminiApi,
     private val apiKeyStore: DataStore<String>,
     private val modelStore: DataStore<String>,
@@ -159,6 +199,8 @@ public class AnalysisWorker(
         parameters,
         characterRepository,
         analysisProgressRepository,
+        generationRepository,
+        voiceMappingRepository,
         geminiApi,
         apiKeyStore,
         modelStore,
