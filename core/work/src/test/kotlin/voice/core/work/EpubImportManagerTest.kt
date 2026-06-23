@@ -30,7 +30,7 @@ class EpubImportManagerTest {
       workManager.enqueueUniqueWork(
         "epub-analysis-${bookId.value}",
         ExistingWorkPolicy.KEEP,
-        any(),
+        any<OneTimeWorkRequest>(),
       )
     }
     assertEquals(
