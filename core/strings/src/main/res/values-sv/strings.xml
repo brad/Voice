@@ -60,6 +60,7 @@
     <string name="library.category.current.title">Aktuella</string>
     <string name="library.category.not_started.title">Inte påbörjade ännu</string>
     <string name="library.empty.add_first_book">Lägg till din ljudboksmapp så att du kan börja lyssna!</string>
+    <string name="library.import_epub">Importera e-bok</string>
     <string name="library.folders.title">Ljudboksmappar</string>
     <string name="library.folders.moved.dialog.title">Ljudboksmappar flyttade</string>
     <string name="library.folders.moved.dialog.message">Du kan nu hantera ljudboksmappar i Inställningar.</string>

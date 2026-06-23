@@ -62,6 +62,7 @@
     <string name="library.category.current.title">Actual</string>
     <string name="library.category.not_started.title">Encara no s\'ha iniciat</string>
     <string name="library.empty.add_first_book">Afegiu la carpeta de l\'audiollibre perquè pugueu començar a escoltar-lo.</string>
+    <string name="library.import_epub">Importa un eBook</string>
     <string name="library.folders.title">Carpetes de l\'audiollibre</string>
     <string name="library.search.hint">Què busqueu?</string>
     <string name="library.storage_permission_bug.action">Autoritzeu el permís</string>

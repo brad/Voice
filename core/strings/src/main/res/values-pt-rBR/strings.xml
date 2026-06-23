@@ -63,6 +63,7 @@
     <string name="library.category.current.title">Actual</string>
     <string name="library.category.not_started.title">Não iniciado ainda</string>
     <string name="library.empty.add_first_book">Vamos adicionar uma pasta de Audiolivros para começar a ouvir!</string>
+    <string name="library.import_epub">Importar eBook</string>
     <string name="library.folders.title">Pastas de audiolivros</string>
     <string name="library.folders.moved.dialog.title">Pastas de audiolivros movidas</string>
     <string name="library.folders.moved.dialog.message">Agora você pode gerenciar as pastas de audiolivros nas Preferências.</string>

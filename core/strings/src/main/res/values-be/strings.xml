@@ -66,6 +66,7 @@
     <string name="library.category.current.title">Чытанае зараз</string>
     <string name="library.category.not_started.title">Яшчэ не пачатыя</string>
     <string name="library.empty.add_first_book">Давайце вызначым папку з аўдыякнігамі!</string>
+    <string name="library.import_epub">Імпарт электроннай кнігі</string>
     <string name="library.folders.title">Папкі з аўдыякнігамі</string>
     <string name="library.folders.moved.dialog.title">Папкі аўдыякніг перамешчаны</string>
     <string name="library.folders.moved.dialog.message">Цяпер вы можаце кіраваць папкамі аўдыякніг у наладах.</string>

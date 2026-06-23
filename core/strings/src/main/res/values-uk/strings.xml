@@ -66,6 +66,7 @@
     <string name="library.category.current.title">Поточні</string>
     <string name="library.category.not_started.title">Ще не початі</string>
     <string name="library.empty.add_first_book">Давайте додамо папку з аудіокнигами, щоб ви могли почати прослуховування!</string>
+    <string name="library.import_epub">Імпорт електронної книги</string>
     <string name="library.folders.title">Папки з аудіокнигами</string>
     <string name="library.folders.moved.dialog.title">Папки аудіокниг переміщено</string>
     <string name="library.folders.moved.dialog.message">Тепер папками аудіокниг можна керувати в налаштуваннях.</string>

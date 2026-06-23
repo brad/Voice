@@ -63,6 +63,7 @@
     <string name="library.category.current.title">Actual</string>
     <string name="library.category.not_started.title">Aún no comenzado</string>
     <string name="library.empty.add_first_book">¡Agreguemos tu carpeta de audiolibros para que puedas empezar a escuchar!</string>
+    <string name="library.import_epub">Importar eBook</string>
     <string name="library.folders.title">Directorios de audiolibros</string>
     <string name="library.folders.moved.dialog.title">Carpetas de audiolibros trasladadas</string>
     <string name="library.folders.moved.dialog.message">Ahora puedes gestionar las carpetas de audiolibros en Preferencias.</string>

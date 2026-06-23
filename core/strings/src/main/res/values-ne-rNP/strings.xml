@@ -55,6 +55,7 @@
     <string name="library.category.current.title">हालको</string>
     <string name="library.category.not_started.title">सुरु भएको छैन</string>
     <string name="library.empty.add_first_book">तपाईंको अडियोबूक फोल्डर थप्नुहोस् ताकि तपाईं सुन्न सुरु गर्न सक्नुहुन्छ!</string>
+    <string name="library.import_epub">ईबुक आयात गर्नुहोस्</string>
     <string name="library.folders.title">अडियोबूक फोल्डरहरू</string>
     <string name="library.search.hint">तपाईं के खोज्दै हुनुन्छ?</string>
     <string name="library.storage_permission_bug.action">अनुमति दिनुहोस्</string>

@@ -60,6 +60,7 @@
     <string name="library.category.current.title">Huidig</string>
     <string name="library.category.not_started.title">Nog nie begin nie</string>
     <string name="library.empty.add_first_book">Kom ons voeg jou audioboek gids sodat jy kan begin luister!</string>
+    <string name="library.import_epub">Voer eBoek in</string>
     <string name="library.folders.title">Klankboekgids</string>
     <string name="library.folders.moved.dialog.title">Oudioboekvouers geskuif</string>
     <string name="library.folders.moved.dialog.message">Jy kan nou oudioboekvouers in Voorkeure bestuur.</string>

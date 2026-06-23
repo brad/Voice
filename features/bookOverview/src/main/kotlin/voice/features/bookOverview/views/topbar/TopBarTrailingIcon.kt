@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
 import voice.features.bookOverview.views.BookFolderIcon
+import voice.features.bookOverview.views.ImportEpubIcon
 import voice.features.bookOverview.views.SettingsIcon
 
 @Composable
@@ -15,6 +16,7 @@ internal fun ColumnScope.TopBarTrailingIcon(
   showAddBookHint: Boolean,
   showFolderPickerIcon: Boolean,
   onBookFolderClick: () -> Unit,
+  onImportEpubClick: () -> Unit,
   onSettingsClick: () -> Unit,
 ) {
   AnimatedVisibility(
@@ -26,6 +28,7 @@ internal fun ColumnScope.TopBarTrailingIcon(
       if (showFolderPickerIcon) {
         BookFolderIcon(withHint = showAddBookHint, onClick = onBookFolderClick)
       }
+      ImportEpubIcon(onClick = onImportEpubClick)
       SettingsIcon(onSettingsClick)
     }
   }

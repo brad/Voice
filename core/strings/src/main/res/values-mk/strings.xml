@@ -60,6 +60,7 @@
     <string name="library.category.current.title">Тековни</string>
     <string name="library.category.not_started.title">Непочнати</string>
     <string name="library.empty.add_first_book">Ајде да ги додадеме вашите аудио книги за да почнете со слушање!</string>
+    <string name="library.import_epub">Увоз на е-книга</string>
     <string name="library.folders.title">Фолдери со аудио книги</string>
     <string name="library.folders.moved.dialog.title">Папките со аудиокниги се преместени</string>
     <string name="library.folders.moved.dialog.message">Сега можете да управувате со папките со аудиокниги во Поставки.</string>

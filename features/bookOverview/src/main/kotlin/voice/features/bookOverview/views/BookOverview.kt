@@ -1,5 +1,6 @@
 package voice.features.bookOverview.views
 
+import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
@@ -28,6 +29,7 @@ import androidx.compose.runtime.retain.retain
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -75,6 +77,7 @@ interface BookOverviewProvider {
 
 @Composable
 fun BookOverviewScreen(modifier: Modifier = Modifier) {
+  val context = LocalContext.current
   val bookGraph = retain<BookOverviewGraph> {
     rootGraphAs<BookOverviewGraph.Factory.Provider>()
       .bookOverviewGraphProviderFactory.create()
@@ -100,6 +103,21 @@ fun BookOverviewScreen(modifier: Modifier = Modifier) {
       }
     },
   )
+  val importEpubLauncher = rememberLauncherForActivityResult(
+    contract = ActivityResultContracts.OpenDocument(),
+    onResult = { uri ->
+      if (uri != null) {
+        try {
+          context.contentResolver.takePersistableUriPermission(
+            uri,
+            Intent.FLAG_GRANT_READ_URI_PERMISSION,
+          )
+        } catch (_: SecurityException) {
+        }
+        bookOverviewViewModel.onImportEpub(BookId(uri))
+      }
+    },
+  )
 
   var showBottomSheet by remember { mutableStateOf(false) }
   BookOverview(
@@ -109,6 +127,9 @@ fun BookOverviewScreen(modifier: Modifier = Modifier) {
     onBookLongClick = { bookId ->
       bottomSheetViewModel.bookSelected(bookId)
       showBottomSheet = true
+    },
+    onImportEpubClick = {
+      importEpubLauncher.launch(arrayOf("application/epub+zip"))
     },
     onBookFolderClick = bookOverviewViewModel::onBookFolderClick,
     onFolderPickerMovedDialogDismiss = bookOverviewViewModel::onFolderPickerMovedDialogDismiss,
@@ -173,6 +194,7 @@ internal fun BookOverview(
   onSettingsClick: () -> Unit,
   onBookClick: (BookId) -> Unit,
   onBookLongClick: (BookId) -> Unit,
+  onImportEpubClick: () -> Unit,
   onBookFolderClick: () -> Unit,
   onFolderPickerMovedDialogDismiss: () -> Unit,
   onPlayButtonClick: () -> Unit,
@@ -189,6 +211,7 @@ internal fun BookOverview(
       BookOverviewTopBar(
         viewState = viewState,
         onBookFolderClick = onBookFolderClick,
+        onImportEpubClick = onImportEpubClick,
         onSettingsClick = onSettingsClick,
         onActiveChange = onSearchActiveChange,
         onQueryChange = onSearchQueryChange,
@@ -288,6 +311,7 @@ fun BookOverviewPreview(
       onSettingsClick = {},
       onBookClick = {},
       onBookLongClick = {},
+      onImportEpubClick = {},
       onBookFolderClick = {},
       onFolderPickerMovedDialogDismiss = {},
       onPlayButtonClick = {},
