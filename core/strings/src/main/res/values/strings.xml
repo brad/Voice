@@ -292,4 +292,6 @@
     <string name="sleep_timer.dialog.title">Sweet dreams! 🌙</string>
     <!-- Sleep timer option and playback status for stopping at the end of a chapter. -->
     <string name="sleep_timer.end_of_chapter">End of Chapter</string>
+    <!-- Label for importing an eBook. -->
+    <string name="library_import_ebook_title">Import eBook</string>
 </resources>
