@@ -111,6 +111,8 @@
     <string name="library.category.not_started.title">Not started Yet</string>
     <!-- Library empty-state prompt shown before the first audiobook is added. -->
     <string name="library.empty.add_first_book">Let\'s add your audiobook folder so you can start listening!</string>
+    <!-- Content description and action label for importing an EPUB into the generation flow. -->
+    <string name="library.import_epub">Import EPUB</string>
     <!-- Title for screens and rows that manage audiobook folders. -->
     <string name="library.folders.title">Audiobook folders</string>
     <!-- Title for the one-time dialog shown from the old audiobook folders shortcut. -->

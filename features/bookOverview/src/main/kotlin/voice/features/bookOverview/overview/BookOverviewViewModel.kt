@@ -45,6 +45,7 @@ import voice.core.scanner.DeviceHasStoragePermissionBug
 import voice.core.scanner.MediaScanTrigger
 import voice.core.search.BookSearch
 import voice.core.ui.GridCount
+import voice.core.work.EpubImportManager
 import voice.features.bookOverview.di.BookOverviewScope
 import voice.features.bookOverview.search.BookSearchViewState
 import voice.navigation.Destination
@@ -71,6 +72,7 @@ class BookOverviewViewModel(
   private val search: BookSearch,
   private val contentRepo: BookContentRepo,
   private val deviceHasStoragePermissionBug: DeviceHasStoragePermissionBug,
+  private val epubImportManager: EpubImportManager,
   @FolderPickerInSettingsFeatureFlagQualifier
   private val folderPickerInSettingsFeatureFlag: FeatureFlag<Boolean>,
   @ExperimentalPlaybackPersistenceQualifier
@@ -257,6 +259,10 @@ class BookOverviewViewModel(
 
   fun onBookFolderClick() {
     dialog = BookOverviewViewState.Dialog.FolderPickerMovedToSettings
+  }
+
+  fun onImportEpub(bookId: BookId) {
+    epubImportManager.importEpub(bookId)
   }
 
   fun onFolderPickerMovedDialogDismiss() {

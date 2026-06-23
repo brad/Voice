@@ -33,6 +33,7 @@ import voice.core.scanner.DeviceHasStoragePermissionBug
 import voice.core.scanner.MediaScanTrigger
 import voice.core.search.BookSearch
 import voice.core.ui.GridCount
+import voice.core.work.EpubImportManager
 import voice.features.bookOverview.book
 import voice.navigation.Destination
 import voice.navigation.Navigator
@@ -80,6 +81,7 @@ class BookOverviewViewModelTest {
       deviceHasStoragePermissionBug = mockk<DeviceHasStoragePermissionBug> {
         every { hasBug } returns MutableStateFlow(false)
       },
+      epubImportManager = mockk(relaxed = true),
       folderPickerInSettingsFeatureFlag = MemoryFeatureFlag(false),
       experimentalPlaybackPersistenceFeatureFlag = MemoryFeatureFlag(true),
       kioskModeFeatureFlag = MemoryFeatureFlag(false),
@@ -145,6 +147,7 @@ class BookOverviewViewModelTest {
       deviceHasStoragePermissionBug = mockk<DeviceHasStoragePermissionBug> {
         every { hasBug } returns MutableStateFlow(false)
       },
+      epubImportManager = mockk(relaxed = true),
       folderPickerInSettingsFeatureFlag = MemoryFeatureFlag(false),
       experimentalPlaybackPersistenceFeatureFlag = MemoryFeatureFlag(false),
       kioskModeFeatureFlag = MemoryFeatureFlag(true),
@@ -279,6 +282,23 @@ class BookOverviewViewModelTest {
     }
   }
 
+  @Test
+  fun `import epub delegates to import manager`() {
+    val epubImportManager = mockk<EpubImportManager>(relaxed = true)
+    val bookId = BookId("content://books/book.epub")
+    val viewModel = viewModel(
+      folderPickerInSettingsFeatureFlag = MemoryFeatureFlag(false),
+      folderPickerMovedDialogShownStore = MemoryDataStore(false),
+      epubImportManager = epubImportManager,
+    )
+
+    viewModel.onImportEpub(bookId)
+
+    verify(exactly = 1) {
+      epubImportManager.importEpub(bookId)
+    }
+  }
+
   private fun BookOverviewViewState.currentBook(bookId: BookId): BookOverviewItemViewState {
     return books.getValue(BookOverviewCategory.CURRENT).getValue(bookId).value
   }
@@ -288,6 +308,7 @@ class BookOverviewViewModelTest {
     folderPickerMovedDialogShownStore: DataStore<Boolean>,
     navigator: Navigator = mockk(),
     appInfoProvider: AppInfoProvider = appInfoProvider(),
+    epubImportManager: EpubImportManager = mockk(relaxed = true),
   ): BookOverviewViewModel {
     return BookOverviewViewModel(
       repo = mockk<BookRepository> {
@@ -317,6 +338,7 @@ class BookOverviewViewModelTest {
       deviceHasStoragePermissionBug = mockk<DeviceHasStoragePermissionBug> {
         every { hasBug } returns MutableStateFlow(false)
       },
+      epubImportManager = epubImportManager,
       folderPickerInSettingsFeatureFlag = folderPickerInSettingsFeatureFlag,
       experimentalPlaybackPersistenceFeatureFlag = MemoryFeatureFlag(false),
       kioskModeFeatureFlag = MemoryFeatureFlag(false),
