@@ -1,6 +1,7 @@
 plugins {
   id("voice.library")
   alias(libs.plugins.kotlin.serialization)
+  alias(libs.plugins.metro)
 }
 
 dependencies {
@@ -9,4 +10,5 @@ dependencies {
   implementation(libs.retrofit.serialization)
   implementation(libs.serialization.json)
   implementation(libs.okhttp)
+  implementation(libs.metro.runtime)
 }
