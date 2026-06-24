@@ -57,6 +57,7 @@
     <string name="folder.type.title">Hvordan er dine filer struktureret?</string>
     <string name="library.category.completed.title">Afsluttet</string>
     <string name="library.category.current.title">Nuværende</string>
+    <string name="library.category.generating.title">Generating from eBook</string>
     <string name="library.category.not_started.title">Endnu ikke startet</string>
     <string name="library.empty.add_first_book">Lad os tilføje din lydbogsmappe, så du kan begynde at lytte!</string>
     <string name="library.import_epub">Importér e-bog</string>

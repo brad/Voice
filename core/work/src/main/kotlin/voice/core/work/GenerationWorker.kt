@@ -263,12 +263,10 @@ public class GenerationWorker(
     bookId: BookId,
     status: GenerationStatus,
   ) {
-    generationRepository.insert(
-      GenerationProgress(
-        bookId = bookId,
-        status = status,
-        lastUpdated = Instant.now(),
-      ),
+    generationRepository.updateStatus(
+      bookId = bookId,
+      status = status,
+      lastUpdated = Instant.now(),
     )
   }
 

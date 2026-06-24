@@ -58,6 +58,7 @@
     <string name="folder.type.title">Miten tiedostosi ovat järjestelty?</string>
     <string name="library.category.completed.title">Valmiina</string>
     <string name="library.category.current.title">Nykyinen</string>
+    <string name="library.category.generating.title">Generating from eBook</string>
     <string name="library.category.not_started.title">Ei vielä aloitettu</string>
     <string name="library.empty.add_first_book">Lisätään äänikirjakansiosi jotta voit aloittaa kuuntelemisen!</string>
     <string name="library.import_epub">Tuo e-kirja</string>

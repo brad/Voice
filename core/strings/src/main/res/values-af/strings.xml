@@ -58,6 +58,7 @@
     <string name="folder.type.title">Hoe is jou lêers onderverdeel?</string>
     <string name="library.category.completed.title">Voltooi</string>
     <string name="library.category.current.title">Huidig</string>
+    <string name="library.category.generating.title">Generating from eBook</string>
     <string name="library.category.not_started.title">Nog nie begin nie</string>
     <string name="library.empty.add_first_book">Kom ons voeg jou audioboek gids sodat jy kan begin luister!</string>
     <string name="library.import_epub">Voer eBoek in</string>

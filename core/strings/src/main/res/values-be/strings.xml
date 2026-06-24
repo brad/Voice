@@ -64,6 +64,7 @@
     <string name="folder.type.title">Як спарадкаваны вашы файлы?</string>
     <string name="library.category.completed.title">Завершаныя</string>
     <string name="library.category.current.title">Чытанае зараз</string>
+    <string name="library.category.generating.title">Generating from eBook</string>
     <string name="library.category.not_started.title">Яшчэ не пачатыя</string>
     <string name="library.empty.add_first_book">Давайце вызначым папку з аўдыякнігамі!</string>
     <string name="library.import_epub">Імпарт электроннай кнігі</string>

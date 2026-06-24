@@ -56,14 +56,6 @@ public class AnalysisWorker(
       return Result.failure()
     }
 
-    generationRepository.insert(
-      GenerationProgress(
-        bookId = bookId,
-        status = GenerationStatus.ANALYZING,
-        lastUpdated = Instant.now(),
-      ),
-    )
-
     val model = modelStore.data.first().ifBlank { "gemini-3.1-flash-lite" }
     val client = GeminiClient(geminiApi, apiKey)
 
@@ -72,16 +64,38 @@ public class AnalysisWorker(
     } catch (e: Exception) {
       null
     } ?: run {
-      updateStatus(bookId, GenerationStatus.FAILED)
+      generationRepository.insert(
+        GenerationProgress(
+          bookId = bookId,
+          status = GenerationStatus.FAILED,
+          lastUpdated = Instant.now(),
+        ),
+      )
       return Result.failure()
     }
 
     val epubData = try {
       EpubExtractor().extract(inputStream)
     } catch (e: Exception) {
-      updateStatus(bookId, GenerationStatus.FAILED)
+      generationRepository.insert(
+        GenerationProgress(
+          bookId = bookId,
+          status = GenerationStatus.FAILED,
+          lastUpdated = Instant.now(),
+        ),
+      )
       return Result.failure()
     }
+
+    generationRepository.insert(
+      GenerationProgress(
+        bookId = bookId,
+        status = GenerationStatus.ANALYZING,
+        lastUpdated = Instant.now(),
+        title = epubData.title,
+        author = epubData.author,
+      ),
+    )
     val fullText = epubData.chapters.joinToString("\n\n") { it.content }
 
     val chunkSize = 32000
@@ -194,12 +208,10 @@ public class AnalysisWorker(
     bookId: BookId,
     status: GenerationStatus,
   ) {
-    generationRepository.insert(
-      GenerationProgress(
-        bookId = bookId,
-        status = status,
-        lastUpdated = Instant.now(),
-      ),
+    generationRepository.updateStatus(
+      bookId = bookId,
+      status = status,
+      lastUpdated = Instant.now(),
     )
   }
 

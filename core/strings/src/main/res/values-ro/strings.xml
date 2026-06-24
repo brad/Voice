@@ -60,6 +60,7 @@
     <string name="folder.type.title">Cum sunt structurate fișierele dumneavoastră?</string>
     <string name="library.category.completed.title">Cărți citite</string>
     <string name="library.category.current.title">Cărți în lectură</string>
+    <string name="library.category.generating.title">Generating from eBook</string>
     <string name="library.category.not_started.title">Cărți neascultate încă</string>
     <string name="library.empty.add_first_book">Adaugă directorul cu cărțile tale și poți să începi!</string>
     <string name="library.import_epub">Importă eBook</string>

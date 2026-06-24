@@ -61,6 +61,7 @@
     <string name="folder.type.title">Come sono organizzati i tuoi file?</string>
     <string name="library.category.completed.title">Completato</string>
     <string name="library.category.current.title">Corrente</string>
+    <string name="library.category.generating.title">Generating from eBook</string>
     <string name="library.category.not_started.title">Non ancora iniziato</string>
     <string name="library.empty.add_first_book">Aggiungiamo la tua cartella degli audiolibri per iniziare ad ascoltare!</string>
     <string name="library.import_epub">Importa eBook</string>

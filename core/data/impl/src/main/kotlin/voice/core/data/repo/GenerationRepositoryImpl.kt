@@ -6,7 +6,9 @@ import dev.zacsweers.metro.SingleIn
 import kotlinx.coroutines.flow.Flow
 import voice.core.data.BookId
 import voice.core.data.GenerationProgress
+import voice.core.data.GenerationStatus
 import voice.core.data.repo.internals.dao.GenerationProgressDao
+import java.time.Instant
 
 @SingleIn(AppScope::class)
 @ContributesBinding(AppScope::class)
@@ -18,4 +20,14 @@ public class GenerationRepositoryImpl(private val dao: GenerationProgressDao) : 
   override suspend fun insert(progress: GenerationProgress): Unit = dao.insert(progress)
 
   override suspend fun deleteForBook(bookId: BookId): Unit = dao.deleteForBook(bookId)
+  override suspend fun updateStatus(
+    bookId: BookId,
+    status: GenerationStatus,
+    lastUpdated: Instant,
+  ): Unit = dao.updateStatus(
+    bookId,
+    status,
+    lastUpdated,
+  )
+  override fun flowInProgressGenerations(): Flow<List<GenerationProgress>> = dao.flowInProgressGenerations(GenerationStatus.COMPLETED)
 }

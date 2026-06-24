@@ -43,6 +43,7 @@ This roadmap outlines the steps to implement auto-builds in CI and a feature to 
 - [x] **Generation Locking & Restart UX**: Disable generation settings once generation has started, and provide a clear way to discard in-progress generation and restart if the user wants to change locked settings.
 - [x] **Progress Tracking UI**: Create a screen to monitor analysis and generation status (resumable).
 - [x] **Library Registration**: Automatically register the final generated audio files as a playable Audiobook in the existing library.
+- [x] **Generating from eBook**: Add entry point to ProgressTrackingScreen for in-progress books
 - [ ] **Error Handling UI**: Notify users of persistent API failures or missing API keys.
 
 ## Phase 5: Final Polish & Testing

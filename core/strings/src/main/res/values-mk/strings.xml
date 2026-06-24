@@ -58,6 +58,7 @@
     <string name="folder.type.title">Како се структурирани вашите датотеки?</string>
     <string name="library.category.completed.title">Комплетирани</string>
     <string name="library.category.current.title">Тековни</string>
+    <string name="library.category.generating.title">Generating from eBook</string>
     <string name="library.category.not_started.title">Непочнати</string>
     <string name="library.empty.add_first_book">Ајде да ги додадеме вашите аудио книги за да почнете со слушање!</string>
     <string name="library.import_epub">Увоз на е-книга</string>
