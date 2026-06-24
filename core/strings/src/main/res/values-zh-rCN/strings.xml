@@ -104,4 +104,14 @@
     <string name="settings.gemini.api_key.summary">用于 Gemini AI 服务的 API 密钥</string>
     <string name="settings.gemini.analysis_model.title">Gemini 分析模型</string>
     <string name="settings.gemini.generation_model.title">Gemini 生成模型</string>
+    <string name="generation_settings.title">Generation Settings</string>
+    <string name="generation_settings.characters_voices">Characters &amp; Voices</string>
+    <string name="generation_settings.action.start_generation">Start Generation</string>
+    <string name="generation_settings.action.discard_restart">Discard &amp; Restart</string>
+    <string name="generation_settings.status.generating">Generating...</string>
+    <string name="generation_settings.status.completed">Generation Completed</string>
+    <string name="generation_settings.discard_confirmation.title">Discard Generation?</string>
+    <string name="generation_settings.discard_confirmation.message">This will stop the current generation and delete any progress and audio files created so far.</string>
+    <string name="generation_settings.discard_confirmation.confirm">Discard</string>
+    <string name="generation_settings.discard_confirmation.cancel">Cancel</string>
 </resources>
