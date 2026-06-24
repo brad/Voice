@@ -167,11 +167,29 @@ class BookOverviewViewModel(
           put(
             BookOverviewCategory.GENERATING,
             inProgressGenerations.associate { gen ->
-              val analysisProgress = remember(gen.bookId) { analysisProgressRepository.flowProgressForBook(gen.bookId) }.collectAsState(initial = null).value
-              val audioProgress = remember(gen.bookId) { audioGenerationProgressRepository.flowProgressForBook(gen.bookId) }.collectAsState(initial = null).value
+              val analysisProgress = remember(gen.bookId) {
+                analysisProgressRepository.flowProgressForBook(gen.bookId)
+              }.collectAsState(initial = null).value
+              val audioProgress = remember(gen.bookId) {
+                audioGenerationProgressRepository.flowProgressForBook(gen.bookId)
+              }.collectAsState(initial = null).value
               val progress = when (gen.status) {
-                GenerationStatus.ANALYZING -> if (analysisProgress != null && analysisProgress.totalChunks > 0) analysisProgress.currentChunkIndex.toFloat() / analysisProgress.totalChunks else 0f
-                GenerationStatus.GENERATING -> if (audioProgress != null && audioProgress.totalChunks > 0) audioProgress.chunkIndex.toFloat() / audioProgress.totalChunks else 0f
+                GenerationStatus.ANALYZING -> if (analysisProgress != null &&
+                  analysisProgress.totalChunks > 0
+                ) {
+                  analysisProgress.currentChunkIndex.toFloat() /
+                    analysisProgress.totalChunks
+                } else {
+                  0f
+                }
+                GenerationStatus.GENERATING -> if (audioProgress != null &&
+                  audioProgress.totalChunks > 0
+                ) {
+                  audioProgress.chunkIndex.toFloat() /
+                    audioProgress.totalChunks
+                } else {
+                  0f
+                }
                 GenerationStatus.COMPLETED -> 1f
                 else -> 0f
               }
@@ -182,14 +200,16 @@ class BookOverviewViewModel(
                 GenerationStatus.FAILED -> "Failed"
                 else -> ""
               }
-              gen.bookId to rememberUpdatedState(BookOverviewItemViewState(
-                name = gen.title ?: "Unknown Title",
-                author = gen.author,
-                cover = null,
-                progress = progress,
-                id = gen.bookId,
-                remainingTime = remainingTime
-              ))
+              gen.bookId to rememberUpdatedState(
+                BookOverviewItemViewState(
+                  name = gen.title ?: "Unknown Title",
+                  author = gen.author,
+                  cover = null,
+                  progress = progress,
+                  id = gen.bookId,
+                  remainingTime = remainingTime,
+                ),
+              )
             },
           )
         }
