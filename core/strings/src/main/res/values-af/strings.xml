@@ -61,7 +61,20 @@
     <string name="library.category.not_started.title">Nog nie begin nie</string>
     <string name="library.empty.add_first_book">Kom ons voeg jou audioboek gids sodat jy kan begin luister!</string>
     <string name="library.import_epub">Voer eBoek in</string>
-    <string name="library.folders.title">Klankboekgids</string>
+    <string name="library.progress_tracking.title">Generation Progress</string>
+    <string name="library.progress_tracking.overall_status">Overall status</string>
+    <string name="library.progress_tracking.analysis_progress">Analysis progress</string>
+    <string name="library.progress_tracking.generation_progress">Generation progress</string>
+    <string name="library.progress_tracking.last_updated">Last updated</string>
+    <string name="library.progress_tracking.not_started">Not started</string>
+    <string name="library.progress_tracking.analysis_value">%1$d / %2$d chunks</string>
+    <string name="library.progress_tracking.generation_value">Chapter %1$d · Chunk %2$d / %3$d</string>
+    <string name="library.progress_tracking.status_pending">Pending</string>
+    <string name="library.progress_tracking.status_analyzing">Analyzing</string>
+    <string name="library.progress_tracking.status_analyzed">Analyzed</string>
+    <string name="library.progress_tracking.status_generating">Generating</string>
+    <string name="library.progress_tracking.status_completed">Completed</string>
+    <string name="library.progress_tracking.status_failed">Failed</string>    <string name="library.folders.title">Klankboekgids</string>
     <string name="library.folders.moved.dialog.title">Oudioboekvouers geskuif</string>
     <string name="library.folders.moved.dialog.message">Jy kan nou oudioboekvouers in Voorkeure bestuur.</string>
     <string name="library.search.hint">Waarna is jy opsoek?</string>

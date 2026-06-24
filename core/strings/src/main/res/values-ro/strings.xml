@@ -63,7 +63,20 @@
     <string name="library.category.not_started.title">Cărți neascultate încă</string>
     <string name="library.empty.add_first_book">Adaugă directorul cu cărțile tale și poți să începi!</string>
     <string name="library.import_epub">Importă eBook</string>
-    <string name="library.folders.title">Directoare cărți</string>
+    <string name="library.progress_tracking.title">Generation Progress</string>
+    <string name="library.progress_tracking.overall_status">Overall status</string>
+    <string name="library.progress_tracking.analysis_progress">Analysis progress</string>
+    <string name="library.progress_tracking.generation_progress">Generation progress</string>
+    <string name="library.progress_tracking.last_updated">Last updated</string>
+    <string name="library.progress_tracking.not_started">Not started</string>
+    <string name="library.progress_tracking.analysis_value">%1$d / %2$d chunks</string>
+    <string name="library.progress_tracking.generation_value">Chapter %1$d · Chunk %2$d / %3$d</string>
+    <string name="library.progress_tracking.status_pending">Pending</string>
+    <string name="library.progress_tracking.status_analyzing">Analyzing</string>
+    <string name="library.progress_tracking.status_analyzed">Analyzed</string>
+    <string name="library.progress_tracking.status_generating">Generating</string>
+    <string name="library.progress_tracking.status_completed">Completed</string>
+    <string name="library.progress_tracking.status_failed">Failed</string>    <string name="library.folders.title">Directoare cărți</string>
     <string name="library.search.hint">Ce anume căutați?</string>
     <string name="library.storage_permission_bug.action">Acordă permisiune</string>
     <string name="library.storage_permission_bug.message">Pe anumite dispozitive, o aplicație de sistem are nevoie de anumite permisiuni pentru a accesa stocarea externă. Aceste permisiuni sunt esențiale pentru ca Voice să poată citi cărțile tale audio.</string>

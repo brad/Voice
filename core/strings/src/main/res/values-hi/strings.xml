@@ -60,7 +60,20 @@
     <string name="library.category.not_started.title">अभी प्रारंभ नही</string>
     <string name="library.empty.add_first_book">चलिए आपका ऑडियोबुक फोल्डर जोड़ते हैं ताकि आप सुनना शुरू कर सकें!</string>
     <string name="library.import_epub">ईबुक आयात करें</string>
-    <string name="library.folders.title">ऑडिओबुक के फोल्डर</string>
+    <string name="library.progress_tracking.title">Generation Progress</string>
+    <string name="library.progress_tracking.overall_status">Overall status</string>
+    <string name="library.progress_tracking.analysis_progress">Analysis progress</string>
+    <string name="library.progress_tracking.generation_progress">Generation progress</string>
+    <string name="library.progress_tracking.last_updated">Last updated</string>
+    <string name="library.progress_tracking.not_started">Not started</string>
+    <string name="library.progress_tracking.analysis_value">%1$d / %2$d chunks</string>
+    <string name="library.progress_tracking.generation_value">Chapter %1$d · Chunk %2$d / %3$d</string>
+    <string name="library.progress_tracking.status_pending">Pending</string>
+    <string name="library.progress_tracking.status_analyzing">Analyzing</string>
+    <string name="library.progress_tracking.status_analyzed">Analyzed</string>
+    <string name="library.progress_tracking.status_generating">Generating</string>
+    <string name="library.progress_tracking.status_completed">Completed</string>
+    <string name="library.progress_tracking.status_failed">Failed</string>    <string name="library.folders.title">ऑडिओबुक के फोल्डर</string>
     <string name="library.search.hint">आप क्या ढूंढ रहे हैं?</string>
     <string name="library.storage_permission_bug.action">अनुमति प्रदान करें</string>
     <string name="library.storage_permission_bug.message">कुछ उपकरणों के लिए, एक सिस्टम ऐप में बाहरी स्टोरेज तक पहुंचने के लिए आवश्यक अनुमति नहीं है। Voice के लिए आपकी ऑडियोबुक पढ़ने के लिए यह पहुंच आवश्यक है।</string>
