@@ -149,6 +149,5 @@
     <string name="settings.gemini.api_key.summary">API-клуч за Gemini AI услуги</string>
     <string name="settings.gemini.analysis_model.title">Модел за анализа на Gemini</string>
     <string name="settings.gemini.generation_model.title">Модел за генерирање на Gemini</string>
-    <string name="settings.gemini.generation_model.summary">Модел што се користи за генерирање аудио</string>
     <string name="settings.audiobook_generation.title">Генерирање аудиокниги</string>
 </resources>

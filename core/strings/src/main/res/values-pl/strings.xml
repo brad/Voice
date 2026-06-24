@@ -155,6 +155,5 @@
     <string name="settings.gemini.api_key.summary">Klucz API dla usług AI Gemini</string>
     <string name="settings.gemini.analysis_model.title">Model analizy Gemini</string>
     <string name="settings.gemini.generation_model.title">Model generowania Gemini</string>
-    <string name="settings.gemini.generation_model.summary">Model używany do generowania dźwięku</string>
     <string name="settings.audiobook_generation.title">Generowanie audiobooków</string>
 </resources>

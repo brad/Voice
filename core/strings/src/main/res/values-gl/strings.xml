@@ -149,6 +149,5 @@
     <string name="settings.gemini.api_key.summary">Chave da API para os servizos de IA de Gemini</string>
     <string name="settings.gemini.analysis_model.title">Modelo de análise de Gemini</string>
     <string name="settings.gemini.generation_model.title">Modelo de xeración de Gemini</string>
-    <string name="settings.gemini.generation_model.summary">Modelo usado para a xeración de audio</string>
     <string name="settings.audiobook_generation.title">Xeración de audiolibros</string>
 </resources>

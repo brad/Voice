@@ -149,6 +149,5 @@
     <string name="settings.gemini.api_key.summary">Gemini AI சேவைகளுக்கான API விசை</string>
     <string name="settings.gemini.analysis_model.title">Gemini பகுப்பாய்வு மாதிரி</string>
     <string name="settings.gemini.generation_model.title">Gemini உருவாக்க மாதிரி</string>
-    <string name="settings.gemini.generation_model.summary">ஒலி உருவாக்கத்திற்கு பயன்படுத்தப்படும் மாதிரி</string>
     <string name="settings.audiobook_generation.title">ஒலிப்புத்தக உருவாக்கம்</string>
 </resources>

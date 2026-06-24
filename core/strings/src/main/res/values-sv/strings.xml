@@ -149,6 +149,5 @@
     <string name="settings.gemini.api_key.summary">API-nyckel för Gemini AI-tjänster</string>
     <string name="settings.gemini.analysis_model.title">Gemini-analysmodell</string>
     <string name="settings.gemini.generation_model.title">Gemini-genereringsmodell</string>
-    <string name="settings.gemini.generation_model.summary">Modell som används för ljudgenerering</string>
     <string name="settings.audiobook_generation.title">Generering av ljudböcker</string>
 </resources>
