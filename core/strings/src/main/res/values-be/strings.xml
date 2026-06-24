@@ -154,7 +154,6 @@
     <string name="settings.gemini.api_key.title">Ключ API Gemini</string>
     <string name="settings.gemini.api_key.summary">Ключ API для сэрвісаў штучнага інтэлекту Gemini</string>
     <string name="settings.gemini.analysis_model.title">Мадэль аналізу Gemini</string>
-    <string name="settings.gemini.analysis_model.summary">Мадэль, што выкарыстоўваецца для аналізу кніг</string>
     <string name="settings.gemini.generation_model.title">Мадэль генерацыі Gemini</string>
     <string name="settings.gemini.generation_model.summary">Мадэль, што выкарыстоўваецца для генерацыі аўдыя</string>
     <string name="settings.audiobook_generation.title">Генерацыя аўдыякніг</string>

@@ -105,7 +105,6 @@
     <string name="settings.gemini.api_key.title">Gemini API कुञ्जी</string>
     <string name="settings.gemini.api_key.summary">Gemini AI सेवाहरूका लागि API कुञ्जी</string>
     <string name="settings.gemini.analysis_model.title">Gemini विश्लेषण मोडेल</string>
-    <string name="settings.gemini.analysis_model.summary">पुस्तक विश्लेषणका लागि प्रयोग हुने मोडेल</string>
     <string name="settings.gemini.generation_model.title">Gemini जेनेरेशन मोडेल</string>
     <string name="settings.gemini.generation_model.summary">अडियो जेनेरेशनका लागि प्रयोग हुने मोडेल</string>
 </resources>

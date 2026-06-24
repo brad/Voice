@@ -154,7 +154,6 @@
     <string name="settings.gemini.api_key.title">Kľúč API Gemini</string>
     <string name="settings.gemini.api_key.summary">Kľúč API pre služby AI Gemini</string>
     <string name="settings.gemini.analysis_model.title">Analytický model Gemini</string>
-    <string name="settings.gemini.analysis_model.summary">Model používaný na analýzu kníh</string>
     <string name="settings.gemini.generation_model.title">Generačný model Gemini</string>
     <string name="settings.gemini.generation_model.summary">Model používaný na generovanie audia</string>
     <string name="settings.audiobook_generation.title">Generovanie audiokníh</string>

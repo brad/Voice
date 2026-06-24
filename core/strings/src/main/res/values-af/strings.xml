@@ -148,7 +148,6 @@
     <string name="settings.gemini.api_key.title">Gemini API-sleutel</string>
     <string name="settings.gemini.api_key.summary">API-sleutel vir Gemini KI-dienste</string>
     <string name="settings.gemini.analysis_model.title">Gemini-ontledingsmodel</string>
-    <string name="settings.gemini.analysis_model.summary">Model wat vir boekontleding gebruik word</string>
     <string name="settings.gemini.generation_model.title">Gemini-genereringsmodel</string>
     <string name="settings.gemini.generation_model.summary">Model wat vir klankgenerering gebruik word</string>
     <string name="settings.audiobook_generation.title">Oudioboekgenerering</string>

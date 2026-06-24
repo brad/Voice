@@ -76,7 +76,6 @@
     <string name="settings.gemini.api_key.title">Κλειδί API Gemini</string>
     <string name="settings.gemini.api_key.summary">Κλειδί API για τις υπηρεσίες AI του Gemini</string>
     <string name="settings.gemini.analysis_model.title">Μοντέλο ανάλυσης Gemini</string>
-    <string name="settings.gemini.analysis_model.summary">Μοντέλο που χρησιμοποιείται για ανάλυση βιβλίων</string>
     <string name="settings.gemini.generation_model.title">Μοντέλο δημιουργίας Gemini</string>
     <string name="settings.gemini.generation_model.summary">Μοντέλο που χρησιμοποιείται για δημιουργία ήχου</string>
 </resources>

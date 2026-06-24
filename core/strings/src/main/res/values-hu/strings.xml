@@ -112,7 +112,6 @@
     <string name="settings.gemini.api_key.title">Gemini API-kulcs</string>
     <string name="settings.gemini.api_key.summary">API-kulcs a Gemini MI-szolgáltatásaihoz</string>
     <string name="settings.gemini.analysis_model.title">Gemini elemzési modell</string>
-    <string name="settings.gemini.analysis_model.summary">Könyvelemzéshez használt modell</string>
     <string name="settings.gemini.generation_model.title">Gemini generálási modell</string>
     <string name="settings.gemini.generation_model.summary">Hanggeneráláshoz használt modell</string>
 </resources>

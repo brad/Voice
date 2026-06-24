@@ -151,7 +151,6 @@
     <string name="settings.gemini.api_key.title">מפתח API של Gemini</string>
     <string name="settings.gemini.api_key.summary">מפתח API לשירותי הבינה המלאכותית של Gemini</string>
     <string name="settings.gemini.analysis_model.title">מודל ניתוח Gemini</string>
-    <string name="settings.gemini.analysis_model.summary">המודל המשמש לניתוח ספרים</string>
     <string name="settings.gemini.generation_model.title">מודל יצירה Gemini</string>
     <string name="settings.gemini.generation_model.summary">המודל המשמש ליצירת שמע</string>
     <string name="settings.audiobook_generation.title">יצירת ספרי שמע</string>
