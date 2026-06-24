@@ -118,8 +118,14 @@ class BookOverviewViewModelTest {
       livePlaybackFlow.value = livePlaybackState
       yield()
 
-      assertEquals(expected = initialKeys, actual = initial.books.getValue(BookOverviewCategory.CURRENT).keys.toList())
-      assertEquals(expected = currentBook.overlay(livePlaybackState).toItemViewState(), actual = initial.currentBook(currentBook.id))
+      assertEquals(
+        expected = initialKeys,
+        actual = initial.books.getValue(BookOverviewCategory.CURRENT).keys.toList(),
+      )
+      assertEquals(
+        expected = currentBook.overlay(livePlaybackState).toItemViewState(),
+        actual = initial.currentBook(currentBook.id),
+      )
       assertEquals(expected = initialOtherItem, actual = initial.currentBook(otherBook.id))
       expectNoEvents()
     }
@@ -172,12 +178,13 @@ class BookOverviewViewModelTest {
     }.test {
       val state = awaitItem()
       assertEquals(
-        expected = KioskModeDemoData.demoAudiobooks.map {
-          it.id
-        },
+        expected = KioskModeDemoData.demoAudiobooks.map { it.id },
         actual = state.books.getValue(BookOverviewCategory.CURRENT).keys.toList(),
       )
-      assertEquals(expected = "Echoes of Tomorrow", actual = state.currentBook(KioskModeDemoData.currentlyPlaying.id).name)
+      assertEquals(
+        expected = "Echoes of Tomorrow",
+        actual = state.currentBook(KioskModeDemoData.currentlyPlaying.id).name,
+      )
     }
   }
 
@@ -259,7 +266,10 @@ class BookOverviewViewModelTest {
 
       viewModel.onBookFolderClick()
 
-      assertEquals(expected = BookOverviewViewState.Dialog.FolderPickerMovedToSettings, actual = awaitItem().dialog)
+      assertEquals(
+        expected = BookOverviewViewState.Dialog.FolderPickerMovedToSettings,
+        actual = awaitItem().dialog,
+      )
       verify(exactly = 0) {
         navigator.goTo(Destination.FolderPicker)
       }
@@ -281,7 +291,10 @@ class BookOverviewViewModelTest {
       assertEquals(expected = true, actual = awaitItem().showFolderPickerIcon)
 
       viewModel.onBookFolderClick()
-      assertEquals(expected = BookOverviewViewState.Dialog.FolderPickerMovedToSettings, actual = awaitItem().dialog)
+      assertEquals(
+        expected = BookOverviewViewState.Dialog.FolderPickerMovedToSettings,
+        actual = awaitItem().dialog,
+      )
 
       viewModel.onFolderPickerMovedDialogDismiss()
 
@@ -372,10 +385,12 @@ class BookOverviewViewModelTest {
     )
   }
 
-  private fun appInfoProvider(installTime: Instant = Instant.parse("2026-06-16T00:00:00Z")): AppInfoProvider {
-    return mockk {
-      every { installTime } returns installTime
-    }
+  private fun appInfoProvider(
+    installTime: Instant = Instant.parse("2026-06-16T00:00:00Z"),
+  ): AppInfoProvider {
+    val provider = mockk<AppInfoProvider>()
+    every { provider.installTime } returns installTime
+    return provider
   }
 }
 
