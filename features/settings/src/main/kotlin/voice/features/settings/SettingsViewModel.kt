@@ -1,14 +1,20 @@
 package voice.features.settings
 
+import android.net.Uri
 import android.os.Build
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.core.net.toUri
 import androidx.datastore.core.DataStore
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.IntoSet
+import dev.zacsweers.metro.Provides
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.first
@@ -33,6 +39,8 @@ import voice.core.data.store.ThemeColorSchemeStore
 import voice.core.data.store.ThemeModeStore
 import voice.core.featureflag.FeatureFlag
 import voice.core.featureflag.KioskModeFeatureFlagQualifier
+import voice.core.gemini.GeminiApi
+import voice.core.gemini.GeminiClient
 import voice.core.ui.DynamicColorAvailability
 import voice.core.ui.GridCount
 import voice.navigation.Destination
@@ -40,7 +48,7 @@ import voice.navigation.Navigator
 import java.time.LocalTime
 
 @Inject
-class SettingsViewModel(
+public class SettingsViewModel(
   @ThemeModeStore
   private val themeModeStore: DataStore<ThemeMode>,
   @ThemeColorSchemeStore
@@ -69,6 +77,7 @@ class SettingsViewModel(
   private val geminiAnalysisModelStore: DataStore<String>,
   @GeminiGenerationModelStore
   private val geminiGenerationModelStore: DataStore<String>,
+  private val geminiApi: GeminiApi,
   dispatcherProvider: DispatcherProvider,
 ) : SettingsListener {
 
@@ -77,9 +86,10 @@ class SettingsViewModel(
     field = MutableSharedFlow<SettingsViewEffect>(extraBufferCapacity = 1)
   private val dialog = mutableStateOf<SettingsViewState.Dialog?>(null)
   private var appVersionTapCount = 0
+  private val availableModels = mutableStateOf<List<String>>(emptyList())
 
   @Composable
-  fun viewState(): SettingsViewState {
+  public fun viewState(): SettingsViewState {
     val themeMode by remember { themeModeStore.data }.collectAsState(initial = ThemeMode.FollowSystem)
     val themeColorScheme by remember { themeColorSchemeStore.data }.collectAsState(initial = ThemeColorScheme.VoiceBlue)
     val autoRewindAmount by remember { autoRewindAmountStore.data }.collectAsState(initial = 0)
@@ -99,6 +109,19 @@ class SettingsViewModel(
     val geminiApiKey by remember { geminiApiKeyStore.data }.collectAsState(initial = "")
     val geminiAnalysisModel by remember { geminiAnalysisModelStore.data }.collectAsState(initial = "gemini-1.5-flash")
     val geminiGenerationModel by remember { geminiGenerationModelStore.data }.collectAsState(initial = "gemini-3.1-flash-tts-preview")
+
+    LaunchedEffect(geminiApiKey) {
+      if (geminiApiKey.isNotBlank()) {
+        try {
+          val client = GeminiClient(geminiApi, geminiApiKey)
+          availableModels.value = client.listModels().map { it.name.removePrefix("models/") }
+        } catch (e: Exception) {
+          availableModels.value = emptyList()
+        }
+      } else {
+        availableModels.value = emptyList()
+      }
+    }
 
     return SettingsViewState(
       themeMode = themeMode,
@@ -126,6 +149,7 @@ class SettingsViewModel(
       geminiApiKey = geminiApiKey,
       geminiAnalysisModel = geminiAnalysisModel,
       geminiGenerationModel = geminiGenerationModel,
+      availableModels = availableModels.value,
     )
   }
 
@@ -277,33 +301,16 @@ class SettingsViewModel(
     navigator.goTo(Destination.DeveloperSettings)
   }
 
-  override fun onGeminiApiKeyRowClick() {
-    dialog.value = SettingsViewState.Dialog.GeminiApiKey
+  override fun onAudiobookGenerationRowClick() {
+    dialog.value = SettingsViewState.Dialog.AudiobookGeneration
   }
 
-  override fun setGeminiApiKey(apiKey: String) {
+  override fun saveAudiobookGenerationSettings(apiKey: String, analysisModel: String, generationModel: String) {
     mainScope.launch {
       geminiApiKeyStore.updateData { apiKey }
+      geminiAnalysisModelStore.updateData { analysisModel }
+      geminiGenerationModelStore.updateData { generationModel }
     }
-  }
-
-  override fun onGeminiAnalysisModelRowClick() {
-    dialog.value = SettingsViewState.Dialog.GeminiAnalysisModel
-  }
-
-  override fun setGeminiAnalysisModel(model: String) {
-    mainScope.launch {
-      geminiAnalysisModelStore.updateData { model }
-    }
-  }
-
-  override fun onGeminiGenerationModelRowClick() {
-    dialog.value = SettingsViewState.Dialog.GeminiGenerationModel
-  }
-
-  override fun setGeminiGenerationModel(model: String) {
-    mainScope.launch {
-      geminiGenerationModelStore.updateData { model }
-    }
+    dialog.value = null
   }
 }

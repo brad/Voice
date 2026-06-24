@@ -3,6 +3,7 @@ package voice.core.gemini
 import kotlinx.serialization.Serializable
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -14,6 +15,11 @@ public interface GeminiApi {
     @Query("key") apiKey: String,
     @Body request: GenerateContentRequest,
   ): Response<GenerateContentResponse>
+
+  @GET("v1beta/models")
+  public suspend fun listModels(
+    @Query("key") apiKey: String,
+  ): Response<ListModelsResponse>
 }
 
 @Serializable
@@ -81,3 +87,16 @@ public data class GenerateContentResponse(val candidates: List<Candidate>)
 
 @Serializable
 public data class Candidate(val content: Content)
+
+@Serializable
+public data class ListModelsResponse(val models: List<Model>)
+
+@Serializable
+public data class Model(
+  val name: String,
+  val baseModelId: String? = null,
+  val version: String? = null,
+  val displayName: String? = null,
+  val description: String? = null,
+  val supportedGenerationMethods: List<String>? = null,
+)

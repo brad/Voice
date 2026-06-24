@@ -36,7 +36,7 @@ This roadmap outlines the steps to implement auto-builds in CI and a feature to 
 
 ## Phase 4: UI & Library Integration
 - [x] **EPUB Import Flow**: Add an "Import EPUB" button to the library and trigger the analysis worker.
-- [ ] **Audiobook Generation Settings Refinement**:
+- [x] **Audiobook Generation Settings Refinement**:
     - Consolidate Gemini API settings into a dedicated "Audiobook Generation" section.
     - Replace free-text model selection with dropdowns populated by real model lists fetched from the Gemini API.
 - [ ] **Generation Settings UI**: Add a screen where users can review and tune generation settings before starting generation, including voice assignments, pronunciation overrides, and similar per-book controls.

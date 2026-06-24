@@ -5,6 +5,7 @@ import app.cash.molecule.RecompositionMode
 import app.cash.molecule.launchMolecule
 import app.cash.turbine.test
 import io.mockk.Runs
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
@@ -21,6 +22,9 @@ import voice.core.data.ThemeColorScheme
 import voice.core.data.ThemeMode
 import voice.core.data.sleeptimer.SleepTimerPreference
 import voice.core.featureflag.MemoryFeatureFlag
+import voice.core.gemini.GeminiApi
+import voice.core.gemini.ListModelsResponse
+import voice.core.gemini.Model
 import voice.core.ui.DynamicColorAvailability
 import voice.core.ui.GridCount
 import voice.navigation.Destination
@@ -29,6 +33,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
 import kotlin.time.Instant
+import retrofit2.Response
 
 class SettingsViewModelTest {
 
@@ -60,6 +65,9 @@ class SettingsViewModelTest {
   private val dynamicColorAvailability = mockk<DynamicColorAvailability> {
     every { isSupported() } returns true
   }
+  private val geminiApi = mockk<GeminiApi> {
+    coEvery { listModels(any()) } returns Response.success(ListModelsResponse(listOf(Model(name = "models/gemini-1.5-flash"))))
+  }
 
   private val viewModel = SettingsViewModel(
     themeModeStore = themeModeStore,
@@ -78,6 +86,7 @@ class SettingsViewModelTest {
     geminiApiKeyStore = geminiApiKeyStore,
     geminiAnalysisModelStore = geminiAnalysisModelStore,
     geminiGenerationModelStore = geminiGenerationModelStore,
+    geminiApi = geminiApi,
     dispatcherProvider = DispatcherProvider(scope.coroutineContext, scope.coroutineContext, scope.coroutineContext),
   )
 
@@ -235,38 +244,40 @@ class SettingsViewModelTest {
   }
 
   @Test
-  fun `gemini api key changes update view state`() = scope.runTest {
+  fun `audiobook generation settings changes update view state`() = scope.runTest {
     backgroundScope.launchMolecule(RecompositionMode.Immediate) {
       viewModel.viewState()
     }.test {
-      assertEquals(expected = "", actual = awaitItem().geminiApiKey)
+      val initial = awaitItem()
+      assertEquals(expected = "", actual = initial.geminiApiKey)
+      assertEquals(expected = "gemini-1.5-flash", actual = initial.geminiAnalysisModel)
+      assertEquals(expected = "gemini-3.1-flash-tts-preview", actual = initial.geminiGenerationModel)
 
-      viewModel.setGeminiApiKey("new-key")
-      assertEquals(expected = "new-key", actual = awaitItem().geminiApiKey)
+      viewModel.saveAudiobookGenerationSettings("new-key", "new-analysis", "new-gen")
+
+      val updated = awaitItem()
+      assertEquals(expected = "new-key", actual = updated.geminiApiKey)
+      assertEquals(expected = "new-analysis", actual = updated.geminiAnalysisModel)
+      assertEquals(expected = "new-gen", actual = updated.geminiGenerationModel)
     }
   }
 
   @Test
-  fun `gemini analysis model changes update view state`() = scope.runTest {
+  fun `available models are fetched when api key is set`() = scope.runTest {
     backgroundScope.launchMolecule(RecompositionMode.Immediate) {
       viewModel.viewState()
     }.test {
-      assertEquals(expected = "gemini-1.5-flash", actual = awaitItem().geminiAnalysisModel)
+      assertEquals(expected = emptyList(), actual = awaitItem().availableModels)
 
-      viewModel.setGeminiAnalysisModel("gemini-2.0-pro")
-      assertEquals(expected = "gemini-2.0-pro", actual = awaitItem().geminiAnalysisModel)
-    }
-  }
+      viewModel.saveAudiobookGenerationSettings("valid-key", "gemini-1.5-flash", "gemini-3.1-flash-tts-preview")
 
-  @Test
-  fun `gemini generation model changes update view state`() = scope.runTest {
-    backgroundScope.launchMolecule(RecompositionMode.Immediate) {
-      viewModel.viewState()
-    }.test {
-      assertEquals(expected = "gemini-3.1-flash-tts-preview", actual = awaitItem().geminiGenerationModel)
-
-      viewModel.setGeminiGenerationModel("gemini-4.0-ultra")
-      assertEquals(expected = "gemini-4.0-ultra", actual = awaitItem().geminiGenerationModel)
+      // Wait for models to be fetched
+      val updated = awaitItem()
+      if (updated.availableModels.isEmpty()) {
+        assertEquals(expected = listOf("gemini-1.5-flash"), actual = awaitItem().availableModels)
+      } else {
+        assertEquals(expected = listOf("gemini-1.5-flash"), actual = updated.availableModels)
+      }
     }
   }
 }

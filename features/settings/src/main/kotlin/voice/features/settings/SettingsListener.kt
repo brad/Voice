@@ -4,42 +4,38 @@ import voice.core.data.ThemeColorScheme
 import voice.core.data.ThemeMode
 import java.time.LocalTime
 
-interface SettingsListener {
-  fun close()
-  fun onThemeModeRowClick()
-  fun onThemeColorSchemeRowClick()
-  fun setThemeMode(themeMode: ThemeMode)
-  fun setThemeColorScheme(themeColorScheme: ThemeColorScheme)
-  fun toggleGrid()
-  fun seekAmountChanged(seconds: Int)
-  fun onSeekAmountRowClick()
-  fun autoRewindAmountChang(seconds: Int)
-  fun onAutoRewindRowClick()
-  fun dismissDialog()
-  fun getSupport()
-  fun suggestIdea()
-  fun openBugReport()
-  fun openTranslations()
-  fun openFaq()
-  fun openSupportVoice()
-  fun setAutoSleepTimer(checked: Boolean)
-  fun setAutoSleepTimerStart(time: LocalTime)
-  fun setAutoSleepTimerEnd(time: LocalTime)
-  fun toggleAnalytics()
-  fun openFolderPicker()
-  fun onAppVersionClick()
+public interface SettingsListener {
+  public fun close()
+  public fun onThemeModeRowClick()
+  public fun onThemeColorSchemeRowClick()
+  public fun setThemeMode(themeMode: ThemeMode)
+  public fun setThemeColorScheme(themeColorScheme: ThemeColorScheme)
+  public fun toggleGrid()
+  public fun seekAmountChanged(seconds: Int)
+  public fun onSeekAmountRowClick()
+  public fun autoRewindAmountChang(seconds: Int)
+  public fun onAutoRewindRowClick()
+  public fun dismissDialog()
+  public fun getSupport()
+  public fun suggestIdea()
+  public fun openBugReport()
+  public fun openTranslations()
+  public fun openFaq()
+  public fun openSupportVoice()
+  public fun setAutoSleepTimer(checked: Boolean)
+  public fun setAutoSleepTimerStart(time: LocalTime)
+  public fun setAutoSleepTimerEnd(time: LocalTime)
+  public fun toggleAnalytics()
+  public fun openFolderPicker()
+  public fun onAppVersionClick()
 
-  fun openDeveloperMenu()
+  public fun openDeveloperMenu()
 
-  fun onGeminiApiKeyRowClick()
-  fun setGeminiApiKey(apiKey: String)
-  fun onGeminiAnalysisModelRowClick()
-  fun setGeminiAnalysisModel(model: String)
-  fun onGeminiGenerationModelRowClick()
-  fun setGeminiGenerationModel(model: String)
+  public fun onAudiobookGenerationRowClick()
+  public fun saveAudiobookGenerationSettings(apiKey: String, analysisModel: String, generationModel: String)
 
-  companion object {
-    fun noop() = object : SettingsListener {
+  public companion object {
+    public fun noop(): SettingsListener = object : SettingsListener {
       override fun close() {}
       override fun onThemeModeRowClick() {}
       override fun onThemeColorSchemeRowClick() {}
@@ -64,12 +60,8 @@ interface SettingsListener {
       override fun openFolderPicker() {}
       override fun onAppVersionClick() {}
       override fun openDeveloperMenu() {}
-      override fun onGeminiApiKeyRowClick() {}
-      override fun setGeminiApiKey(apiKey: String) {}
-      override fun onGeminiAnalysisModelRowClick() {}
-      override fun setGeminiAnalysisModel(model: String) {}
-      override fun onGeminiGenerationModelRowClick() {}
-      override fun setGeminiGenerationModel(model: String) {}
+      override fun onAudiobookGenerationRowClick() {}
+      override fun saveAudiobookGenerationSettings(apiKey: String, analysisModel: String, generationModel: String) {}
     }
   }
 }

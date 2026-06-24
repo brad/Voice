@@ -1,6 +1,11 @@
 package voice.features.settings.views
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -21,14 +26,13 @@ import androidx.compose.runtime.retain.retain
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation3.runtime.NavEntry
+import androidx.compose.ui.unit.dp
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.IntoSet
 import dev.zacsweers.metro.Provides
 import voice.core.common.rootGraphAs
-import voice.core.ui.VoiceTheme
+import voice.core.strings.R as StringsR
 import voice.core.ui.icons.VoiceIcons
 import voice.features.settings.SettingsListener
 import voice.features.settings.SettingsViewEffect
@@ -37,104 +41,73 @@ import voice.features.settings.SettingsViewState
 import voice.features.settings.views.sleeptimer.AutoSleepTimerCard
 import voice.navigation.Destination
 import voice.navigation.NavEntryProvider
-import voice.core.strings.R as StringsR
+import androidx.navigation3.runtime.NavEntry
 
 @Composable
-@Preview
-private fun SettingsPreview() {
-  VoiceTheme {
-    Settings(
-      SettingsViewState.preview(),
-      SettingsListener.noop(),
-    )
-  }
-}
-
-@Composable
-private fun Settings(
+internal fun Settings(
   viewState: SettingsViewState,
   listener: SettingsListener,
-  snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
+  snackbarHostState: SnackbarHostState,
 ) {
   val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
   Scaffold(
     modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-    snackbarHost = {
-      SnackbarHost(hostState = snackbarHostState)
-    },
     topBar = {
       TopAppBar(
         scrollBehavior = scrollBehavior,
         title = {
-          Text(stringResource(StringsR.string.settings_action_open))
+          Text(text = stringResource(StringsR.string.settings_action_open))
         },
         navigationIcon = {
-          IconButton(
-            onClick = {
-              listener.close()
-            },
-          ) {
+          IconButton(onClick = listener::close) {
             Icon(
-              imageVector = VoiceIcons.Close,
+              imageVector = VoiceIcons.ArrowBack,
               contentDescription = stringResource(StringsR.string.common_action_close),
             )
           }
         },
       )
     },
-  ) { contentPadding ->
-    LazyColumn(contentPadding = contentPadding) {
-      if (viewState.showDeveloperMenu && !viewState.kioskMode) {
-        item {
-          DeveloperMenuItem(
-            onClick = listener::openDeveloperMenu,
-          )
+    snackbarHost = { SnackbarHost(snackbarHostState) },
+    contentWindowInsets = WindowInsets(0, 0, 0, 0),
+  ) { padding ->
+    LazyColumn(
+      modifier = Modifier
+        .fillMaxSize()
+        .padding(padding),
+      contentPadding = WindowInsets.systemBars.asPaddingValues(),
+    ) {
+      item {
+        ThemeModeRow(viewState.themeMode) {
+          listener.onThemeModeRowClick()
         }
       }
+
+      if (viewState.showThemeColorSchemePref) {
+        item {
+          ThemeColorSchemeRow(viewState.themeColorScheme) {
+            listener.onThemeColorSchemeRowClick()
+          }
+        }
+      }
+
       item {
         ListItem(
           modifier = Modifier.clickable { listener.openFolderPicker() },
           leadingContent = {
             Icon(
-              imageVector = VoiceIcons.Book,
-              contentDescription = stringResource(StringsR.string.library_folders_title),
+              imageVector = VoiceIcons.Folder,
+              contentDescription = stringResource(StringsR.string.settings_library_folders_summary),
             )
           },
           headlineContent = {
-            Text(stringResource(StringsR.string.library_folders_title))
-          },
-          supportingContent = {
             Text(stringResource(StringsR.string.settings_library_folders_summary))
           },
         )
       }
-      item {
-        ThemeModeRow(viewState.themeMode, listener::onThemeModeRowClick)
-      }
-      if (viewState.showThemeColorSchemePref) {
-        item {
-          ThemeColorSchemeRow(viewState.themeColorScheme, listener::onThemeColorSchemeRowClick)
-        }
-      }
-      if (viewState.showAnalyticSetting && !viewState.kioskMode) {
-        item {
-          AnalyticsRow(analyticsEnabled = viewState.analyticsEnabled, toggle = listener::toggleAnalytics)
-        }
-      }
+
       item {
         ListItem(
-          modifier = Modifier.clickable { listener.toggleGrid() },
-          leadingContent = {
-            val icon = if (viewState.useGrid) {
-              VoiceIcons.GridView
-            } else {
-              VoiceIcons.ViewList
-            }
-            Icon(
-              imageVector = icon,
-              contentDescription = stringResource(StringsR.string.settings_library_use_grid_title),
-            )
-          },
           headlineContent = { Text(stringResource(StringsR.string.settings_library_use_grid_title)) },
           trailingContent = {
             Switch(
@@ -165,54 +138,24 @@ private fun Settings(
 
       item {
         ListItem(
-          modifier = Modifier.clickable { listener.onGeminiApiKeyRowClick() },
+          modifier = Modifier.clickable { listener.onAudiobookGenerationRowClick() },
           leadingContent = {
             Icon(
               imageVector = VoiceIcons.Settings,
-              contentDescription = stringResource(StringsR.string.settings_gemini_api_key_title),
+              contentDescription = stringResource(StringsR.string.settings_audiobook_generation_title),
             )
           },
           headlineContent = {
-            Text(stringResource(StringsR.string.settings_gemini_api_key_title))
+            Text(stringResource(StringsR.string.settings_audiobook_generation_title))
           },
           supportingContent = {
-            Text(stringResource(StringsR.string.settings_gemini_api_key_summary))
-          },
-        )
-      }
-
-      item {
-        ListItem(
-          modifier = Modifier.clickable { listener.onGeminiAnalysisModelRowClick() },
-          leadingContent = {
-            Icon(
-              imageVector = VoiceIcons.Settings,
-              contentDescription = stringResource(StringsR.string.settings_gemini_analysis_model_title),
+            Text(
+              if (viewState.geminiApiKey.isEmpty()) {
+                stringResource(StringsR.string.settings_gemini_api_key_summary)
+              } else {
+                "${viewState.geminiAnalysisModel} / ${viewState.geminiGenerationModel}"
+              }
             )
-          },
-          headlineContent = {
-            Text(stringResource(StringsR.string.settings_gemini_analysis_model_title))
-          },
-          supportingContent = {
-            Text(stringResource(StringsR.string.settings_gemini_analysis_model_summary))
-          },
-        )
-      }
-
-      item {
-        ListItem(
-          modifier = Modifier.clickable { listener.onGeminiGenerationModelRowClick() },
-          leadingContent = {
-            Icon(
-              imageVector = VoiceIcons.Settings,
-              contentDescription = stringResource(StringsR.string.settings_gemini_generation_model_title),
-            )
-          },
-          headlineContent = {
-            Text(stringResource(StringsR.string.settings_gemini_generation_model_title))
-          },
-          supportingContent = {
-            Text(stringResource(StringsR.string.settings_gemini_generation_model_summary))
           },
         )
       }
@@ -364,16 +307,16 @@ private fun AnalyticsRow(
 }
 
 @ContributesTo(AppScope::class)
-interface SettingsGraph {
-  val settingsViewModel: SettingsViewModel
+public interface SettingsGraph {
+  public val settingsViewModel: SettingsViewModel
 }
 
 @ContributesTo(AppScope::class)
-interface SettingsProvider {
+public interface SettingsProvider {
 
   @Provides
   @IntoSet
-  fun settingsNavEntryProvider(): NavEntryProvider<*> = NavEntryProvider<Destination.Settings> { key ->
+  public fun settingsNavEntryProvider(): NavEntryProvider<*> = NavEntryProvider<Destination.Settings> { key ->
     NavEntry(key) {
       Settings()
     }
@@ -381,7 +324,7 @@ interface SettingsProvider {
 }
 
 @Composable
-fun Settings() {
+public fun Settings() {
   val viewModel = retain<SettingsViewModel> { rootGraphAs<SettingsGraph>().settingsViewModel }
   val snackbarHostState = remember { SnackbarHostState() }
   val viewState = viewModel.viewState()
@@ -433,27 +376,13 @@ private fun Dialog(
         onDismiss = listener::dismissDialog,
       )
     }
-    SettingsViewState.Dialog.GeminiApiKey -> {
-      StringSettingDialog(
-        title = stringResource(StringsR.string.settings_gemini_api_key_title),
-        initialValue = viewState.geminiApiKey,
-        onConfirm = listener::setGeminiApiKey,
-        onDismiss = listener::dismissDialog,
-      )
-    }
-    SettingsViewState.Dialog.GeminiAnalysisModel -> {
-      StringSettingDialog(
-        title = stringResource(StringsR.string.settings_gemini_analysis_model_title),
-        initialValue = viewState.geminiAnalysisModel,
-        onConfirm = listener::setGeminiAnalysisModel,
-        onDismiss = listener::dismissDialog,
-      )
-    }
-    SettingsViewState.Dialog.GeminiGenerationModel -> {
-      StringSettingDialog(
-        title = stringResource(StringsR.string.settings_gemini_generation_model_title),
-        initialValue = viewState.geminiGenerationModel,
-        onConfirm = listener::setGeminiGenerationModel,
+    SettingsViewState.Dialog.AudiobookGeneration -> {
+      AudiobookGenerationDialog(
+        initialApiKey = viewState.geminiApiKey,
+        initialAnalysisModel = viewState.geminiAnalysisModel,
+        initialGenerationModel = viewState.geminiGenerationModel,
+        availableModels = viewState.availableModels,
+        onConfirm = listener::saveAudiobookGenerationSettings,
         onDismiss = listener::dismissDialog,
       )
     }

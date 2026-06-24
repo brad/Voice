@@ -4,11 +4,11 @@ import kotlinx.coroutines.delay
 import voice.core.logging.api.Logger
 import java.io.IOException
 
-class GeminiClient(
+public class GeminiClient(
   private val api: GeminiApi,
   private val apiKey: String,
 ) {
-  suspend fun generateContent(
+  public suspend fun generateContent(
     model: String,
     request: GenerateContentRequest,
     maxRetries: Int = 5,
@@ -43,5 +43,13 @@ class GeminiClient(
         throw e
       }
     }
+  }
+
+  public suspend fun listModels(): List<Model> {
+    val response = api.listModels(apiKey)
+    if (response.isSuccessful) {
+      return response.body()?.models ?: emptyList()
+    }
+    throw IOException("Gemini API error: ${response.code()} ${response.message()}")
   }
 }
