@@ -26,6 +26,8 @@ import voice.core.data.BookId
 import voice.core.data.GenerationStatus
 import voice.core.ui.icons.VoiceIcons
 import voice.features.bookOverview.di.BookOverviewGraph
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.Button
 import voice.navigation.Destination
 import voice.navigation.NavEntryProvider
 import voice.core.strings.R as StringsR
@@ -49,14 +51,18 @@ private fun ProgressTrackingScreen(bookId: BookId) {
       .bookOverviewGraphProviderFactory.create()
   }.progressTrackingViewModel
   ProgressTracking(
+    bookId = bookId,
     viewState = viewModel.state(bookId),
+    onConfigureGeneration = viewModel::onConfigureGeneration,
     onClose = viewModel::close,
   )
 }
 
 @Composable
 private fun ProgressTracking(
+  bookId: BookId,
   viewState: ProgressTrackingViewState,
+  onConfigureGeneration: (BookId) -> Unit,
   onClose: () -> Unit,
 ) {
   Scaffold(
@@ -90,6 +96,20 @@ private fun ProgressTracking(
             Text(text = viewState.status.label())
           },
         )
+      }
+      if (viewState.status == GenerationStatus.ANALYZED) {
+        item {
+          ListItem(
+            headlineContent = {
+              Button(
+                onClick = { onConfigureGeneration(bookId) },
+                modifier = Modifier.fillMaxWidth()
+              ) {
+                Text("Configure Generation")
+              }
+            }
+          )
+        }
       }
       item {
         ListItem(
