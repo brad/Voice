@@ -107,8 +107,8 @@ public class SettingsViewModel(
       dynamicColorAvailability.isSupported()
     }
     val geminiApiKey by remember { geminiApiKeyStore.data }.collectAsState(initial = "")
-    val geminiAnalysisModel by remember { geminiAnalysisModelStore.data }.collectAsState(initial = "gemini-1.5-flash")
-    val geminiGenerationModel by remember { geminiGenerationModelStore.data }.collectAsState(initial = "gemini-3.1-flash-tts-preview")
+    val geminiAnalysisModel by remember { geminiAnalysisModelStore.data }.collectAsState(initial = "gemini-2.5-flash")
+    val geminiGenerationModel by remember { geminiGenerationModelStore.data }.collectAsState(initial = "gemini-2.5-flash-preview-tts")
 
     LaunchedEffect(geminiApiKey) {
       if (geminiApiKey.isNotBlank()) {

@@ -40,7 +40,7 @@ class AnalysisWorkerTest {
   fun setUp() {
     context = ApplicationProvider.getApplicationContext()
     every { apiKeyStore.data } returns flowOf("fake-api-key")
-    every { modelStore.data } returns flowOf("gemini-1.5-flash")
+    every { modelStore.data } returns flowOf("gemini-2.5-flash")
   }
 
   @Test

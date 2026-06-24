@@ -40,7 +40,7 @@ class GenerationWorkerTest {
   fun setUp() {
     context = ApplicationProvider.getApplicationContext()
     every { apiKeyStore.data } returns flowOf("fake-api-key")
-    every { modelStore.data } returns flowOf("gemini-3.1-flash-tts-preview")
+    every { modelStore.data } returns flowOf("gemini-2.5-flash-preview-tts")
   }
 
   private fun createWorker(inputData: androidx.work.Data = workDataOf()): GenerationWorker {

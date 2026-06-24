@@ -64,7 +64,7 @@ public class AnalysisWorker(
       ),
     )
 
-    val model = modelStore.data.first().ifBlank { "gemini-1.5-flash" }
+    val model = modelStore.data.first().ifBlank { "gemini-2.5-flash" }
     val client = GeminiClient(geminiApi, apiKey)
 
     val inputStream = try {

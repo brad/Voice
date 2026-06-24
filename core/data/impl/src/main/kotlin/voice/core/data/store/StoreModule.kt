@@ -37,14 +37,14 @@ public interface StoreModule {
   @SingleIn(AppScope::class)
   @GeminiAnalysisModelStore
   private fun geminiAnalysisModel(factory: VoiceDataStoreFactory): DataStore<String> {
-    return factory.string("geminiAnalysisModel", defaultValue = "gemini-1.5-flash")
+    return factory.string("geminiAnalysisModel", defaultValue = "gemini-2.5-flash")
   }
 
   @Provides
   @SingleIn(AppScope::class)
   @GeminiGenerationModelStore
   private fun geminiGenerationModel(factory: VoiceDataStoreFactory): DataStore<String> {
-    return factory.string("geminiGenerationModel", defaultValue = "gemini-3.1-flash-tts-preview")
+    return factory.string("geminiGenerationModel", defaultValue = "gemini-2.5-flash-preview-tts")
   }
 
   @Provides

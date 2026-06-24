@@ -51,9 +51,9 @@ public data class SettingsViewState(
         showSupportDevelopment = true,
         kioskMode = false,
         geminiApiKey = "AIza...",
-        geminiAnalysisModel = "gemini-1.5-flash",
-        geminiGenerationModel = "gemini-3.1-flash-tts-preview",
-        availableModels = listOf("gemini-1.5-flash", "gemini-1.5-pro"),
+        geminiAnalysisModel = "gemini-2.5-flash",
+        geminiGenerationModel = "gemini-2.5-flash-preview-tts",
+        availableModels = listOf("gemini-2.5-flash", "gemini-1.5-pro"),
       )
     }
   }
