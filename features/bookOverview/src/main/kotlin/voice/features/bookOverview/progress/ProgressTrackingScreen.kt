@@ -159,7 +159,10 @@ private fun GenerationStatus?.label(): String {
 }
 
 @Composable
-private fun progressText(current: Int?, total: Int?): String {
+private fun progressText(
+  current: Int?,
+  total: Int?,
+): String {
   return if (current != null && total != null) {
     stringResource(StringsR.string.library_progress_tracking_analysis_value, current, total)
   } else {
