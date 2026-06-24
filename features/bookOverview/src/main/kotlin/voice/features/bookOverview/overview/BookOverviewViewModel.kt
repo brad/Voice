@@ -51,6 +51,11 @@ import voice.features.bookOverview.search.BookSearchViewState
 import voice.navigation.Destination
 import voice.navigation.Navigator
 import kotlin.time.Instant
+import voice.core.data.GenerationProgress
+import voice.core.data.GenerationStatus
+import voice.core.data.repo.GenerationRepository
+import voice.core.data.repo.AnalysisProgressRepository
+import voice.core.data.repo.AudioGenerationProgressRepository
 
 @SingleIn(BookOverviewScope::class)
 @Inject
@@ -80,6 +85,9 @@ class BookOverviewViewModel(
   @KioskModeFeatureFlagQualifier
   private val kioskModeFeatureFlag: FeatureFlag<Boolean>,
   dispatcherProvider: DispatcherProvider,
+  private val generationRepository: GenerationRepository,
+  private val analysisProgressRepository: AnalysisProgressRepository,
+  private val audioGenerationProgressRepository: AudioGenerationProgressRepository,
 ) {
 
   private val scope = MainScope(dispatcherProvider)
@@ -104,6 +112,8 @@ class BookOverviewViewModel(
       .collectAsState(initial = emptyList()).value
     val currentBookId = remember { currentBookStoreDataStore.data }
       .collectAsState(initial = null).value
+    val inProgressGenerations = remember { generationRepository.flowInProgressGenerations() }
+      .collectAsState(initial = emptyList()).value
     val scannerActive = remember { mediaScanner.scannerActive }
       .collectAsState(initial = false).value
     val folderPickerMovedDialogShown = remember { folderPickerMovedDialogShownStore.data }
@@ -136,21 +146,49 @@ class BookOverviewViewModel(
 
     return BookOverviewViewState(
       layoutMode = layoutMode,
-      books = books
-        .groupBy {
-          it.category
-        }
-        .mapValues { (category, books) ->
-          books
-            .sortedWith(category.comparator)
-            .associate { book ->
-              book.id to book.itemViewState(
-                currentBookId = currentBookId,
-                livePlaybackState = { livePlaybackState.value },
-              )
+      books = buildMap {
+        putAll(books
+          .groupBy {
+            it.category
+          }
+          .mapValues { (category, books) ->
+            books
+              .sortedWith(category.comparator)
+              .associate { book ->
+                book.id to book.itemViewState(
+                  currentBookId = currentBookId,
+                  livePlaybackState = { livePlaybackState.value },
+                )
+              }
+          })
+        if (inProgressGenerations.isNotEmpty()) {
+          put(BookOverviewCategory.GENERATING, inProgressGenerations.associate { gen ->
+            val analysisProgress = remember(gen.bookId) { analysisProgressRepository.flowProgressForBook(gen.bookId) }.collectAsState(initial = null).value
+            val audioProgress = remember(gen.bookId) { audioGenerationProgressRepository.flowProgressForBook(gen.bookId) }.collectAsState(initial = null).value
+            val progress = when (gen.status) {
+              GenerationStatus.ANALYZING -> if (analysisProgress != null && analysisProgress.totalChunks > 0) analysisProgress.currentChunkIndex.toFloat() / analysisProgress.totalChunks else 0f
+              GenerationStatus.GENERATING -> if (audioProgress != null && audioProgress.totalChunks > 0) audioProgress.chunkIndex.toFloat() / audioProgress.totalChunks else 0f
+              GenerationStatus.COMPLETED -> 1f
+              else -> 0f
             }
+            val remainingTime = when (gen.status) {
+              GenerationStatus.ANALYZING -> "Analyzing..."
+              GenerationStatus.GENERATING -> "Generating..."
+              GenerationStatus.PENDING -> "Pending..."
+              GenerationStatus.FAILED -> "Failed"
+              else -> ""
+            }
+            gen.bookId to rememberUpdatedState(BookOverviewItemViewState(
+              name = gen.title ?: "Unknown Title",
+              author = gen.author,
+              cover = null,
+              progress = progress,
+              id = gen.bookId,
+              remainingTime = remainingTime
+            ))
+          })
         }
-        .toSortedMap(),
+      }.toSortedMap(),
       playButtonState = if (playState == PlayStateManager.PlayState.Playing) {
         BookOverviewViewState.PlayButtonState.Playing
       } else {
@@ -254,7 +292,13 @@ class BookOverviewViewModel(
   }
 
   fun onBookClick(id: BookId) {
-    navigator.goTo(Destination.Playback(id))
+    scope.launch {
+      if (generationRepository.progressForBook(id) != null) {
+        navigator.goTo(Destination.ProgressTracking(id))
+      } else {
+        navigator.goTo(Destination.Playback(id))
+      }
+    }
   }
 
   fun onBookFolderClick() {
