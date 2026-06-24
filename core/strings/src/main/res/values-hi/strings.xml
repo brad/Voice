@@ -57,6 +57,7 @@
     <string name="folder.type.title">आपकी फाइलें कैसे संरचित हैं?</string>
     <string name="library.category.completed.title">पूर्ण</string>
     <string name="library.category.current.title">वर्तमान</string>
+    <string name="library.category.generating.title">Generating from eBook</string>
     <string name="library.category.not_started.title">अभी प्रारंभ नही</string>
     <string name="library.empty.add_first_book">चलिए आपका ऑडियोबुक फोल्डर जोड़ते हैं ताकि आप सुनना शुरू कर सकें!</string>
     <string name="library.import_epub">ईबुक आयात करें</string>

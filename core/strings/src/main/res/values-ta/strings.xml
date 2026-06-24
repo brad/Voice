@@ -58,6 +58,7 @@
     <string name="folder.type.title">உங்கள் கோப்புகள் எவ்வாறு கட்டமைக்கப்பட்டுள்ளன?</string>
     <string name="library.category.completed.title">முடிந்தது</string>
     <string name="library.category.current.title">மின்னோட்ட்ம், ஓட்டம்</string>
+    <string name="library.category.generating.title">Generating from eBook</string>
     <string name="library.category.not_started.title">இன்னும் தொடங்கப்படவில்லை</string>
     <string name="library.empty.add_first_book">உங்கள் ஆடியோபுக் கோப்புறையைச் சேர்ப்போம், எனவே நீங்கள் கேட்கத் தொடங்கலாம்!</string>
     <string name="library.import_epub">eBook இறக்குமதி செய்க</string>

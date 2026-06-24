@@ -61,6 +61,7 @@
     <string name="folder.type.title">איך הקבצים שלך מסודרים?</string>
     <string name="library.category.completed.title">הושלמו</string>
     <string name="library.category.current.title">נוכחי</string>
+    <string name="library.category.generating.title">Generating from eBook</string>
     <string name="library.category.not_started.title">לא שמעתי עדיין</string>
     <string name="library.empty.add_first_book">בואו נוסיף את תיקיית הקולספר שלכם כדי שתוכלו להתחיל להאזין!</string>
     <string name="library.import_epub">ייבא ספר אלקטרוני</string>

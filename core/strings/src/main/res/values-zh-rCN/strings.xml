@@ -49,6 +49,7 @@
     <string name="folder.type.title">您的文件是如何组织的？</string>
     <string name="library.category.completed.title">已结束播放</string>
     <string name="library.category.current.title">正在播放中</string>
+    <string name="library.category.generating.title">Generating from eBook</string>
     <string name="library.category.not_started.title">尚未开始播放</string>
     <string name="library.empty.add_first_book">首先添加有声书文件夹，然后就可以开始听书啦！</string>
     <string name="library.import_epub">导入电子书</string>

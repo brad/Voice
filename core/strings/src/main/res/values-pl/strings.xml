@@ -64,6 +64,7 @@
     <string name="folder.type.title">Jaka jest struktura twoich plików?</string>
     <string name="library.category.completed.title">Ukończone</string>
     <string name="library.category.current.title">Aktualne</string>
+    <string name="library.category.generating.title">Generating from eBook</string>
     <string name="library.category.not_started.title">Nierozpoczęte</string>
     <string name="library.empty.add_first_book">Dodajmy twój folder z audiobookami aby rozpocząć słuchanie!</string>
     <string name="library.import_epub">Importuj e-book</string>

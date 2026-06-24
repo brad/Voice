@@ -58,6 +58,7 @@
     <string name="folder.type.title">Hur är dina filer uppbyggda?</string>
     <string name="library.category.completed.title">Avslutade</string>
     <string name="library.category.current.title">Aktuella</string>
+    <string name="library.category.generating.title">Generating from eBook</string>
     <string name="library.category.not_started.title">Inte påbörjade ännu</string>
     <string name="library.empty.add_first_book">Lägg till din ljudboksmapp så att du kan börja lyssna!</string>
     <string name="library.import_epub">Importera e-bok</string>

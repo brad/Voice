@@ -60,6 +60,7 @@
     <string name="folder.type.title">Com s\'estructuren els fitxers?</string>
     <string name="library.category.completed.title">Completat</string>
     <string name="library.category.current.title">Actual</string>
+    <string name="library.category.generating.title">Generating from eBook</string>
     <string name="library.category.not_started.title">Encara no s\'ha iniciat</string>
     <string name="library.empty.add_first_book">Afegiu la carpeta de l\'audiollibre perquè pugueu començar a escoltar-lo.</string>
     <string name="library.import_epub">Importa un eBook</string>

@@ -58,6 +58,7 @@
     <string name="folder.type.title">Kuidas on sinu heliraamatute failid struktureeritud?</string>
     <string name="library.category.completed.title">Kuulatud</string>
     <string name="library.category.current.title">Praegune</string>
+    <string name="library.category.generating.title">Generating from eBook</string>
     <string name="library.category.not_started.title">Kuulamise ootel</string>
     <string name="library.empty.add_first_book">Lisame nüüd üheskoos heliraamatute kausta ja sa saad alustada kuulamisega!</string>
     <string name="library.import_epub">Impordi e-raamat</string>

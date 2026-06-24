@@ -64,6 +64,7 @@
     <string name="folder.type.title">Jak jsou organizované vaše soubory?</string>
     <string name="library.category.completed.title">Dokončeno</string>
     <string name="library.category.current.title">Aktuální</string>
+    <string name="library.category.generating.title">Generating from eBook</string>
     <string name="library.category.not_started.title">Doposud nespuštěno</string>
     <string name="library.empty.add_first_book">Pojďme přidat vaši složku s audioknihami ať můžete začít poslouchat!</string>
     <string name="library.import_epub">Importovat e-knihu</string>
