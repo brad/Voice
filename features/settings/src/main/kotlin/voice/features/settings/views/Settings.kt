@@ -27,12 +27,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation3.runtime.NavEntry
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.IntoSet
 import dev.zacsweers.metro.Provides
 import voice.core.common.rootGraphAs
-import voice.core.strings.R as StringsR
 import voice.core.ui.icons.VoiceIcons
 import voice.features.settings.SettingsListener
 import voice.features.settings.SettingsViewEffect
@@ -41,7 +41,7 @@ import voice.features.settings.SettingsViewState
 import voice.features.settings.views.sleeptimer.AutoSleepTimerCard
 import voice.navigation.Destination
 import voice.navigation.NavEntryProvider
-import androidx.navigation3.runtime.NavEntry
+import voice.core.strings.R as StringsR
 
 @Composable
 internal fun Settings(
@@ -154,7 +154,7 @@ internal fun Settings(
                 stringResource(StringsR.string.settings_gemini_api_key_summary)
               } else {
                 "${viewState.geminiAnalysisModel} / ${viewState.geminiGenerationModel}"
-              }
+              },
             )
           },
         )
