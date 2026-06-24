@@ -163,4 +163,14 @@
     <string name="settings.gemini.analysis_model.title">Gemini பகுப்பாய்வு மாதிரி</string>
     <string name="settings.gemini.generation_model.title">Gemini உருவாக்க மாதிரி</string>
     <string name="settings.audiobook_generation.title">ஒலிப்புத்தக உருவாக்கம்</string>
+    <string name="generation_settings.title">Generation Settings</string>
+    <string name="generation_settings.characters_voices">Characters &amp; Voices</string>
+    <string name="generation_settings.action.start_generation">Start Generation</string>
+    <string name="generation_settings.action.discard_restart">Discard &amp; Restart</string>
+    <string name="generation_settings.status.generating">Generating...</string>
+    <string name="generation_settings.status.completed">Generation Completed</string>
+    <string name="generation_settings.discard_confirmation.title">Discard Generation?</string>
+    <string name="generation_settings.discard_confirmation.message">This will stop the current generation and delete any progress and audio files created so far.</string>
+    <string name="generation_settings.discard_confirmation.confirm">Discard</string>
+    <string name="generation_settings.discard_confirmation.cancel">Cancel</string>
 </resources>

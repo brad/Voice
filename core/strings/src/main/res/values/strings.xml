@@ -320,7 +320,6 @@
     <string name="sleep_timer.dialog.title">Sweet dreams! 🌙</string>
     <!-- Sleep timer option and playback status for stopping at the end of a chapter. -->
     <string name="sleep_timer.end_of_chapter">End of Chapter</string>
-
     <!-- Title for the generation settings screen. -->
     <string name="generation_settings.title">Generation Settings</string>
     <!-- Label for the characters and voices section in generation settings. -->
