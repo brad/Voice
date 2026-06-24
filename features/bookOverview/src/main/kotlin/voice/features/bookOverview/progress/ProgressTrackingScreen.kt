@@ -1,11 +1,13 @@
 package voice.features.bookOverview.progress
 
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
@@ -26,8 +28,6 @@ import voice.core.data.BookId
 import voice.core.data.GenerationStatus
 import voice.core.ui.icons.VoiceIcons
 import voice.features.bookOverview.di.BookOverviewGraph
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.Button
 import voice.navigation.Destination
 import voice.navigation.NavEntryProvider
 import voice.core.strings.R as StringsR
