@@ -153,17 +153,17 @@ private fun GenerationSettings(
               Text(stringResource(StringsR.string.generation_settings_action_discard_restart))
             }
           } else if (isCompleted) {
-             Text(
-               text = stringResource(StringsR.string.generation_settings_status_completed),
-               style = MaterialTheme.typography.bodyMedium,
-               modifier = Modifier.align(Alignment.CenterHorizontally).padding(bottom = 8.dp),
-             )
-             Button(
-               onClick = { showDiscardDialog = true },
-               modifier = Modifier.fillMaxWidth(),
-             ) {
-               Text(stringResource(StringsR.string.generation_settings_action_discard_restart))
-             }
+            Text(
+              text = stringResource(StringsR.string.generation_settings_status_completed),
+              style = MaterialTheme.typography.bodyMedium,
+              modifier = Modifier.align(Alignment.CenterHorizontally).padding(bottom = 8.dp),
+            )
+            Button(
+              onClick = { showDiscardDialog = true },
+              modifier = Modifier.fillMaxWidth(),
+            ) {
+              Text(stringResource(StringsR.string.generation_settings_action_discard_restart))
+            }
           } else {
             Button(
               onClick = { onStartGeneration(bookId) },
