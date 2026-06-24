@@ -117,6 +117,8 @@
     <string name="settings.gemini.api_key.summary">مفتاح API لخدمات Gemini للذكاء الاصطناعي</string>
     <string name="settings.gemini.analysis_model.title">نموذج تحليل Gemini</string>
     <string name="settings.gemini.analysis_model.summary">النموذج المستخدم لتحليل الكتب</string>
+    <string name="settings_gemini_analysis_model_summary">النموذج المستخدم لتحليل الكتب</string>
     <string name="settings.gemini.generation_model.title">نموذج التوليد Gemini</string>
     <string name="settings.gemini.generation_model.summary">النموذج المستخدم لإنشاء الصوت</string>
+    <string name="settings_gemini_generation_model_summary">النموذج المستخدم لإنشاء الصوت</string>
 </resources>
