@@ -47,8 +47,8 @@ class SettingsViewModelTest {
   private val analyticsConsentStore = MemoryDataStore(false)
   private val developerMenuUnlockedStore = MemoryDataStore(false)
   private val geminiApiKeyStore = MemoryDataStore("")
-  private val geminiAnalysisModelStore = MemoryDataStore("gemini-2.5-flash")
-  private val geminiGenerationModelStore = MemoryDataStore("gemini-2.5-flash-preview-tts")
+  private val geminiAnalysisModelStore = MemoryDataStore("gemini-3.1-flash-lite")
+  private val geminiGenerationModelStore = MemoryDataStore("gemini-3.1-flash-tts-preview")
   private val navigator = mockk<Navigator> {
     every { goTo(any()) } just Runs
   }
@@ -66,7 +66,7 @@ class SettingsViewModelTest {
     every { isSupported() } returns true
   }
   private val geminiApi = mockk<GeminiApi> {
-    coEvery { listModels(any()) } returns Response.success(ListModelsResponse(listOf(Model(name = "models/gemini-2.5-flash"))))
+    coEvery { listModels(any()) } returns Response.success(ListModelsResponse(listOf(Model(name = "models/gemini-3.1-flash-lite"))))
   }
 
   private val viewModel = SettingsViewModel(
@@ -250,8 +250,8 @@ class SettingsViewModelTest {
     }.test {
       val initial = awaitItem()
       assertEquals(expected = "", actual = initial.geminiApiKey)
-      assertEquals(expected = "gemini-2.5-flash", actual = initial.geminiAnalysisModel)
-      assertEquals(expected = "gemini-2.5-flash-preview-tts", actual = initial.geminiGenerationModel)
+      assertEquals(expected = "gemini-3.1-flash-lite", actual = initial.geminiAnalysisModel)
+      assertEquals(expected = "gemini-3.1-flash-tts-preview", actual = initial.geminiGenerationModel)
 
       viewModel.saveAudiobookGenerationSettings("new-key", "new-analysis", "new-gen")
 
@@ -269,14 +269,14 @@ class SettingsViewModelTest {
     }.test {
       assertEquals(expected = emptyList(), actual = awaitItem().availableModels)
 
-      viewModel.saveAudiobookGenerationSettings("valid-key", "gemini-2.5-flash", "gemini-2.5-flash-preview-tts")
+      viewModel.saveAudiobookGenerationSettings("valid-key", "gemini-3.1-flash-lite", "gemini-3.1-flash-tts-preview")
 
       // Wait for models to be fetched
       val updated = awaitItem()
       if (updated.availableModels.isEmpty()) {
-        assertEquals(expected = listOf("gemini-2.5-flash"), actual = awaitItem().availableModels)
+        assertEquals(expected = listOf("gemini-3.1-flash-lite"), actual = awaitItem().availableModels)
       } else {
-        assertEquals(expected = listOf("gemini-2.5-flash"), actual = updated.availableModels)
+        assertEquals(expected = listOf("gemini-3.1-flash-lite"), actual = updated.availableModels)
       }
     }
   }
