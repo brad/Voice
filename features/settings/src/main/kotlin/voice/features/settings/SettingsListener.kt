@@ -32,7 +32,11 @@ public interface SettingsListener {
   public fun openDeveloperMenu()
 
   public fun onAudiobookGenerationRowClick()
-  public fun saveAudiobookGenerationSettings(apiKey: String, analysisModel: String, generationModel: String)
+  public fun saveAudiobookGenerationSettings(
+    apiKey: String,
+    analysisModel: String,
+    generationModel: String,
+  )
 
   public companion object {
     public fun noop(): SettingsListener = object : SettingsListener {
@@ -61,7 +65,11 @@ public interface SettingsListener {
       override fun onAppVersionClick() {}
       override fun openDeveloperMenu() {}
       override fun onAudiobookGenerationRowClick() {}
-      override fun saveAudiobookGenerationSettings(apiKey: String, analysisModel: String, generationModel: String) {}
+      override fun saveAudiobookGenerationSettings(
+        apiKey: String,
+        analysisModel: String,
+        generationModel: String,
+      ) {}
     }
   }
 }

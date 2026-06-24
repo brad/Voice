@@ -157,7 +157,6 @@
     <string name="settings.gemini.api_key.title">Eochair API Gemini</string>
     <string name="settings.gemini.api_key.summary">Eochair API do sheirbhísí intleachta saorga Gemini</string>
     <string name="settings.gemini.analysis_model.title">Múnla anailíse Gemini</string>
-    <string name="settings.gemini.analysis_model.summary">Múnla a úsáidtear chun leabhair a anailísiú</string>
     <string name="settings.gemini.generation_model.title">Múnla giniúna Gemini</string>
-    <string name="settings.gemini.generation_model.summary">Múnla a úsáidtear chun fuaim a ghiniúint</string>
+    <string name="settings.audiobook_generation.title">Giniúint closleabhar</string>
 </resources>

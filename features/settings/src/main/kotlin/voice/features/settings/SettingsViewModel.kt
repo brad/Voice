@@ -305,7 +305,11 @@ public class SettingsViewModel(
     dialog.value = SettingsViewState.Dialog.AudiobookGeneration
   }
 
-  override fun saveAudiobookGenerationSettings(apiKey: String, analysisModel: String, generationModel: String) {
+  override fun saveAudiobookGenerationSettings(
+    apiKey: String,
+    analysisModel: String,
+    generationModel: String,
+  ) {
     mainScope.launch {
       geminiApiKeyStore.updateData { apiKey }
       geminiAnalysisModelStore.updateData { analysisModel }

@@ -55,14 +55,14 @@ internal fun AudiobookGenerationDialog(
           label = stringResource(StringsR.string.settings_gemini_analysis_model_title),
           selectedModel = analysisModel,
           availableModels = availableModels,
-          onModelSelected = { analysisModel = it },
+          onModelSelect = { analysisModel = it },
         )
 
         ModelSelector(
           label = stringResource(StringsR.string.settings_gemini_generation_model_title),
           selectedModel = generationModel,
           availableModels = availableModels,
-          onModelSelected = { generationModel = it },
+          onModelSelect = { generationModel = it },
           modifier = Modifier.padding(top = 16.dp),
         )
       }
@@ -89,7 +89,7 @@ private fun ModelSelector(
   label: String,
   selectedModel: String,
   availableModels: List<String>,
-  onModelSelected: (String) -> Unit,
+  onModelSelect: (String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
   var expanded by remember { mutableStateOf(false) }
@@ -97,7 +97,7 @@ private fun ModelSelector(
   if (availableModels.isEmpty()) {
     OutlinedTextField(
       value = selectedModel,
-      onValueChange = onModelSelected,
+      onValueChange = onModelSelect,
       label = { Text(label) },
       modifier = modifier.fillMaxWidth(),
       singleLine = true,
@@ -134,7 +134,7 @@ private fun ModelSelector(
           DropdownMenuItem(
             text = { Text(model) },
             onClick = {
-              onModelSelected(model)
+              onModelSelect(model)
               expanded = false
             },
           )
