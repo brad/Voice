@@ -320,4 +320,25 @@
     <string name="sleep_timer.dialog.title">Sweet dreams! 🌙</string>
     <!-- Sleep timer option and playback status for stopping at the end of a chapter. -->
     <string name="sleep_timer.end_of_chapter">End of Chapter</string>
+
+    <!-- Title for the generation settings screen. -->
+    <string name="generation_settings.title">Generation Settings</string>
+    <!-- Label for the characters and voices section in generation settings. -->
+    <string name="generation_settings.characters_voices">Characters &amp; Voices</string>
+    <!-- Button label to start the audiobook generation. -->
+    <string name="generation_settings.action.start_generation">Start Generation</string>
+    <!-- Button label to discard current generation and restart. -->
+    <string name="generation_settings.action.discard_restart">Discard &amp; Restart</string>
+    <!-- Status message when generation is in progress. -->
+    <string name="generation_settings.status.generating">Generating...</string>
+    <!-- Status message when generation is completed. -->
+    <string name="generation_settings.status.completed">Generation Completed</string>
+    <!-- Title for the discard generation confirmation dialog. -->
+    <string name="generation_settings.discard_confirmation.title">Discard Generation?</string>
+    <!-- Message for the discard generation confirmation dialog. -->
+    <string name="generation_settings.discard_confirmation.message">This will stop the current generation and delete any progress and audio files created so far.</string>
+    <!-- Positive button label for discarding generation. -->
+    <string name="generation_settings.discard_confirmation.confirm">Discard</string>
+    <!-- Negative button label for discarding generation. -->
+    <string name="generation_settings.discard_confirmation.cancel">Cancel</string>
 </resources>
