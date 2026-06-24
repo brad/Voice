@@ -17,9 +17,7 @@ public interface GeminiApi {
   ): Response<GenerateContentResponse>
 
   @GET("v1beta/models")
-  public suspend fun listModels(
-    @Query("key") apiKey: String,
-  ): Response<ListModelsResponse>
+  public suspend fun listModels(@Query("key") apiKey: String): Response<ListModelsResponse>
 }
 
 @Serializable
