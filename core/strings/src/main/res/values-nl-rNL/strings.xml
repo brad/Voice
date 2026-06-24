@@ -149,10 +149,8 @@
     <string name="settings.gemini.api_key.summary">API-sleutel voor Gemini AI-services</string>
     <string name="settings.gemini.analysis_model.title">Gemini-analysemodel</string>
     <string name="settings.gemini.analysis_model.summary">Model dat wordt gebruikt voor boekanalyse</string>
-    <string name="settings_gemini_analysis_model_summary">Model dat wordt gebruikt voor boekanalyse</string>
     <string name="settings.gemini.generation_model.title">Gemini-generatiemodel</string>
     <string name="settings.gemini.generation_model.summary">Model dat wordt gebruikt voor audiogeneratie</string>
-    <string name="settings_gemini_generation_model_summary">Model dat wordt gebruikt voor audiogeneratie</string>
     <string name="settings.audiobook_generation.title">Audioboekgeneratie</string>
     <string name="settings.gemini.analysis_model.dialog.title">Selecteer analysiemodel</string>
     <string name="settings.gemini.generation_model.dialog.title">Selecteer generatiemodel</string>
