@@ -1,9 +1,9 @@
 package voice.features.bookOverview.progress
 
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.Composable
 import dev.zacsweers.metro.Inject
 import voice.core.data.BookId
 import voice.core.data.GenerationStatus

@@ -1,10 +1,10 @@
 package voice.features.bookOverview.progress
 
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -103,11 +103,11 @@ private fun ProgressTracking(
             headlineContent = {
               Button(
                 onClick = { onConfigureGeneration(bookId) },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
               ) {
                 Text("Configure Generation")
               }
-            }
+            },
           )
         }
       }
