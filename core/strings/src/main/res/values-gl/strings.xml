@@ -152,6 +152,4 @@
     <string name="settings.gemini.generation_model.title">Modelo de xeración de Gemini</string>
     <string name="settings.gemini.generation_model.summary">Modelo usado para a xeración de audio</string>
     <string name="settings.audiobook_generation.title">Xeración de audiolibros</string>
-    <string name="settings.gemini.analysis_model.dialog.title">Seleccionar modelo de análise</string>
-    <string name="settings.gemini.generation_model.dialog.title">Seleccionar modelo de xeración</string>
 </resources>

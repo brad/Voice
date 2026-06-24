@@ -152,6 +152,4 @@
     <string name="settings.gemini.generation_model.title">Gemini oluşturma modeli</string>
     <string name="settings.gemini.generation_model.summary">Ses oluşturma için kullanılan model</string>
     <string name="settings.audiobook_generation.title">Sesli kitap oluşturma</string>
-    <string name="settings.gemini.analysis_model.dialog.title">Analiz modelini seç</string>
-    <string name="settings.gemini.generation_model.dialog.title">Oluşturma modelini seç</string>
 </resources>

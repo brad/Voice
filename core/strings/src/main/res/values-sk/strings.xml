@@ -158,6 +158,4 @@
     <string name="settings.gemini.generation_model.title">Generačný model Gemini</string>
     <string name="settings.gemini.generation_model.summary">Model používaný na generovanie audia</string>
     <string name="settings.audiobook_generation.title">Generovanie audiokníh</string>
-    <string name="settings.gemini.analysis_model.dialog.title">Vybrať model analýzy</string>
-    <string name="settings.gemini.generation_model.dialog.title">Vybrať model generovania</string>
 </resources>

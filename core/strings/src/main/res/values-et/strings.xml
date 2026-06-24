@@ -152,6 +152,4 @@
     <string name="settings.gemini.generation_model.title">Gemini genereerimismudel</string>
     <string name="settings.gemini.generation_model.summary">Heli genereerimiseks kasutatav mudel</string>
     <string name="settings.audiobook_generation.title">Audioraamatute genereerimine</string>
-    <string name="settings.gemini.analysis_model.dialog.title">Vali analüüsimudel</string>
-    <string name="settings.gemini.generation_model.dialog.title">Vali genereerimismudel</string>
 </resources>
