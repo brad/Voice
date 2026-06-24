@@ -12,6 +12,7 @@ import voice.core.data.BookId
 import voice.core.data.GenerationProgress
 import voice.core.data.GenerationStatus
 import voice.core.data.repo.AudioGenerationProgressRepository
+import voice.core.data.repo.BookContentRepo
 import voice.core.data.repo.CharacterRepository
 import voice.core.data.repo.GenerationRepository
 import voice.core.data.repo.VoiceMappingRepository
@@ -29,10 +30,10 @@ import voice.core.gemini.SpeakerVoiceConfig
 import voice.core.gemini.SpeechConfig
 import voice.core.gemini.VoiceConfig
 import voice.core.logging.api.Logger
+import voice.core.scanner.MediaScanTrigger
 import java.io.File
 import java.io.FileOutputStream
 import java.time.Instant
-import kotlin.uuid.Uuid
 
 public class GenerationWorker(
   context: Context,
@@ -42,9 +43,11 @@ public class GenerationWorker(
   private val wordPronunciationRepository: WordPronunciationRepository,
   private val audioGenerationProgressRepository: AudioGenerationProgressRepository,
   private val generationRepository: GenerationRepository,
+  private val bookContentRepo: BookContentRepo,
   private val geminiApi: GeminiApi,
   private val apiKeyStore: DataStore<String>,
   private val modelStore: DataStore<String>,
+  private val mediaScanTrigger: MediaScanTrigger,
 ) : CoroutineWorker(context, params) {
 
   override suspend fun doWork(): Result {
@@ -167,7 +170,6 @@ public class GenerationWorker(
 
           audioGenerationProgressRepository.insert(
             AudioGenerationProgress(
-
               bookId = bookId,
               chapterIndex = chapterIdx,
               chunkIndex = chunkIdx + 1,
@@ -190,6 +192,15 @@ public class GenerationWorker(
     }
 
     updateStatus(bookId, GenerationStatus.COMPLETED)
+    mediaScanTrigger.scan()
+
+    // Improve metadata after scan
+    val internalId = BookId(outputDir.toURI().toString())
+    val generatedContent = bookContentRepo.get(internalId)
+    if (generatedContent != null) {
+      bookContentRepo.put(generatedContent.copy(name = epubData.title))
+    }
+
     return Result.success()
   }
 
@@ -271,9 +282,11 @@ public class GenerationWorker(
     private val wordPronunciationRepository: WordPronunciationRepository,
     private val audioGenerationProgressRepository: AudioGenerationProgressRepository,
     private val generationRepository: GenerationRepository,
+    private val bookContentRepo: BookContentRepo,
     private val geminiApi: GeminiApi,
     private val apiKeyStore: DataStore<String>,
     private val modelStore: DataStore<String>,
+    private val mediaScanTrigger: MediaScanTrigger,
   ) : WorkerCreator {
     override fun create(
       context: Context,
@@ -282,7 +295,8 @@ public class GenerationWorker(
       return GenerationWorker(
         context, parameters, characterRepository, voiceMappingRepository,
         wordPronunciationRepository, audioGenerationProgressRepository,
-        generationRepository, geminiApi, apiKeyStore, modelStore,
+        generationRepository, bookContentRepo, geminiApi, apiKeyStore,
+        modelStore, mediaScanTrigger,
       )
     }
   }

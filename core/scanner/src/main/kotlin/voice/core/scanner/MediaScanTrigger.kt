@@ -1,5 +1,6 @@
 package voice.core.scanner
 
+import android.content.Context
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.SingleIn
@@ -16,13 +17,16 @@ import voice.core.data.folders.FolderType
 import voice.core.data.repo.BookRepository
 import voice.core.documentfile.CachedDocumentFile
 import voice.core.documentfile.CachedDocumentFileFactory
+import voice.core.documentfile.FileBasedDocumentFile
 import voice.core.logging.api.Logger
+import java.io.File
 import kotlin.time.measureTime
 
 @SingleIn(AppScope::class)
 @Inject
 public class MediaScanTrigger
 internal constructor(
+  private val context: Context,
   private val audiobookFolders: AudiobookFolders,
   private val scanner: MediaScanner,
   private val coverScanner: CoverScanner,
@@ -47,13 +51,21 @@ internal constructor(
       oldJob?.cancelAndJoin()
 
       measureTime {
-        val folders: Map<FolderType, List<CachedDocumentFile>> = audiobookFolders.all()
+        val folders: MutableMap<FolderType, List<CachedDocumentFile>> = audiobookFolders.all()
           .first()
           .mapValues { (_, documentFilesWithUri) ->
             documentFilesWithUri.map {
               documentFileFactory.create(it.documentFile.uri)
             }
-          }
+          }.toMutableMap()
+
+        // Include internal audiobooks directory
+        val internalAudiobooksDir = File(context.filesDir, "audiobooks")
+        if (internalAudiobooksDir.exists() && internalAudiobooksDir.isDirectory) {
+          val internalFolders = folders[FolderType.Root].orEmpty()
+          folders[FolderType.Root] = internalFolders + FileBasedDocumentFile(internalAudiobooksDir)
+        }
+
         scanner.scan(folders)
       }.also {
         Logger.i("scan took $it")

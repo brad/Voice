@@ -42,7 +42,7 @@ This roadmap outlines the steps to implement auto-builds in CI and a feature to 
 - [x] **Generation Settings UI**: Add a screen where users can review and tune generation settings before starting generation, including voice assignments, pronunciation overrides, and similar per-book controls.
 - [x] **Generation Locking & Restart UX**: Disable generation settings once generation has started, and provide a clear way to discard in-progress generation and restart if the user wants to change locked settings.
 - [x] **Progress Tracking UI**: Create a screen to monitor analysis and generation status (resumable).
-- [ ] **Library Registration**: Automatically register the final generated audio files as a playable Audiobook in the existing library.
+- [x] **Library Registration**: Automatically register the final generated audio files as a playable Audiobook in the existing library.
 - [ ] **Error Handling UI**: Notify users of persistent API failures or missing API keys.
 
 ## Phase 5: Final Polish & Testing
