@@ -61,7 +61,20 @@
     <string name="library.category.not_started.title">Galu no incumintzadu</string>
     <string name="library.empty.add_first_book">Agiunghimus sa cartella de audiolibros tua in manera chi potzas incumintzare a ascurtare!</string>
     <string name="library.import_epub">Importa eBook</string>
-    <string name="library.folders.title">Cartellas de sos audiolibros</string>
+    <string name="library.progress_tracking.title">Generation Progress</string>
+    <string name="library.progress_tracking.overall_status">Overall status</string>
+    <string name="library.progress_tracking.analysis_progress">Analysis progress</string>
+    <string name="library.progress_tracking.generation_progress">Generation progress</string>
+    <string name="library.progress_tracking.last_updated">Last updated</string>
+    <string name="library.progress_tracking.not_started">Not started</string>
+    <string name="library.progress_tracking.analysis_value">%1$d / %2$d chunks</string>
+    <string name="library.progress_tracking.generation_value">Chapter %1$d · Chunk %2$d / %3$d</string>
+    <string name="library.progress_tracking.status_pending">Pending</string>
+    <string name="library.progress_tracking.status_analyzing">Analyzing</string>
+    <string name="library.progress_tracking.status_analyzed">Analyzed</string>
+    <string name="library.progress_tracking.status_generating">Generating</string>
+    <string name="library.progress_tracking.status_completed">Completed</string>
+    <string name="library.progress_tracking.status_failed">Failed</string>    <string name="library.folders.title">Cartellas de sos audiolibros</string>
     <string name="library.folders.moved.dialog.title">Cartellas de audiolibros tramudadas</string>
     <string name="library.folders.moved.dialog.message">Como podes manigiare sas cartellas de audiolibros in sas Preferèntzias.</string>
     <string name="library.search.hint">Ite ses chirchende?</string>

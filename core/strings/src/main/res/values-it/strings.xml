@@ -64,7 +64,20 @@
     <string name="library.category.not_started.title">Non ancora iniziato</string>
     <string name="library.empty.add_first_book">Aggiungiamo la tua cartella degli audiolibri per iniziare ad ascoltare!</string>
     <string name="library.import_epub">Importa eBook</string>
-    <string name="library.folders.title">Cartelle audiolibri</string>
+    <string name="library.progress_tracking.title">Generation Progress</string>
+    <string name="library.progress_tracking.overall_status">Overall status</string>
+    <string name="library.progress_tracking.analysis_progress">Analysis progress</string>
+    <string name="library.progress_tracking.generation_progress">Generation progress</string>
+    <string name="library.progress_tracking.last_updated">Last updated</string>
+    <string name="library.progress_tracking.not_started">Not started</string>
+    <string name="library.progress_tracking.analysis_value">%1$d / %2$d chunks</string>
+    <string name="library.progress_tracking.generation_value">Chapter %1$d · Chunk %2$d / %3$d</string>
+    <string name="library.progress_tracking.status_pending">Pending</string>
+    <string name="library.progress_tracking.status_analyzing">Analyzing</string>
+    <string name="library.progress_tracking.status_analyzed">Analyzed</string>
+    <string name="library.progress_tracking.status_generating">Generating</string>
+    <string name="library.progress_tracking.status_completed">Completed</string>
+    <string name="library.progress_tracking.status_failed">Failed</string>    <string name="library.folders.title">Cartelle audiolibri</string>
     <string name="library.folders.moved.dialog.title">Cartelle degli audiolibri spostate</string>
     <string name="library.folders.moved.dialog.message">Ora puoi gestire le cartelle degli audiolibri nelle Preferenze.</string>
     <string name="library.search.hint">Cosa stai cercando?</string>

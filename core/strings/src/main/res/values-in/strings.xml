@@ -58,7 +58,20 @@
     <string name="library.category.not_started.title">Belum dimulai</string>
     <string name="library.empty.add_first_book">Mari tambahkan folder buku audio Anda sehingga Anda dapat mulai mendengarkan!</string>
     <string name="library.import_epub">Impor eBook</string>
-    <string name="library.folders.title">Folder buku audio</string>
+    <string name="library.progress_tracking.title">Generation Progress</string>
+    <string name="library.progress_tracking.overall_status">Overall status</string>
+    <string name="library.progress_tracking.analysis_progress">Analysis progress</string>
+    <string name="library.progress_tracking.generation_progress">Generation progress</string>
+    <string name="library.progress_tracking.last_updated">Last updated</string>
+    <string name="library.progress_tracking.not_started">Not started</string>
+    <string name="library.progress_tracking.analysis_value">%1$d / %2$d chunks</string>
+    <string name="library.progress_tracking.generation_value">Chapter %1$d · Chunk %2$d / %3$d</string>
+    <string name="library.progress_tracking.status_pending">Pending</string>
+    <string name="library.progress_tracking.status_analyzing">Analyzing</string>
+    <string name="library.progress_tracking.status_analyzed">Analyzed</string>
+    <string name="library.progress_tracking.status_generating">Generating</string>
+    <string name="library.progress_tracking.status_completed">Completed</string>
+    <string name="library.progress_tracking.status_failed">Failed</string>    <string name="library.folders.title">Folder buku audio</string>
     <string name="library.folders.moved.dialog.title">Folder buku audio dipindahkan</string>
     <string name="library.folders.moved.dialog.message">Sekarang Anda dapat mengelola folder buku audio di Preferensi.</string>
     <string name="library.search.hint">Apa yang Anda cari?</string>

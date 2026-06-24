@@ -59,7 +59,7 @@ public class GenerationWorker(
 
     updateStatus(bookId, GenerationStatus.GENERATING)
 
-    val model = modelStore.data.first().ifBlank { "gemini-2.5-flash-preview-tts" }
+    val model = modelStore.data.first().ifBlank { "gemini-3.1-flash-tts-preview" }
     val client = GeminiClient(geminiApi, apiKey)
 
     val inputStream = try {

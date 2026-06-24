@@ -61,7 +61,20 @@
     <string name="library.category.not_started.title">Ei vielä aloitettu</string>
     <string name="library.empty.add_first_book">Lisätään äänikirjakansiosi jotta voit aloittaa kuuntelemisen!</string>
     <string name="library.import_epub">Tuo e-kirja</string>
-    <string name="library.folders.title">Äänikirjakansiot</string>
+    <string name="library.progress_tracking.title">Generation Progress</string>
+    <string name="library.progress_tracking.overall_status">Overall status</string>
+    <string name="library.progress_tracking.analysis_progress">Analysis progress</string>
+    <string name="library.progress_tracking.generation_progress">Generation progress</string>
+    <string name="library.progress_tracking.last_updated">Last updated</string>
+    <string name="library.progress_tracking.not_started">Not started</string>
+    <string name="library.progress_tracking.analysis_value">%1$d / %2$d chunks</string>
+    <string name="library.progress_tracking.generation_value">Chapter %1$d · Chunk %2$d / %3$d</string>
+    <string name="library.progress_tracking.status_pending">Pending</string>
+    <string name="library.progress_tracking.status_analyzing">Analyzing</string>
+    <string name="library.progress_tracking.status_analyzed">Analyzed</string>
+    <string name="library.progress_tracking.status_generating">Generating</string>
+    <string name="library.progress_tracking.status_completed">Completed</string>
+    <string name="library.progress_tracking.status_failed">Failed</string>    <string name="library.folders.title">Äänikirjakansiot</string>
     <string name="library.folders.moved.dialog.title">Äänikirjakansiot siirretty</string>
     <string name="library.folders.moved.dialog.message">Voit nyt hallita äänikirjakansioita asetuksissa.</string>
     <string name="library.search.hint">Mitä etsit?</string>
