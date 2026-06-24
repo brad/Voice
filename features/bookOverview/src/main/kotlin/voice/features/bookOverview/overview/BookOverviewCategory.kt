@@ -22,10 +22,6 @@ enum class BookOverviewCategory(
     nameRes = StringsR.string.library_category_generating_title,
     comparator = { b1, b2 -> 0 },
   ),
-  GENERATING(
-    nameRes = StringsR.string.library_category_generating_title,
-    comparator = { b1, b2 -> 0 },
-  ),
   FINISHED(
     nameRes = StringsR.string.library_category_completed_title,
     comparator = BookComparator.ByLastPlayed,
