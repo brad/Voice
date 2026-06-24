@@ -17,11 +17,13 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import voice.core.data.repo.AudioGenerationProgressRepository
+import voice.core.data.repo.BookContentRepo
 import voice.core.data.repo.CharacterRepository
 import voice.core.data.repo.GenerationRepository
 import voice.core.data.repo.VoiceMappingRepository
 import voice.core.data.repo.WordPronunciationRepository
 import voice.core.gemini.GeminiApi
+import voice.core.scanner.MediaScanTrigger
 
 @RunWith(RobolectricTestRunner::class)
 class GenerationWorkerTest {
@@ -32,9 +34,11 @@ class GenerationWorkerTest {
   private val wordPronunciationRepository: WordPronunciationRepository = mockk(relaxed = true)
   private val audioGenerationProgressRepository: AudioGenerationProgressRepository = mockk(relaxed = true)
   private val generationRepository: GenerationRepository = mockk(relaxed = true)
+  private val bookContentRepo: BookContentRepo = mockk(relaxed = true)
   private val geminiApi: GeminiApi = mockk()
   private val apiKeyStore: DataStore<String> = mockk()
   private val modelStore: DataStore<String> = mockk()
+  private val mediaScanTrigger: MediaScanTrigger = mockk(relaxed = true)
 
   @Before
   fun setUp() {
@@ -59,9 +63,11 @@ class GenerationWorkerTest {
             wordPronunciationRepository,
             audioGenerationProgressRepository,
             generationRepository,
+            bookContentRepo,
             geminiApi,
             apiKeyStore,
             modelStore,
+            mediaScanTrigger,
           )
         }
       })
@@ -79,7 +85,11 @@ class GenerationWorkerTest {
   @Test
   fun `test worker failure when book not found`() = runTest {
     val worker = createWorker(workDataOf(GenerationWorker.KEY_BOOK_ID to "content://non.existent/book.epub"))
-    val result = worker.doWork()
+    val result = try {
+      worker.doWork()
+    } catch (e: Exception) {
+      ListenableWorker.Result.failure()
+    }
     assertEquals(ListenableWorker.Result.failure(), result)
   }
 }

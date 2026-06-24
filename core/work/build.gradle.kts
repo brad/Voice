@@ -15,6 +15,7 @@ dependencies {
   implementation(projects.core.gemini)
   implementation(projects.core.epub)
   implementation(projects.core.logging.api)
+  implementation(projects.core.scanner)
   implementation(libs.work.runtime)
   implementation(libs.metro.runtime)
   implementation(libs.serialization.json)
