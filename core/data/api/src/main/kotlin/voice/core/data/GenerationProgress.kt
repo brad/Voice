@@ -12,6 +12,4 @@ public data class GenerationProgress(
   val lastUpdated: Instant,
   val title: String? = null,
   val author: String? = null,
-  val title: String? = null,
-  val author: String? = null,
 )
