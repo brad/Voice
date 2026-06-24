@@ -22,7 +22,7 @@ class ProgressTrackingViewModel(
 ) {
 
   @Composable
-  fun state(bookId: BookId): ProgressTrackingViewState {
+  internal fun state(bookId: BookId): ProgressTrackingViewState {
     val generationProgress by remember(bookId) {
       generationRepository.flowProgressForBook(bookId)
     }.collectAsState(initial = null)
