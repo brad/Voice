@@ -148,7 +148,6 @@
     <string name="settings.gemini.api_key.title">Gemini API-nøkkel</string>
     <string name="settings.gemini.api_key.summary">API-nøkkel for Gemini AI-tjenester</string>
     <string name="settings.gemini.analysis_model.title">Gemini-analysemodell</string>
-    <string name="settings.gemini.analysis_model.summary">Modell brukt for bokanalyse</string>
     <string name="settings.gemini.generation_model.title">Gemini-genereringsmodell</string>
-    <string name="settings.gemini.generation_model.summary">Modell brukt for lydgenerering</string>
+    <string name="settings.audiobook_generation.title">Lydbokgenerering</string>
 </resources>

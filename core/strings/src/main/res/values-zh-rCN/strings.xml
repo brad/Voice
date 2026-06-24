@@ -90,7 +90,5 @@
     <string name="settings.gemini.api_key.title">Gemini API 密钥</string>
     <string name="settings.gemini.api_key.summary">用于 Gemini AI 服务的 API 密钥</string>
     <string name="settings.gemini.analysis_model.title">Gemini 分析模型</string>
-    <string name="settings.gemini.analysis_model.summary">用于图书分析的模型</string>
     <string name="settings.gemini.generation_model.title">Gemini 生成模型</string>
-    <string name="settings.gemini.generation_model.summary">用于音频生成的模型</string>
 </resources>

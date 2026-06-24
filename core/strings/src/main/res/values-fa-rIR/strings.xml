@@ -148,7 +148,6 @@
     <string name="settings.gemini.api_key.title">کلید API جمینای</string>
     <string name="settings.gemini.api_key.summary">کلید API برای سرویس‌های هوش مصنوعی جمینای</string>
     <string name="settings.gemini.analysis_model.title">مدل تحلیل جمینای</string>
-    <string name="settings.gemini.analysis_model.summary">مدلی که برای تحلیل کتاب استفاده می‌شود</string>
     <string name="settings.gemini.generation_model.title">مدل تولید جمینای</string>
-    <string name="settings.gemini.generation_model.summary">مدلی که برای تولید صدا استفاده می‌شود</string>
+    <string name="settings.audiobook_generation.title">تولید کتاب صوتی</string>
 </resources>

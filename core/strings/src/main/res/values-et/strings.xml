@@ -148,7 +148,6 @@
     <string name="settings.gemini.api_key.title">Gemini API-võti</string>
     <string name="settings.gemini.api_key.summary">API-võti Gemini tehisintellekti teenuste jaoks</string>
     <string name="settings.gemini.analysis_model.title">Gemini analüüsimudel</string>
-    <string name="settings.gemini.analysis_model.summary">Raamatute analüüsimiseks kasutatav mudel</string>
     <string name="settings.gemini.generation_model.title">Gemini genereerimismudel</string>
-    <string name="settings.gemini.generation_model.summary">Heli genereerimiseks kasutatav mudel</string>
+    <string name="settings.audiobook_generation.title">Audioraamatute genereerimine</string>
 </resources>

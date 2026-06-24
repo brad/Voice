@@ -4,7 +4,7 @@ import voice.core.data.ThemeColorScheme
 import voice.core.data.ThemeMode
 import java.time.LocalTime
 
-data class SettingsViewState(
+public data class SettingsViewState(
   val themeMode: ThemeMode,
   val themeColorScheme: ThemeColorScheme,
   val showThemeColorSchemePref: Boolean,
@@ -22,20 +22,19 @@ data class SettingsViewState(
   val geminiApiKey: String,
   val geminiAnalysisModel: String,
   val geminiGenerationModel: String,
+  val availableModels: List<String>,
 ) {
 
-  enum class Dialog {
+  public enum class Dialog {
     AutoRewindAmount,
     SeekTime,
     Theme,
     ColorScheme,
-    GeminiApiKey,
-    GeminiAnalysisModel,
-    GeminiGenerationModel,
+    AudiobookGeneration,
   }
 
-  companion object {
-    fun preview(): SettingsViewState {
+  public companion object {
+    public fun preview(): SettingsViewState {
       return SettingsViewState(
         themeMode = ThemeMode.FollowSystem,
         themeColorScheme = ThemeColorScheme.VoiceBlue,
@@ -54,17 +53,18 @@ data class SettingsViewState(
         geminiApiKey = "AIza...",
         geminiAnalysisModel = "gemini-1.5-flash",
         geminiGenerationModel = "gemini-3.1-flash-tts-preview",
+        availableModels = listOf("gemini-1.5-flash", "gemini-1.5-pro"),
       )
     }
   }
 
-  data class AutoSleepTimerViewState(
+  public data class AutoSleepTimerViewState(
     val enabled: Boolean,
     val startTime: LocalTime,
     val endTime: LocalTime,
   ) {
-    companion object {
-      fun preview(): AutoSleepTimerViewState {
+    public companion object {
+      public fun preview(): AutoSleepTimerViewState {
         return AutoSleepTimerViewState(
           enabled = false,
           startTime = LocalTime.of(22, 0),
