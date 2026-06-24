@@ -148,4 +148,7 @@
     <string name="settings.gemini.analysis_model.summary">書籍の分析に使用するモデル</string>
     <string name="settings.gemini.generation_model.title">Gemini 生成モデル</string>
     <string name="settings.gemini.generation_model.summary">音声生成に使用するモデル</string>
+    <string name="settings.audiobook_generation.title">オーディオブック生成</string>
+    <string name="settings.gemini.analysis_model.dialog.title">分析モデルを選択</string>
+    <string name="settings.gemini.generation_model.dialog.title">生成モデルを選択</string>
 </resources>

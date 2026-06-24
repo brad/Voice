@@ -151,4 +151,7 @@
     <string name="settings.gemini.analysis_model.summary">புத்தக பகுப்பாய்விற்கு பயன்படுத்தப்படும் மாதிரி</string>
     <string name="settings.gemini.generation_model.title">Gemini உருவாக்க மாதிரி</string>
     <string name="settings.gemini.generation_model.summary">ஒலி உருவாக்கத்திற்கு பயன்படுத்தப்படும் மாதிரி</string>
+    <string name="settings.audiobook_generation.title">ஒலிப்புத்தக உருவாக்கம்</string>
+    <string name="settings.gemini.analysis_model.dialog.title">பகுப்பாய்வு மாதிரியைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="settings.gemini.generation_model.dialog.title">உருவாக்க மாதிரியைத் தேர்ந்தெடுக்கவும்</string>
 </resources>

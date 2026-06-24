@@ -154,4 +154,7 @@
     <string name="settings.gemini.analysis_model.summary">Modello usato per l\'analisi dei libri</string>
     <string name="settings.gemini.generation_model.title">Modello di generazione Gemini</string>
     <string name="settings.gemini.generation_model.summary">Modello usato per la generazione audio</string>
+    <string name="settings.audiobook_generation.title">Generazione di audiolibri</string>
+    <string name="settings.gemini.analysis_model.dialog.title">Seleziona modello di analisi</string>
+    <string name="settings.gemini.generation_model.dialog.title">Seleziona modello di generazione</string>
 </resources>

@@ -151,4 +151,7 @@
     <string name="settings.gemini.analysis_model.summary">Модел што се користи за анализа на книги</string>
     <string name="settings.gemini.generation_model.title">Модел за генерирање на Gemini</string>
     <string name="settings.gemini.generation_model.summary">Модел што се користи за генерирање аудио</string>
+    <string name="settings.audiobook_generation.title">Генерирање аудиокниги</string>
+    <string name="settings.gemini.analysis_model.dialog.title">Избери модел за анализа</string>
+    <string name="settings.gemini.generation_model.dialog.title">Избери модел за генерирање</string>
 </resources>

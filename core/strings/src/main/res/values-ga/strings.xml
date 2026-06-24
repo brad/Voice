@@ -160,4 +160,7 @@
     <string name="settings.gemini.analysis_model.summary">Múnla a úsáidtear chun leabhair a anailísiú</string>
     <string name="settings.gemini.generation_model.title">Múnla giniúna Gemini</string>
     <string name="settings.gemini.generation_model.summary">Múnla a úsáidtear chun fuaim a ghiniúint</string>
+    <string name="settings.audiobook_generation.title">Giniúint closleabhar</string>
+    <string name="settings.gemini.analysis_model.dialog.title">Roghnaigh samhail anailíse</string>
+    <string name="settings.gemini.generation_model.dialog.title">Roghnaigh samhail ghiniúna</string>
 </resources>

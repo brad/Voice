@@ -154,4 +154,7 @@
     <string name="settings.gemini.analysis_model.summary">המודל המשמש לניתוח ספרים</string>
     <string name="settings.gemini.generation_model.title">מודל יצירה Gemini</string>
     <string name="settings.gemini.generation_model.summary">המודל המשמש ליצירת שמע</string>
+    <string name="settings.audiobook_generation.title">יצירת ספרי שמע</string>
+    <string name="settings.gemini.analysis_model.dialog.title">בחירת מודל ניתוח</string>
+    <string name="settings.gemini.generation_model.dialog.title">בחירת מודל יצירה</string>
 </resources>

@@ -148,4 +148,7 @@
     <string name="settings.gemini.analysis_model.summary">Model yang digunakan untuk analisis buku</string>
     <string name="settings.gemini.generation_model.title">Model generasi Gemini</string>
     <string name="settings.gemini.generation_model.summary">Model yang digunakan untuk pembuatan audio</string>
+    <string name="settings.audiobook_generation.title">Pembuatan buku audio</string>
+    <string name="settings.gemini.analysis_model.dialog.title">Pilih model analisis</string>
+    <string name="settings.gemini.generation_model.dialog.title">Pilih model generasi</string>
 </resources>

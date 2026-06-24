@@ -151,4 +151,7 @@
     <string name="settings.gemini.analysis_model.summary">Model wat vir boekontleding gebruik word</string>
     <string name="settings.gemini.generation_model.title">Gemini-genereringsmodel</string>
     <string name="settings.gemini.generation_model.summary">Model wat vir klankgenerering gebruik word</string>
+    <string name="settings.audiobook_generation.title">Oudioboekgenerering</string>
+    <string name="settings.gemini.analysis_model.dialog.title">Kies ontledingsmodel</string>
+    <string name="settings.gemini.generation_model.dialog.title">Kies genereringsmodel</string>
 </resources>

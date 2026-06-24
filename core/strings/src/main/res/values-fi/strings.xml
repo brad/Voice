@@ -151,4 +151,7 @@
     <string name="settings.gemini.analysis_model.summary">Kirjojen analysointiin käytettävä malli</string>
     <string name="settings.gemini.generation_model.title">Gemini-generointimalli</string>
     <string name="settings.gemini.generation_model.summary">Äänen luomiseen käytettävä malli</string>
+    <string name="settings.audiobook_generation.title">Äänikirjojen luonti</string>
+    <string name="settings.gemini.analysis_model.dialog.title">Valitse analyysimalli</string>
+    <string name="settings.gemini.generation_model.dialog.title">Valitse generointimalli</string>
 </resources>
