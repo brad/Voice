@@ -107,6 +107,8 @@
     <string name="library.category.completed.title">Completed</string>
     <!-- Library category header for books currently being listened to. -->
     <string name="library.category.current.title">Current</string>
+    <string name="library.category.generating.title">Generating from eBook</string>
+    <string name="library.category.generating.title">Generating from eBook</string>
     <!-- Library category header for books not started yet. -->
     <string name="library.category.not_started.title">Not started Yet</string>
     <!-- Library empty-state prompt shown before the first audiobook is added. -->

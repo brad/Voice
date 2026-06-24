@@ -8,6 +8,7 @@ class EpubExtractor {
   fun extract(inputStream: InputStream): EpubBookData {
     val epubBook = EpubReader().readEpub(inputStream)
     val title = epubBook.title
+    val author = epubBook.metadata.authors.firstOrNull()?.let { f"{it.firstname} {it.lastname}".trim() }
     val chapters =
       epubBook.spine.spineReferences.map { ref ->
         EpubChapter(
@@ -15,12 +16,13 @@ class EpubExtractor {
           content = ref.resource.inputStream.bufferedReader().readText(),
         )
       }
-    return EpubBookData(title, chapters)
+    return EpubBookData(title, author, chapters)
   }
 }
 
 data class EpubBookData(
   val title: String,
+  val author: String?,
   val chapters: List<EpubChapter>,
 )
 data class EpubChapter(

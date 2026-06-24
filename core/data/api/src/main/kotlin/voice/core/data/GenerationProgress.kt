@@ -10,4 +10,8 @@ public data class GenerationProgress(
   val bookId: BookId,
   val status: GenerationStatus,
   val lastUpdated: Instant,
+  val title: String? = null,
+  val author: String? = null,
+  val title: String? = null,
+  val author: String? = null,
 )

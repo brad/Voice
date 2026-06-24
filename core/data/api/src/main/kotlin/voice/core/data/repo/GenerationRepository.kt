@@ -2,11 +2,15 @@ package voice.core.data.repo
 
 import kotlinx.coroutines.flow.Flow
 import voice.core.data.BookId
+import java.time.Instant
 import voice.core.data.GenerationProgress
+import voice.core.data.GenerationStatus
 
 public interface GenerationRepository {
   public suspend fun progressForBook(bookId: BookId): GenerationProgress?
   public fun flowProgressForBook(bookId: BookId): Flow<GenerationProgress?>
   public suspend fun insert(progress: GenerationProgress)
   public suspend fun deleteForBook(bookId: BookId)
+  public suspend fun updateStatus(bookId: BookId, status: GenerationStatus, lastUpdated: Instant)
+  public fun flowInProgressGenerations(): Flow<List<GenerationProgress>>
 }
