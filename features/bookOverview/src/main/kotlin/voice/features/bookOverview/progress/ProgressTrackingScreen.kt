@@ -3,9 +3,11 @@ package voice.features.bookOverview.progress
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
@@ -49,14 +51,18 @@ private fun ProgressTrackingScreen(bookId: BookId) {
       .bookOverviewGraphProviderFactory.create()
   }.progressTrackingViewModel
   ProgressTracking(
+    bookId = bookId,
     viewState = viewModel.state(bookId),
+    onConfigureGeneration = viewModel::onConfigureGeneration,
     onClose = viewModel::close,
   )
 }
 
 @Composable
 private fun ProgressTracking(
+  bookId: BookId,
   viewState: ProgressTrackingViewState,
+  onConfigureGeneration: (BookId) -> Unit,
   onClose: () -> Unit,
 ) {
   Scaffold(
@@ -90,6 +96,20 @@ private fun ProgressTracking(
             Text(text = viewState.status.label())
           },
         )
+      }
+      if (viewState.status == GenerationStatus.ANALYZED) {
+        item {
+          ListItem(
+            headlineContent = {
+              Button(
+                onClick = { onConfigureGeneration(bookId) },
+                modifier = Modifier.fillMaxWidth(),
+              ) {
+                Text("Configure Generation")
+              }
+            },
+          )
+        }
       }
       item {
         ListItem(

@@ -10,6 +10,7 @@ import voice.core.data.GenerationStatus
 import voice.core.data.repo.AnalysisProgressRepository
 import voice.core.data.repo.AudioGenerationProgressRepository
 import voice.core.data.repo.GenerationRepository
+import voice.navigation.Destination
 import voice.navigation.Navigator
 import java.time.Instant
 
@@ -46,6 +47,10 @@ class ProgressTrackingViewModel(
         audioProgress?.lastUpdated,
       ).maxOrNull(),
     )
+  }
+
+  fun onConfigureGeneration(bookId: BookId) {
+    navigator.goTo(Destination.GenerationSettings(bookId))
   }
 
   fun close() {

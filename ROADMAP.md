@@ -39,7 +39,7 @@ This roadmap outlines the steps to implement auto-builds in CI and a feature to 
 - [x] **Audiobook Generation Settings Refinement**:
     - Consolidate Gemini API settings into a dedicated "Audiobook Generation" section.
     - Replace free-text model selection with dropdowns populated by real model lists fetched from the Gemini API.
-- [ ] **Generation Settings UI**: Add a screen where users can review and tune generation settings before starting generation, including voice assignments, pronunciation overrides, and similar per-book controls.
+- [x] **Generation Settings UI**: Add a screen where users can review and tune generation settings before starting generation, including voice assignments, pronunciation overrides, and similar per-book controls.
 - [ ] **Generation Locking & Restart UX**: Disable generation settings once generation has started, and provide a clear way to discard in-progress generation and restart if the user wants to change locked settings.
 - [x] **Progress Tracking UI**: Create a screen to monitor analysis and generation status (resumable).
 - [ ] **Library Registration**: Automatically register the final generated audio files as a playable Audiobook in the existing library.

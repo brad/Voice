@@ -1,0 +1,20 @@
+plugins {
+  id("voice.library")
+  id("voice.compose")
+  alias(libs.plugins.metro)
+}
+
+dependencies {
+  implementation(projects.navigation)
+  implementation(projects.core.common)
+  implementation(projects.core.ui)
+  implementation(projects.core.strings)
+  implementation(projects.core.data.api)
+  implementation(projects.core.work)
+
+  implementation(libs.lifecycle)
+  implementation(libs.navigation3.ui)
+
+  testImplementation(libs.bundles.testing.jvm)
+  testImplementation(libs.molecule)
+}
