@@ -24,6 +24,11 @@ sealed interface Destination {
     override val trackingName: String get() = "CoverFromInternet"
   }
 
+  @Serializable
+  data class ProgressTracking(val bookId: BookId) : Compose {
+    override val trackingName: String get() = "ProgressTracking"
+  }
+
   data class Website(val url: String) : Destination
 
   @Serializable

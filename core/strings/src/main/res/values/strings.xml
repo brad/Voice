@@ -113,6 +113,34 @@
     <string name="library.empty.add_first_book">Let\'s add your audiobook folder so you can start listening!</string>
     <!-- Content description and action label for importing an EPUB into the generation flow. -->
     <string name="library.import_epub">Import eBook</string>
+    <!-- Screen title for monitoring EPUB analysis and audio generation progress. -->
+    <string name="library.progress_tracking.title">Generation Progress</string>
+    <!-- Label for the overall generation status row. -->
+    <string name="library.progress_tracking.overall_status">Overall status</string>
+    <!-- Label for the analysis progress row. -->
+    <string name="library.progress_tracking.analysis_progress">Analysis progress</string>
+    <!-- Label for the generation progress row. -->
+    <string name="library.progress_tracking.generation_progress">Generation progress</string>
+    <!-- Label for the last-updated timestamp row. -->
+    <string name="library.progress_tracking.last_updated">Last updated</string>
+    <!-- Placeholder text for not-yet-started progress sections. -->
+    <string name="library.progress_tracking.not_started">Not started</string>
+    <!-- Value for analysis chunk progress. -->
+    <string name="library.progress_tracking.analysis_value">%1$d / %2$d chunks</string>
+    <!-- Value for generation chapter/chunk progress. -->
+    <string name="library.progress_tracking.generation_value">Chapter %1$d · Chunk %2$d / %3$d</string>
+    <!-- Human-readable generation status for pending work. -->
+    <string name="library.progress_tracking.status_pending">Pending</string>
+    <!-- Human-readable generation status for active analysis. -->
+    <string name="library.progress_tracking.status_analyzing">Analyzing</string>
+    <!-- Human-readable generation status for completed analysis. -->
+    <string name="library.progress_tracking.status_analyzed">Analyzed</string>
+    <!-- Human-readable generation status for active audio generation. -->
+    <string name="library.progress_tracking.status_generating">Generating</string>
+    <!-- Human-readable generation status for successful completion. -->
+    <string name="library.progress_tracking.status_completed">Completed</string>
+    <!-- Human-readable generation status for failures. -->
+    <string name="library.progress_tracking.status_failed">Failed</string>
     <!-- Title for screens and rows that manage audiobook folders. -->
     <string name="library.folders.title">Audiobook folders</string>
     <!-- Title for the one-time dialog shown from the old audiobook folders shortcut. -->

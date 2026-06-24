@@ -285,10 +285,12 @@ class BookOverviewViewModelTest {
   @Test
   fun `import epub delegates to import manager`() {
     val epubImportManager = mockk<EpubImportManager>(relaxed = true)
+    val navigator = mockk<Navigator>(relaxed = true)
     val bookId = BookId("content://books/book.epub")
     val viewModel = viewModel(
       folderPickerInSettingsFeatureFlag = MemoryFeatureFlag(false),
       folderPickerMovedDialogShownStore = MemoryDataStore(false),
+      navigator = navigator,
       epubImportManager = epubImportManager,
     )
 
@@ -296,6 +298,9 @@ class BookOverviewViewModelTest {
 
     verify(exactly = 1) {
       epubImportManager.importEpub(bookId)
+    }
+    verify(exactly = 1) {
+      navigator.goTo(Destination.ProgressTracking(bookId))
     }
   }
 

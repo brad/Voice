@@ -8,6 +8,7 @@ import voice.features.bookOverview.deleteBook.DeleteBookViewModel
 import voice.features.bookOverview.editTitle.EditBookTitleViewModel
 import voice.features.bookOverview.fileCover.FileCoverViewModel
 import voice.features.bookOverview.overview.BookOverviewViewModel
+import voice.features.bookOverview.progress.ProgressTrackingViewModel
 
 abstract class BookOverviewScope private constructor()
 
@@ -18,6 +19,7 @@ interface BookOverviewGraph {
   val bottomSheetViewModel: BottomSheetViewModel
   val deleteBookViewModel: DeleteBookViewModel
   val fileCoverViewModel: FileCoverViewModel
+  val progressTrackingViewModel: ProgressTrackingViewModel
 
   @GraphExtension.Factory
   @ContributesTo(AppScope::class)

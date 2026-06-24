@@ -263,6 +263,7 @@ class BookOverviewViewModel(
 
   fun onImportEpub(bookId: BookId) {
     epubImportManager.importEpub(bookId)
+    navigator.goTo(Destination.ProgressTracking(bookId))
   }
 
   fun onFolderPickerMovedDialogDismiss() {
