@@ -213,18 +213,10 @@
     <string name="settings.gemini.api_key.summary">API Key for Gemini AI services</string>
     <!-- Label for Gemini Analysis Model setting. -->
     <string name="settings.gemini.analysis_model.title">Analysis Model</string>
-    <!-- Summary for Gemini Analysis Model setting. -->
-    <string name="settings.gemini.analysis_model.summary">Model used for book analysis</string>
     <!-- Label for Gemini Generation Model setting. -->
     <string name="settings.gemini.generation_model.title">Generation Model</string>
-    <!-- Summary for Gemini Generation Model setting. -->
-    <string name="settings.gemini.generation_model.summary">Model used for audio generation</string>
     <!-- Section header for Gemini-powered audiobook generation settings. -->
     <string name="settings.audiobook_generation.title">Audiobook Generation</string>
-    <!-- Title for the dialog to select a Gemini analysis model. -->
-    <string name="settings.gemini.analysis_model.dialog.title">Select Analysis Model</string>
-    <!-- Title for the dialog to select a Gemini generation model. -->
-    <string name="settings.gemini.generation_model.dialog.title">Select Generation Model</string>
     <!-- Title for the dark theme setting. -->
     <!-- Settings row title for selecting the app color scheme. -->
     <string name="settings.appearance.color_scheme.title">Color scheme</string>
