@@ -385,9 +385,7 @@ class BookOverviewViewModelTest {
     )
   }
 
-  private fun appInfoProvider(
-    installTime: Instant = Instant.parse("2026-06-16T00:00:00Z"),
-  ): AppInfoProvider {
+  private fun appInfoProvider(installTime: Instant = Instant.parse("2026-06-16T00:00:00Z")): AppInfoProvider {
     val provider = mockk<AppInfoProvider>()
     every { provider.installTime } returns installTime
     return provider
