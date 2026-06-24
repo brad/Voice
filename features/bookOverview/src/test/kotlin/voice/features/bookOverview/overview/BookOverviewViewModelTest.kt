@@ -21,8 +21,11 @@ import voice.core.common.DispatcherProvider
 import voice.core.data.BookId
 import voice.core.data.GridMode
 import voice.core.data.KioskModeDemoData
+import voice.core.data.repo.AnalysisProgressRepository
+import voice.core.data.repo.AudioGenerationProgressRepository
 import voice.core.data.repo.BookContentRepo
 import voice.core.data.repo.BookRepository
+import voice.core.data.repo.GenerationRepository
 import voice.core.data.repo.internals.dao.RecentBookSearchDao
 import voice.core.featureflag.MemoryFeatureFlag
 import voice.core.playback.LivePlaybackState
@@ -86,6 +89,11 @@ class BookOverviewViewModelTest {
       experimentalPlaybackPersistenceFeatureFlag = MemoryFeatureFlag(true),
       kioskModeFeatureFlag = MemoryFeatureFlag(false),
       dispatcherProvider = dispatcherProvider,
+      generationRepository = mockk<GenerationRepository> {
+        every { flowInProgressGenerations() } returns MutableStateFlow(emptyList())
+      },
+      analysisProgressRepository = mockk<AnalysisProgressRepository>(relaxed = true),
+      audioGenerationProgressRepository = mockk<AudioGenerationProgressRepository>(relaxed = true),
     )
 
     backgroundScope.launchMolecule(RecompositionMode.Immediate) {
@@ -152,6 +160,11 @@ class BookOverviewViewModelTest {
       experimentalPlaybackPersistenceFeatureFlag = MemoryFeatureFlag(false),
       kioskModeFeatureFlag = MemoryFeatureFlag(true),
       dispatcherProvider = dispatcherProvider,
+      generationRepository = mockk<GenerationRepository> {
+        every { flowInProgressGenerations() } returns MutableStateFlow(emptyList())
+      },
+      analysisProgressRepository = mockk<AnalysisProgressRepository>(relaxed = true),
+      audioGenerationProgressRepository = mockk<AudioGenerationProgressRepository>(relaxed = true),
     )
 
     backgroundScope.launchMolecule(RecompositionMode.Immediate) {
@@ -314,6 +327,11 @@ class BookOverviewViewModelTest {
     navigator: Navigator = mockk(),
     appInfoProvider: AppInfoProvider = appInfoProvider(),
     epubImportManager: EpubImportManager = mockk(relaxed = true),
+    generationRepository: GenerationRepository = mockk {
+      every { flowInProgressGenerations() } returns MutableStateFlow(emptyList())
+    },
+    analysisProgressRepository: AnalysisProgressRepository = mockk(relaxed = true),
+    audioGenerationProgressRepository: AudioGenerationProgressRepository = mockk(relaxed = true),
   ): BookOverviewViewModel {
     return BookOverviewViewModel(
       repo = mockk<BookRepository> {
@@ -348,12 +366,15 @@ class BookOverviewViewModelTest {
       experimentalPlaybackPersistenceFeatureFlag = MemoryFeatureFlag(false),
       kioskModeFeatureFlag = MemoryFeatureFlag(false),
       dispatcherProvider = dispatcherProvider,
+      generationRepository = generationRepository,
+      analysisProgressRepository = analysisProgressRepository,
+      audioGenerationProgressRepository = audioGenerationProgressRepository,
     )
   }
 
   private fun appInfoProvider(installTime: Instant = Instant.parse("2026-06-16T00:00:00Z")): AppInfoProvider {
     return mockk {
-      every { this@mockk.installTime } returns installTime
+      every { installTime } returns installTime
     }
   }
 }
