@@ -13,4 +13,6 @@ public data class GenerationProgress(
   val title: String? = null,
   val author: String? = null,
   val errorMessage: String? = null,
+  val povType: PovType? = null,
+  val povCharacterName: String? = null,
 )

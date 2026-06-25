@@ -15,7 +15,7 @@ public object GeminiAnalysisPrompts {
   """
 
   public const val INCREMENTAL_CHARACTER_EXTRACTION_PROMPT: String = """
-    You are analyzing a book to identify characters and word pronunciations for audiobook generation.
+    You are analyzing a book to identify characters, word pronunciations, and narrative point of view (POV) for audiobook generation.
 
     Known Characters (from previous chunks):
     %s
@@ -30,9 +30,17 @@ public object GeminiAnalysisPrompts {
        - If a character is new, add them.
        - Resolve different names for the same character to one primary name.
     3. Identify any unusual words, proper names, or technical terms in this chunk that might require specific pronunciation guidance and provide their phonetic spelling.
-    4. Return the FULL updated list of all characters identified so far, and any new pronunciations found in THIS chunk.
+    4. Determine the narrative Point of View (POV) of this chunk:
+       - "FIRST_PERSON": Narrated by a character (uses "I", "me", "my"). Identify the character name if possible.
+       - "THIRD_PERSON_LIMITED": Narrated objectively but focuses on the thoughts/feelings of one character at a time. Identify the focal character name.
+       - "OMNISCIENT": Narrator knows everything about all characters and events, often switching focus freely.
+    5. Return the FULL updated list of all characters identified so far, any new pronunciations found in THIS chunk, and the detected POV.
 
-    Format the output as a JSON object with a "characters" array and a "pronunciations" array.
+    Format the output as a JSON object with:
+    - "characters": array of character objects
+    - "pronunciations": array of pronunciation objects
+    - "povType": "FIRST_PERSON", "THIRD_PERSON_LIMITED", or "OMNISCIENT"
+    - "povCharacterName": name of the POV/focal character (optional)
   """
 
   public val CHARACTER_EXTRACTION_SCHEMA: ResponseSchema = ResponseSchema(
@@ -65,7 +73,16 @@ public object GeminiAnalysisPrompts {
           required = listOf("word", "phonetic"),
         ),
       ),
+      "povType" to ResponseSchema(
+        type = "string",
+        description = "Narrative point of view",
+        enum = listOf("FIRST_PERSON", "THIRD_PERSON_LIMITED", "OMNISCIENT"),
+      ),
+      "povCharacterName" to ResponseSchema(
+        type = "string",
+        description = "Name of the POV or focal character",
+      ),
     ),
-    required = listOf("characters", "pronunciations"),
+    required = listOf("characters", "pronunciations", "povType"),
   )
 }

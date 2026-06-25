@@ -10,6 +10,7 @@ import voice.core.data.Bookmark
 import voice.core.data.ChapterId
 import voice.core.data.GenerationStatus
 import voice.core.data.MarkData
+import voice.core.data.PovType
 import java.io.File
 import java.time.Instant
 import kotlin.uuid.Uuid
@@ -85,4 +86,10 @@ internal class Converters {
 
   @TypeConverter
   fun toGenerationStatus(value: String): GenerationStatus = GenerationStatus.valueOf(value)
+
+  @TypeConverter
+  fun fromPovType(type: PovType): String = type.name
+
+  @TypeConverter
+  fun toPovType(value: String): PovType = PovType.valueOf(value)
 }
