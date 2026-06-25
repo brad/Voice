@@ -205,7 +205,10 @@ public class GenerationWorker(
     return Result.success()
   }
 
-  internal fun chunkText(text: String, maxChars: Int): List<String> {
+  internal fun chunkText(
+    text: String,
+    maxChars: Int,
+  ): List<String> {
     val chunks = mutableListOf<String>()
     var currentChunk = StringBuilder()
 

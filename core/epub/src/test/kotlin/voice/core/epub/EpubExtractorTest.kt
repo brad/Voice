@@ -5,26 +5,26 @@ import org.junit.Test
 
 class EpubExtractorTest {
 
-    private val extractor = EpubExtractor()
+  private val extractor = EpubExtractor()
 
-    @Test
-    fun `test stripHtml removes tags and decodes entities`() {
-        val html = """
-            <html>
-            <head><title>Ignore me</title></head>
-            <body>
-                <h1>Title</h1>
-                <p>Hello &nbsp; world &amp; everyone!</p>
-                <script>alert('bad');</script>
-                <style>.bad { color: red; }</style>
-                <div>Quotes: &quot; &apos;</div>
-            </body>
-            </html>
-        """.trimIndent()
+  @Test
+  fun `test stripHtml removes tags and decodes entities`() {
+    val html = """
+      <html>
+        <head><title>Ignore me</title></head>
+        <body>
+          <h1>Title</h1>
+          <p>Hello &nbsp; world &amp; everyone!</p>
+          <script>alert('bad');</script>
+          <style>.bad { color: red; }</style>
+          <div>Quotes: &quot; &apos;</div>
+        </body>
+      </html>
+    """.trimIndent()
 
-        val expected = "Title Hello world & everyone! Quotes: \" '"
-        val actual = extractor.stripHtml(html)
+    val expected = "Title Hello world & everyone! Quotes: \" '"
+    val actual = extractor.stripHtml(html)
 
-        assertEquals(expected, actual)
-    }
+    assertEquals(expected, actual)
+  }
 }
