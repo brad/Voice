@@ -97,6 +97,22 @@ private fun ProgressTracking(
           },
         )
       }
+      if (viewState.status == GenerationStatus.FAILED && viewState.errorMessage != null) {
+        item {
+          ListItem(
+            headlineContent = {
+              Text(
+                text = when (viewState.errorMessage) {
+                  "Gemini API key is missing" -> stringResource(StringsR.string.library_progress_tracking_error_api_key_missing)
+                  "Persistent API failure" -> stringResource(StringsR.string.library_progress_tracking_error_persistent_failure)
+                  else -> viewState.errorMessage
+                },
+                color = androidx.compose.material3.MaterialTheme.colorScheme.error,
+              )
+            },
+          )
+        }
+      }
       if (viewState.status == GenerationStatus.ANALYZED) {
         item {
           ListItem(

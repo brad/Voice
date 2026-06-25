@@ -24,11 +24,12 @@ public interface GenerationProgressDao {
   @Query("DELETE FROM generation_progress WHERE bookId = :bookId")
   public suspend fun deleteForBook(bookId: BookId)
 
-  @Query("UPDATE generation_progress SET status = :status, lastUpdated = :lastUpdated WHERE bookId = :bookId")
+  @Query("UPDATE generation_progress SET status = :status, lastUpdated = :lastUpdated, errorMessage = :errorMessage WHERE bookId = :bookId")
   public suspend fun updateStatus(
     bookId: BookId,
     status: GenerationStatus,
     lastUpdated: Instant,
+    errorMessage: String? = null,
   )
 
   @Query("SELECT * FROM generation_progress WHERE status != :completedStatus")

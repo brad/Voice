@@ -5,6 +5,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import dev.zacsweers.metro.Inject
+import kotlinx.coroutines.flow.first
 import voice.core.data.BookId
 import voice.core.data.GenerationStatus
 import voice.core.data.repo.AnalysisProgressRepository
@@ -41,6 +42,7 @@ class ProgressTrackingViewModel(
       generationChapter = audioProgress?.chapterIndex?.plus(1),
       generationChunk = audioProgress?.chunkIndex,
       generationTotalChunks = audioProgress?.totalChunks,
+      errorMessage = generationProgress?.errorMessage,
       lastUpdated = listOfNotNull(
         generationProgress?.lastUpdated,
         analysisProgress?.lastUpdated,
@@ -65,5 +67,6 @@ internal data class ProgressTrackingViewState(
   val generationChapter: Int?,
   val generationChunk: Int?,
   val generationTotalChunks: Int?,
+  val errorMessage: String?,
   val lastUpdated: Instant?,
 )
