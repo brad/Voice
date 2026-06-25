@@ -186,7 +186,7 @@ class VoiceMapperTest {
       character = narrator,
       povType = PovType.FIRST_PERSON,
       povCharacterName = "Alice",
-      allCharacters = listOf(povChar)
+      allCharacters = listOf(povChar),
     )
 
     assertEquals("Kore", mapping.voiceName)

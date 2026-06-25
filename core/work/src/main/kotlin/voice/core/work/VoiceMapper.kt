@@ -32,10 +32,10 @@ internal object VoiceMapper {
         if (povType == PovType.FIRST_PERSON && povCharacterName != null) {
           val povChar = allCharacters.find { it.name.lowercase() == povCharacterName.lowercase() }
           if (povChar != null) {
-             // Use same voice as POV character
-             mapToVoice(povChar, null, null, emptyList(), emptyList()).voiceName
+            // Use same voice as POV character
+            mapToVoice(povChar, null, null, emptyList(), emptyList()).voiceName
           } else {
-             VOICE_CHARON
+            VOICE_CHARON
           }
         } else {
           VOICE_CHARON
