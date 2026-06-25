@@ -97,21 +97,16 @@ public class GenerationWorker(
       val chapter = epubData.chapters[chapterIdx]
       val chapterText = chapter.content
 
-      // Simple chunking by paragraph or sentence to stay within token limits
-      val paragraphs = chapterText.split("\n\n").filter { it.isNotBlank() }
-      val totalChunks = paragraphs.size
+      val chunks = chunkText(chapterText, 4000)
+      val totalChunks = chunks.size
 
       val currentChunkStart = if (chapterIdx == startChapterIndex) startChunkIndex else 0
 
       val chapterChunks = mutableListOf<File>()
 
       for (chunkIdx in currentChunkStart until totalChunks) {
-        val chunkText = paragraphs[chunkIdx]
+        val chunkText = chunks[chunkIdx]
 
-        // Prepare multi-speaker prompt
-        // In a real implementation, we would use Gemini to label the speakers in the text
-        // For now, we'll use a simplified approach: wrap text in speaker labels
-        // and include mappings in the config.
         val characterInstructions = characters.joinToString("\n") { char ->
           val mapping = mappings.find { it.characterId == char.id }
           val tuning = if (mapping != null) {
@@ -159,6 +154,7 @@ public class GenerationWorker(
         )
 
         try {
+          Logger.d("Generating audio for chapter $chapterIdx chunk $chunkIdx/$totalChunks")
           val response = client.generateContent(model, request)
           val audioData = response.candidates.firstOrNull()?.content?.parts?.firstOrNull()?.inlineData?.data
             ?: throw Exception("No audio data in response")
@@ -209,11 +205,50 @@ public class GenerationWorker(
     return Result.success()
   }
 
+  internal fun chunkText(text: String, maxChars: Int): List<String> {
+    val chunks = mutableListOf<String>()
+    var currentChunk = StringBuilder()
+
+    val paragraphs = text.split("\n")
+    for (paragraph in paragraphs) {
+      if (paragraph.isBlank()) continue
+
+      if (paragraph.length > maxChars) {
+        val sentences = paragraph.split(Regex("(?<=[.!?])\\s+"))
+        for (sentence in sentences) {
+          if (currentChunk.length + sentence.length > maxChars) {
+            if (currentChunk.isNotEmpty()) {
+              chunks.add(currentChunk.toString().trim())
+              currentChunk = StringBuilder()
+            }
+            if (sentence.length > maxChars) {
+              sentence.chunked(maxChars).forEach { chunks.add(it) }
+            } else {
+              currentChunk.append(sentence).append(" ")
+            }
+          } else {
+            currentChunk.append(sentence).append(" ")
+          }
+        }
+      } else if (currentChunk.length + paragraph.length > maxChars) {
+        chunks.add(currentChunk.toString().trim())
+        currentChunk = StringBuilder(paragraph).append("\n")
+      } else {
+        currentChunk.append(paragraph).append("\n")
+      }
+    }
+
+    if (currentChunk.isNotEmpty()) {
+      chunks.add(currentChunk.toString().trim())
+    }
+
+    return chunks
+  }
+
   private fun mergePcmFilesToWav(
     pcmFiles: List<File>,
     outputFile: File,
   ) {
-    // Basic WAV header for 24kHz, 16-bit, mono PCM (common Gemini TTS output)
     val sampleRate = 24000
     val channels = 1
     val bitDepth = 16
@@ -225,22 +260,19 @@ public class GenerationWorker(
     val byteRate = (sampleRate * channels * bitDepth / 8).toLong()
 
     FileOutputStream(outputFile).use { out ->
-      // RIFF header
       out.write("RIFF".toByteArray())
       out.write(intToByteArray(totalDataLen.toInt()))
       out.write("WAVE".toByteArray())
 
-      // fmt sub-chunk
       out.write("fmt ".toByteArray())
-      out.write(intToByteArray(16)) // sub-chunk size
-      out.write(shortToByteArray(1)) // audio format (PCM)
+      out.write(intToByteArray(16))
+      out.write(shortToByteArray(1))
       out.write(shortToByteArray(channels.toShort()))
       out.write(intToByteArray(sampleRate))
       out.write(intToByteArray(byteRate.toInt()))
-      out.write(shortToByteArray((channels * bitDepth / 8).toShort())) // block align
+      out.write(shortToByteArray((channels * bitDepth / 8).toShort()))
       out.write(shortToByteArray(bitDepth.toShort()))
 
-      // data sub-chunk
       out.write("data".toByteArray())
       out.write(intToByteArray(totalAudioLen.toInt()))
 

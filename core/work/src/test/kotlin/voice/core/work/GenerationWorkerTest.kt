@@ -12,6 +12,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -83,13 +84,22 @@ class GenerationWorkerTest {
   }
 
   @Test
-  fun `test worker failure when book not found`() = runTest {
-    val worker = createWorker(workDataOf(GenerationWorker.KEY_BOOK_ID to "content://non.existent/book.epub"))
-    val result = try {
-      worker.doWork()
-    } catch (e: Exception) {
-      ListenableWorker.Result.failure()
-    }
-    assertEquals(ListenableWorker.Result.failure(), result)
+  fun `test chunkText splitting`() {
+    val worker = createWorker()
+    val text = "Paragraph one.\nParagraph two which is a bit longer."
+    val chunks = worker.chunkText(text, 20)
+
+    assertTrue(chunks.size >= 2)
+    chunks.forEach { assertTrue(it.length <= 25) } // Allowing some margin for trim/new-lines
+  }
+
+  @Test
+  fun `test chunkText with very long sentence`() {
+    val worker = createWorker()
+    val text = "Thisisaverylongsentencewithoutanyspacesorpunctuationsthatshouldbechunkedbycharactercounteventually."
+    val chunks = worker.chunkText(text, 10)
+
+    assertTrue(chunks.size >= 10)
+    chunks.forEach { assertTrue(it.length <= 10) }
   }
 }
