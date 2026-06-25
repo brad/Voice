@@ -53,7 +53,7 @@ public class Migration64to65 : IncrementalMigration(64) {
     if (columnsToCopy.isNotEmpty()) {
       val columnsCsv = columnsToCopy.joinToString(", ") { "`$it`" }
       db.execSQL(
-        "INSERT INTO `generation_progress_new` ($columnsCsv) SELECT $columnsCsv FROM `generation_progress`"
+        "INSERT INTO `generation_progress_new` ($columnsCsv) SELECT $columnsCsv FROM `generation_progress`",
       )
     }
 
