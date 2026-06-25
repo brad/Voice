@@ -24,10 +24,12 @@ public class GenerationRepositoryImpl(private val dao: GenerationProgressDao) : 
     bookId: BookId,
     status: GenerationStatus,
     lastUpdated: Instant,
+    errorMessage: String?,
   ): Unit = dao.updateStatus(
     bookId,
     status,
     lastUpdated,
+    errorMessage,
   )
   override fun flowInProgressGenerations(): Flow<List<GenerationProgress>> = dao.flowInProgressGenerations(GenerationStatus.COMPLETED)
 }

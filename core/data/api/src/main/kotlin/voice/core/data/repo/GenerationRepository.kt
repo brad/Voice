@@ -15,6 +15,7 @@ public interface GenerationRepository {
     bookId: BookId,
     status: GenerationStatus,
     lastUpdated: Instant,
+    errorMessage: String? = null,
   )
   public fun flowInProgressGenerations(): Flow<List<GenerationProgress>>
 }

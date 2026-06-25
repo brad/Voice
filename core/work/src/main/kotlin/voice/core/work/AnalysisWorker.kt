@@ -53,6 +53,7 @@ public class AnalysisWorker(
     val apiKey = apiKeyStore.data.first()
     if (apiKey.isBlank()) {
       Logger.e("Gemini API key is missing")
+      updateStatus(bookId, GenerationStatus.FAILED, "Gemini API key is missing")
       return Result.failure()
     }
 
@@ -196,6 +197,10 @@ public class AnalysisWorker(
         )
       } catch (e: Exception) {
         Logger.e(e, "Error during character extraction for chunk $i")
+        if (runAttemptCount >= 3) {
+          updateStatus(bookId, GenerationStatus.FAILED, e.message ?: "Persistent API failure")
+          return Result.failure()
+        }
         return Result.retry()
       }
     }
@@ -207,11 +212,13 @@ public class AnalysisWorker(
   private suspend fun updateStatus(
     bookId: BookId,
     status: GenerationStatus,
+    errorMessage: String? = null,
   ) {
     generationRepository.updateStatus(
       bookId = bookId,
       status = status,
       lastUpdated = Instant.now(),
+      errorMessage = errorMessage,
     )
   }
 

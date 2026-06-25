@@ -11,6 +11,7 @@ import voice.core.data.repo.AnalysisProgressRepository
 import voice.core.data.repo.AudioGenerationProgressRepository
 import voice.core.data.repo.GenerationRepository
 import voice.navigation.Destination
+import kotlinx.coroutines.flow.first
 import voice.navigation.Navigator
 import java.time.Instant
 
@@ -41,6 +42,7 @@ class ProgressTrackingViewModel(
       generationChapter = audioProgress?.chapterIndex?.plus(1),
       generationChunk = audioProgress?.chunkIndex,
       generationTotalChunks = audioProgress?.totalChunks,
+      errorMessage = generationProgress?.errorMessage,
       lastUpdated = listOfNotNull(
         generationProgress?.lastUpdated,
         analysisProgress?.lastUpdated,
@@ -65,5 +67,6 @@ internal data class ProgressTrackingViewState(
   val generationChapter: Int?,
   val generationChunk: Int?,
   val generationTotalChunks: Int?,
+  val errorMessage: String?,
   val lastUpdated: Instant?,
 )
