@@ -31,18 +31,34 @@ internal fun DeleteBookDialog(
   AlertDialog(
     onDismissRequest = onDismiss,
     title = {
-      Text(stringResource(StringsR.string.book_delete_dialog_title))
+      Text(
+        stringResource(
+          if (viewState.isImport) {
+            StringsR.string.book_cancel_import_dialog_title
+          } else {
+            StringsR.string.book_delete_dialog_title
+          },
+        ),
+      )
     },
     confirmButton = {
       Button(
         onClick = onConfirmDeletion,
-        enabled = viewState.deleteCheckBoxChecked,
+        enabled = viewState.confirmButtonEnabled,
         colors = ButtonDefaults.buttonColors(
           containerColor = MaterialTheme.colorScheme.errorContainer,
           contentColor = MaterialTheme.colorScheme.error,
         ),
       ) {
-        Text(stringResource(id = StringsR.string.common_action_delete))
+        Text(
+          stringResource(
+            id = if (viewState.isImport) {
+              StringsR.string.book_cancel_import_action_confirm
+            } else {
+              StringsR.string.common_action_delete
+            },
+          ),
+        )
       }
     },
     dismissButton = {
@@ -54,25 +70,35 @@ internal fun DeleteBookDialog(
     },
     text = {
       Column {
-        Text(stringResource(id = StringsR.string.book_delete_dialog_message))
+        Text(
+          stringResource(
+            id = if (viewState.isImport) {
+              StringsR.string.book_cancel_import_dialog_message
+            } else {
+              StringsR.string.book_delete_dialog_message
+            },
+          ),
+        )
 
         Spacer(modifier = Modifier.heightIn(8.dp))
         Text(viewState.fileToDelete, style = MaterialTheme.typography.bodyLarge)
 
-        Row(
-          verticalAlignment = Alignment.CenterVertically,
-          modifier = Modifier
-            .padding(top = 8.dp)
-            .fillMaxWidth()
-            .clickable {
-              onDeleteCheckBoxCheck(!viewState.deleteCheckBoxChecked)
-            },
-        ) {
-          Checkbox(
-            checked = viewState.deleteCheckBoxChecked,
-            onCheckedChange = onDeleteCheckBoxCheck,
-          )
-          Text(stringResource(id = StringsR.string.book_delete_dialog_confirm_files))
+        if (!viewState.isImport) {
+          Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+              .padding(top = 8.dp)
+              .fillMaxWidth()
+              .clickable {
+                onDeleteCheckBoxCheck(!viewState.deleteCheckBoxChecked)
+              },
+          ) {
+            Checkbox(
+              checked = viewState.deleteCheckBoxChecked,
+              onCheckedChange = onDeleteCheckBoxCheck,
+            )
+            Text(stringResource(id = StringsR.string.book_delete_dialog_confirm_files))
+          }
         }
       }
     },

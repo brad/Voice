@@ -346,4 +346,13 @@
     <string name="generation_settings.discard_confirmation.confirm">Discard</string>
     <!-- Negative button label for discarding generation. -->
     <string name="generation_settings.discard_confirmation.cancel">Cancel</string>
+
+    <!-- Title for the cancel import confirmation dialog. -->
+    <string name="book.cancel_import.dialog.title">Cancel Import</string>
+    <!-- Message for the cancel import confirmation dialog. -->
+    <string name="book.cancel_import.dialog.message">This will cancel the ebook import and delete any generated files. The ebook file will not be deleted.</string>
+    <!-- Label for the cancel import action in the bottom sheet. -->
+    <string name="book.cancel_import.bottom_sheet.title">Cancel Import</string>
+    <!-- Confirm button label for canceling import. -->
+    <string name="book.cancel_import.action.confirm">Cancel Import</string>
 </resources>

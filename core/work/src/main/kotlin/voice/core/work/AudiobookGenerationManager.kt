@@ -10,8 +10,12 @@ import dev.zacsweers.metro.ContributesBinding
 import voice.core.data.BookId
 import voice.core.data.GenerationProgress
 import voice.core.data.GenerationStatus
+import voice.core.data.repo.AnalysisProgressRepository
 import voice.core.data.repo.AudioGenerationProgressRepository
+import voice.core.data.repo.CharacterRepository
 import voice.core.data.repo.GenerationRepository
+import voice.core.data.repo.VoiceMappingRepository
+import voice.core.data.repo.WordPronunciationRepository
 import java.io.File
 import java.time.Instant
 
@@ -19,6 +23,7 @@ public interface AudiobookGenerationManager {
   public fun generateAudiobook(bookId: BookId)
   public fun cancelGeneration(bookId: BookId)
   public suspend fun discardGeneration(bookId: BookId)
+  public suspend fun cancelImport(bookId: BookId)
 }
 
 @ContributesBinding(AppScope::class)
@@ -27,6 +32,10 @@ public class WorkManagerAudiobookGenerationManager(
   private val workManager: WorkManager,
   private val audioGenerationProgressRepository: AudioGenerationProgressRepository,
   private val generationRepository: GenerationRepository,
+  private val analysisProgressRepository: AnalysisProgressRepository,
+  private val characterRepository: CharacterRepository,
+  private val voiceMappingRepository: VoiceMappingRepository,
+  private val wordPronunciationRepository: WordPronunciationRepository,
 ) : AudiobookGenerationManager {
 
   public override fun generateAudiobook(bookId: BookId) {
@@ -55,6 +64,21 @@ public class WorkManagerAudiobookGenerationManager(
         lastUpdated = Instant.now(),
       ),
     )
+    val outputDir = File(context.filesDir, "audiobooks/${bookId.value}")
+    outputDir.deleteRecursively()
+  }
+
+  public override suspend fun cancelImport(bookId: BookId) {
+    workManager.cancelUniqueWork("epub-analysis-${bookId.value}")
+    cancelGeneration(bookId)
+
+    generationRepository.deleteForBook(bookId)
+    audioGenerationProgressRepository.deleteForBook(bookId)
+    analysisProgressRepository.deleteForBook(bookId)
+    characterRepository.deleteForBook(bookId)
+    voiceMappingRepository.deleteForBook(bookId)
+    wordPronunciationRepository.deleteForBook(bookId)
+
     val outputDir = File(context.filesDir, "audiobooks/${bookId.value}")
     outputDir.deleteRecursively()
   }
