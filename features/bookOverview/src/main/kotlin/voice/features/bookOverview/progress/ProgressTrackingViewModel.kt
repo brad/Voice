@@ -5,13 +5,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import dev.zacsweers.metro.Inject
+import kotlinx.coroutines.flow.first
 import voice.core.data.BookId
 import voice.core.data.GenerationStatus
 import voice.core.data.repo.AnalysisProgressRepository
 import voice.core.data.repo.AudioGenerationProgressRepository
 import voice.core.data.repo.GenerationRepository
 import voice.navigation.Destination
-import kotlinx.coroutines.flow.first
 import voice.navigation.Navigator
 import java.time.Instant
 
