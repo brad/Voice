@@ -66,7 +66,10 @@
     <string name="library.progress_tracking.status_analyzed">Analyzed</string>
     <string name="library.progress_tracking.status_generating">Generating</string>
     <string name="library.progress_tracking.status_completed">Completed</string>
-    <string name="library.progress_tracking.status_failed">Failed</string>    <string name="library.folders.title">有声书文件夹</string>
+    <string name="library.progress_tracking.status_failed">Failed</string>
+    <string name="library.progress_tracking.error_api_key_missing">Gemini API key is missing. Please set it in Settings.</string>
+    <string name="library.progress_tracking.error_persistent_failure">Persistent API failure. Please check your internet connection or API key.</string>
+    <string name="library.folders.title">有声书文件夹</string>
     <string name="library.search.hint">您在找什么？</string>
     <string name="library.storage_permission_bug.action">给予权限</string>
     <string name="library.storage_permission_bug.message">对于某些设备，系统应用程序缺少访问外部存储的必要权限。此访问对于Voice阅读您的有声读物至关重要。</string>

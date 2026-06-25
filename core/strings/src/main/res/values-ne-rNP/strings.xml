@@ -70,7 +70,10 @@
     <string name="library.progress_tracking.status_analyzed">Analyzed</string>
     <string name="library.progress_tracking.status_generating">Generating</string>
     <string name="library.progress_tracking.status_completed">Completed</string>
-    <string name="library.progress_tracking.status_failed">Failed</string>    <string name="library.folders.title">अडियोबूक फोल्डरहरू</string>
+    <string name="library.progress_tracking.status_failed">Failed</string>
+    <string name="library.progress_tracking.error_api_key_missing">Gemini API key is missing. Please set it in Settings.</string>
+    <string name="library.progress_tracking.error_persistent_failure">Persistent API failure. Please check your internet connection or API key.</string>
+    <string name="library.folders.title">अडियोबूक फोल्डरहरू</string>
     <string name="library.search.hint">तपाईं के खोज्दै हुनुन्छ?</string>
     <string name="library.storage_permission_bug.action">अनुमति दिनुहोस्</string>
     <string name="library.storage_permission_bug.message">केहि यन्त्रहरूको लागि, प्रणाली एपले बाह्य भण्डारण पहुँच गर्न आवश्यक अनुमति गुमाएको छ। तपाईंको अडियोबूकहरू पढ्नको लागि Voice को लागि यो पहुँच आवश्यक छ।</string>

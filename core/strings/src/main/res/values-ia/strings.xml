@@ -75,7 +75,10 @@
     <string name="library.progress_tracking.status_analyzed">Analyzed</string>
     <string name="library.progress_tracking.status_generating">Generating</string>
     <string name="library.progress_tracking.status_completed">Completed</string>
-    <string name="library.progress_tracking.status_failed">Failed</string>    <string name="library.folders.title">Dossieres de audiolibros</string>
+    <string name="library.progress_tracking.status_failed">Failed</string>
+    <string name="library.progress_tracking.error_api_key_missing">Gemini API key is missing. Please set it in Settings.</string>
+    <string name="library.progress_tracking.error_persistent_failure">Persistent API failure. Please check your internet connection or API key.</string>
+    <string name="library.folders.title">Dossieres de audiolibros</string>
     <string name="library.folders.moved.dialog.title">Dossieres de audiolibros movite</string>
     <string name="library.folders.moved.dialog.message">Tu pote ora gerer le dossieres de audiolibros in Preferentias.</string>
     <string name="library.search.hint">Que cerca tu?</string>

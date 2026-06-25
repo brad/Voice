@@ -77,7 +77,10 @@
     <string name="library.progress_tracking.status_analyzed">Analyzed</string>
     <string name="library.progress_tracking.status_generating">Generating</string>
     <string name="library.progress_tracking.status_completed">Completed</string>
-    <string name="library.progress_tracking.status_failed">Failed</string>    <string name="library.folders.title">Carpetes de l\'audiollibre</string>
+    <string name="library.progress_tracking.status_failed">Failed</string>
+    <string name="library.progress_tracking.error_api_key_missing">Gemini API key is missing. Please set it in Settings.</string>
+    <string name="library.progress_tracking.error_persistent_failure">Persistent API failure. Please check your internet connection or API key.</string>
+    <string name="library.folders.title">Carpetes de l\'audiollibre</string>
     <string name="library.search.hint">Què busqueu?</string>
     <string name="library.storage_permission_bug.action">Autoritzeu el permís</string>
     <string name="library.storage_permission_bug.message">Per a determinats dispositius, a una aplicació del sistema li falta el permís necessari per accedir a l\'emmagatzematge extern. Aquest accés és essencial perquè el Voice llegeixi els audiollibres.</string>

@@ -143,7 +143,9 @@
     <string name="library.progress_tracking.status_completed">Completed</string>
     <!-- Human-readable generation status for failures. -->
     <string name="library.progress_tracking.status_failed">Failed</string>
+    <!-- Error message for when the Gemini API key is missing -->
     <string name="library.progress_tracking.error_api_key_missing">Gemini API key is missing. Please set it in Settings.</string>
+    <!-- Error message when Gemini API is persistently failing -->
     <string name="library.progress_tracking.error_persistent_failure">Persistent API failure. Please check your internet connection or API key.</string>
     <!-- Title for screens and rows that manage audiobook folders. -->
     <string name="library.folders.title">Audiobook folders</string>

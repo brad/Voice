@@ -77,7 +77,10 @@
     <string name="library.progress_tracking.status_analyzed">Analyzed</string>
     <string name="library.progress_tracking.status_generating">Generating</string>
     <string name="library.progress_tracking.status_completed">Completed</string>
-    <string name="library.progress_tracking.status_failed">Failed</string>    <string name="library.folders.title">Directoare cărți</string>
+    <string name="library.progress_tracking.status_failed">Failed</string>
+    <string name="library.progress_tracking.error_api_key_missing">Gemini API key is missing. Please set it in Settings.</string>
+    <string name="library.progress_tracking.error_persistent_failure">Persistent API failure. Please check your internet connection or API key.</string>
+    <string name="library.folders.title">Directoare cărți</string>
     <string name="library.search.hint">Ce anume căutați?</string>
     <string name="library.storage_permission_bug.action">Acordă permisiune</string>
     <string name="library.storage_permission_bug.message">Pe anumite dispozitive, o aplicație de sistem are nevoie de anumite permisiuni pentru a accesa stocarea externă. Aceste permisiuni sunt esențiale pentru ca Voice să poată citi cărțile tale audio.</string>
