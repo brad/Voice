@@ -21,7 +21,7 @@ This roadmap outlines the steps to implement auto-builds in CI and a feature to 
 - [x] **Voice Mapping Logic**: Implement an intelligent mapping system:
     - Assign pre-built voices (Kore, Aoide, etc.) based on gender/age.
     - Implement "tuning" logic to vary speed, pitch, or energy for reused voices.
-- [ ] **POV-aware Voice Assignment**: Refine analysis to identify and handle narrative point of view (POV) with high consistency.
+- [x] **POV-aware Voice Assignment**: Refine analysis to identify and handle narrative point of view (POV) with high consistency.
     - **First-Person POV**: Detect the POV character. The narrator voice should match the POV character but use a "storyteller" tuning (e.g., more measured, reflective, or formal) compared to their dialogue.
     - **Third-Person Limited**: Identify the focal character. The narrator remains a distinct voice but should mirror the gender/tone of the focal character's perspective for that section.
     - **Third-Person Omniscient**: Use a neutral, authoritative narrator voice (e.g., Charon/Fenrir) that is consistent across the entire book.
@@ -44,7 +44,7 @@ This roadmap outlines the steps to implement auto-builds in CI and a feature to 
 - [x] **Progress Tracking UI**: Create a screen to monitor analysis and generation status (resumable).
 - [x] **Library Registration**: Automatically register the final generated audio files as a playable Audiobook in the existing library.
 - [x] **Generating from eBook**: Add entry point to ProgressTrackingScreen for in-progress books
-- [ ] **Error Handling UI**: Notify users of persistent API failures or missing API keys.
+- [x] **Error Handling UI**: Notify users of persistent API failures or missing API keys.
 
 ## Phase 5: Final Polish & Testing
 - [ ] **Edge Case Testing**: Long books, books with many characters, network interruptions.
