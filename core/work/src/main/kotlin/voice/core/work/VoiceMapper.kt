@@ -1,6 +1,7 @@
 package voice.core.work
 
 import voice.core.data.Character
+import voice.core.data.PovType
 import voice.core.data.VoiceMapping
 import kotlin.uuid.Uuid
 
@@ -14,7 +15,10 @@ internal object VoiceMapper {
 
   fun mapToVoice(
     character: Character,
+    povType: PovType? = null,
+    povCharacterName: String? = null,
     existingMappings: List<VoiceMapping> = emptyList(),
+    allCharacters: List<Character> = emptyList(),
   ): VoiceMapping {
     val name = character.name.lowercase()
     val gender = character.gender?.lowercase() ?: "unknown"
@@ -24,7 +28,19 @@ internal object VoiceMapper {
     val isNarrator = name == "narrator"
 
     val voiceName = when {
-      isNarrator -> VOICE_CHARON
+      isNarrator -> {
+        if (povType == PovType.FIRST_PERSON && povCharacterName != null) {
+          val povChar = allCharacters.find { it.name.lowercase() == povCharacterName.lowercase() }
+          if (povChar != null) {
+            // Use same voice as POV character
+            mapToVoice(povChar, null, null, emptyList(), emptyList()).voiceName
+          } else {
+            VOICE_CHARON
+          }
+        } else {
+          VOICE_CHARON
+        }
+      }
       gender.contains("female") || gender.contains("woman") || gender.contains("girl") -> {
         when {
           energyTrait.contains("low") -> VOICE_AOIDE
@@ -63,7 +79,11 @@ internal object VoiceMapper {
     var energy = 1.0f
     var pitch = pitchBase
 
-    if (!isNarrator) {
+    if (isNarrator) {
+      // Narrator specific tuning: "storyteller" tuning
+      speed = 0.95f
+      energy = 0.9f
+    } else {
       // Apply energy traits
       when {
         energyTrait.contains("high") -> {

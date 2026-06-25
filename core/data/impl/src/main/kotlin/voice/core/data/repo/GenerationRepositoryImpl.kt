@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import voice.core.data.BookId
 import voice.core.data.GenerationProgress
 import voice.core.data.GenerationStatus
+import voice.core.data.PovType
 import voice.core.data.repo.internals.dao.GenerationProgressDao
 import java.time.Instant
 
@@ -20,6 +21,13 @@ public class GenerationRepositoryImpl(private val dao: GenerationProgressDao) : 
   override suspend fun insert(progress: GenerationProgress): Unit = dao.insert(progress)
 
   override suspend fun deleteForBook(bookId: BookId): Unit = dao.deleteForBook(bookId)
+
+  override suspend fun updatePov(
+    bookId: BookId,
+    povType: PovType,
+    povCharacterName: String?,
+  ): Unit = dao.updatePov(bookId, povType, povCharacterName)
+
   override suspend fun updateStatus(
     bookId: BookId,
     status: GenerationStatus,
@@ -31,5 +39,6 @@ public class GenerationRepositoryImpl(private val dao: GenerationProgressDao) : 
     lastUpdated,
     errorMessage,
   )
+
   override fun flowInProgressGenerations(): Flow<List<GenerationProgress>> = dao.flowInProgressGenerations(GenerationStatus.COMPLETED)
 }

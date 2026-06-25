@@ -14,6 +14,7 @@ import voice.core.data.BookId
 import voice.core.data.Character
 import voice.core.data.GenerationProgress
 import voice.core.data.GenerationStatus
+import voice.core.data.PovType
 import voice.core.data.VoiceMapping
 import voice.core.data.WordPronunciation
 import voice.core.data.repo.AnalysisProgressRepository
@@ -167,6 +168,13 @@ public class AnalysisWorker(
         characterRepository.insertAll(newCharacters)
         currentCharacters = newCharacters
 
+        // Update POV
+        generationRepository.updatePov(
+          bookId = bookId,
+          povType = extracted.povType,
+          povCharacterName = extracted.povCharacterName,
+        )
+
         // Extract and insert pronunciations (they are incremental for this chunk)
         val newPronunciations = extracted.pronunciations.map {
           WordPronunciation(
@@ -182,7 +190,7 @@ public class AnalysisWorker(
         voiceMappingRepository.deleteForBook(bookId)
         val newMappings = mutableListOf<VoiceMapping>()
         for (char in newCharacters) {
-          val mapping = VoiceMapper.mapToVoice(char, newMappings)
+          val mapping = VoiceMapper.mapToVoice(char, extracted.povType, extracted.povCharacterName, newMappings, newCharacters)
           newMappings.add(mapping)
         }
         voiceMappingRepository.insertAll(newMappings)
@@ -196,7 +204,7 @@ public class AnalysisWorker(
           ),
         )
       } catch (e: Exception) {
-        Logger.e(e, "Error during character extraction for chunk $i")
+        Logger.e(e, "Error during character extraction for chunk ")
         if (runAttemptCount >= 3) {
           updateStatus(bookId, GenerationStatus.FAILED, e.message ?: "Persistent API failure")
           return Result.failure()
@@ -241,6 +249,8 @@ public class AnalysisWorker(
   private data class ExtractedData(
     val characters: List<SerializableCharacter>,
     val pronunciations: List<SerializablePronunciation> = emptyList(),
+    val povType: PovType,
+    val povCharacterName: String? = null,
   )
 
   public companion object {

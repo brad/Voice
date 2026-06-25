@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import voice.core.data.BookId
 import voice.core.data.GenerationProgress
 import voice.core.data.GenerationStatus
+import voice.core.data.PovType
 import java.time.Instant
 
 @Dao
@@ -23,6 +24,13 @@ public interface GenerationProgressDao {
 
   @Query("DELETE FROM generation_progress WHERE bookId = :bookId")
   public suspend fun deleteForBook(bookId: BookId)
+
+  @Query("UPDATE generation_progress SET povType = :povType, povCharacterName = :povCharacterName WHERE bookId = :bookId")
+  public suspend fun updatePov(
+    bookId: BookId,
+    povType: PovType,
+    povCharacterName: String?,
+  )
 
   @Query("UPDATE generation_progress SET status = :status, lastUpdated = :lastUpdated, errorMessage = :errorMessage WHERE bookId = :bookId")
   public suspend fun updateStatus(
