@@ -193,4 +193,62 @@ class VoiceMapperTest {
     assertEquals(0.95f, mapping.speed)
     assertEquals(0.9f, mapping.energy)
   }
+
+  @Test
+  fun `test third person limited narrator matching focal character voice`() {
+    val bookId = BookId("test")
+    val focalChar = Character(
+      id = Uuid.random(),
+      bookId = bookId,
+      name = "Bob",
+      gender = "Male",
+      age = "Adult",
+      energy = "Medium",
+      personality = "Strong",
+    )
+    val narrator = Character(
+      id = Uuid.random(),
+      bookId = bookId,
+      name = "Narrator",
+      gender = null,
+      age = null,
+      energy = null,
+      personality = null,
+    )
+
+    val mapping = VoiceMapper.mapToVoice(
+      character = narrator,
+      povType = PovType.THIRD_PERSON_LIMITED,
+      povCharacterName = "Bob",
+      allCharacters = listOf(focalChar),
+    )
+
+    assertEquals("Charon", mapping.voiceName)
+    assertEquals(0.95f, mapping.speed)
+    assertEquals(0.9f, mapping.energy)
+  }
+
+  @Test
+  fun `test omniscient narrator uses default voice`() {
+    val bookId = BookId("test")
+    val narrator = Character(
+      id = Uuid.random(),
+      bookId = bookId,
+      name = "Narrator",
+      gender = null,
+      age = null,
+      energy = null,
+      personality = null,
+    )
+
+    val mapping = VoiceMapper.mapToVoice(
+      character = narrator,
+      povType = PovType.OMNISCIENT,
+      povCharacterName = null,
+      allCharacters = emptyList(),
+    )
+
+    assertEquals("Charon", mapping.voiceName)
+    assertEquals(0.95f, mapping.speed)
+  }
 }

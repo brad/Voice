@@ -29,15 +29,17 @@ internal object VoiceMapper {
 
     val voiceName = when {
       isNarrator -> {
-        if (povType == PovType.FIRST_PERSON && povCharacterName != null) {
-          val povChar = allCharacters.find { it.name.lowercase() == povCharacterName.lowercase() }
-          if (povChar != null) {
-            // Use same voice as POV character
-            mapToVoice(povChar, null, null, emptyList(), emptyList()).voiceName
-          } else {
-            VOICE_CHARON
-          }
+        val characterToMirror = if (povType == PovType.FIRST_PERSON || povType == PovType.THIRD_PERSON_LIMITED) {
+          allCharacters.find { it.name.lowercase() == povCharacterName?.lowercase() }
         } else {
+          null
+        }
+
+        if (characterToMirror != null) {
+          // Mirror the voice of the POV/focal character
+          mapToVoice(characterToMirror, null, null, emptyList(), emptyList()).voiceName
+        } else {
+          // Default to a neutral authoritative voice for OMNISCIENT or unknown
           VOICE_CHARON
         }
       }

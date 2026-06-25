@@ -121,7 +121,7 @@ private fun ProgressTracking(
                 onClick = { onConfigureGeneration(bookId) },
                 modifier = Modifier.fillMaxWidth(),
               ) {
-                Text("Configure Generation")
+                Text(stringResource(StringsR.string.library_progress_tracking_action_configure_generation))
               }
             },
           )
