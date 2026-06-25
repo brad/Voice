@@ -74,7 +74,7 @@ public abstract class AppDb : RoomDatabase() {
   public abstract fun audioGenerationProgressDao(): AudioGenerationProgressDao
 
   internal companion object {
-    const val VERSION = 64
+    const val VERSION = 65
     const val DATABASE_NAME = "autoBookDB"
   }
 }
