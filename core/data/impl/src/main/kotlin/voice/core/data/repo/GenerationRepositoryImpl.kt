@@ -31,5 +31,13 @@ public class GenerationRepositoryImpl(private val dao: GenerationProgressDao) : 
     lastUpdated,
     errorMessage,
   )
+
+  override suspend fun updatePov(
+    bookId: BookId,
+    povType: String?,
+    povCharacterName: String?,
+    lastUpdated: Instant,
+  ): Unit = dao.updatePov(bookId, povType, povCharacterName, lastUpdated)
+
   override fun flowInProgressGenerations(): Flow<List<GenerationProgress>> = dao.flowInProgressGenerations(GenerationStatus.COMPLETED)
 }

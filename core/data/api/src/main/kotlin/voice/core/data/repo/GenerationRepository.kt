@@ -17,5 +17,11 @@ public interface GenerationRepository {
     lastUpdated: Instant,
     errorMessage: String? = null,
   )
+  public suspend fun updatePov(
+    bookId: BookId,
+    povType: String?,
+    povCharacterName: String?,
+    lastUpdated: Instant,
+  )
   public fun flowInProgressGenerations(): Flow<List<GenerationProgress>>
 }

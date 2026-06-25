@@ -5,7 +5,10 @@ import org.junit.Assert.assertNotEquals
 import org.junit.Test
 import voice.core.data.BookId
 import voice.core.data.Character
+import voice.core.data.GenerationProgress
+import voice.core.data.GenerationStatus
 import voice.core.data.VoiceMapping
+import java.time.Instant
 import kotlin.uuid.Uuid
 
 class VoiceMapperTest {
@@ -123,9 +126,9 @@ class VoiceMapperTest {
     )
     val mapping = VoiceMapper.mapToVoice(character)
     assertEquals("Charon", mapping.voiceName)
-    assertEquals(1.0f, mapping.speed)
+    assertEquals(0.95f, mapping.speed)
     assertEquals(1.0f, mapping.pitch)
-    assertEquals(1.0f, mapping.energy)
+    assertEquals(0.9f, mapping.energy)
   }
 
   @Test
@@ -153,9 +156,33 @@ class VoiceMapperTest {
       energy = "Medium",
       personality = "Shy",
     )
-    val mapping2 = VoiceMapper.mapToVoice(char2, listOf(mapping1))
+    val mapping2 = VoiceMapper.mapToVoice(char2, null, listOf(mapping1))
     assertEquals("Kore", mapping2.voiceName)
     assertNotEquals(mapping1.pitch, mapping2.pitch)
     assertEquals(1.05f, mapping2.pitch)
+  }
+
+  @Test
+  fun `test first-person pov tuning`() {
+    val bookId = BookId("test")
+    val character = Character(
+      id = Uuid.random(),
+      bookId = bookId,
+      name = "Narrator",
+      gender = null,
+      age = null,
+      energy = null,
+      personality = null,
+    )
+    val progress = GenerationProgress(
+      bookId = bookId,
+      status = GenerationStatus.ANALYZING,
+      lastUpdated = Instant.now(),
+      povType = "First-Person",
+    )
+    val mapping = VoiceMapper.mapToVoice(character, progress)
+    assertEquals("Charon", mapping.voiceName)
+    assertEquals(1.0f, mapping.speed)
+    assertEquals(1.0f, mapping.energy)
   }
 }

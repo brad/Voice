@@ -32,6 +32,14 @@ public interface GenerationProgressDao {
     errorMessage: String? = null,
   )
 
+  @Query("UPDATE generation_progress SET povType = :povType, povCharacterName = :povCharacterName, lastUpdated = :lastUpdated WHERE bookId = :bookId")
+  public suspend fun updatePov(
+    bookId: BookId,
+    povType: String?,
+    povCharacterName: String?,
+    lastUpdated: Instant,
+  )
+
   @Query("SELECT * FROM generation_progress WHERE status != :completedStatus")
   public fun flowInProgressGenerations(completedStatus: GenerationStatus): Flow<List<GenerationProgress>>
 }

@@ -85,6 +85,9 @@ public class GenerationWorker(
     val characters = characterRepository.charactersForBook(bookId)
     val mappings = voiceMappingRepository.mappingsForBook(bookId)
     val pronunciations = wordPronunciationRepository.pronunciationsForBook(bookId)
+    val currentProgress = generationRepository.progressForBook(bookId)
+    val povType = currentProgress?.povType ?: "Unknown"
+    val povCharacterName = currentProgress?.povCharacterName ?: "None"
 
     val progress = audioGenerationProgressRepository.progressForBook(bookId)
     val startChapterIndex = progress?.chapterIndex ?: 0
@@ -109,9 +112,6 @@ public class GenerationWorker(
         val chunkText = paragraphs[chunkIdx]
 
         // Prepare multi-speaker prompt
-        // In a real implementation, we would use Gemini to label the speakers in the text
-        // For now, we'll use a simplified approach: wrap text in speaker labels
-        // and include mappings in the config.
         val characterInstructions = characters.joinToString("\n") { char ->
           val mapping = mappings.find { it.characterId == char.id }
           val tuning = if (mapping != null) {
@@ -131,6 +131,13 @@ public class GenerationWorker(
         val speakerPrompt = """
           Perform a multi-speaker TTS generation for the following book excerpt.
           Identify the speakers (including the Narrator) and assign them the appropriate voices from the configuration.
+
+          Narrative Context:
+          - Point of View: $povType
+          - Perspective Character: $povCharacterName
+
+          The Narrator's performance should reflect the narrative context (e.g., more personal if First-Person, more objective if Omniscient).
+
           Character Profiles and Voice Tuning:
           $characterInstructions$pronunciationInstructions
 

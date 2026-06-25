@@ -110,6 +110,10 @@ public class AnalysisWorker(
 
     for (i in startChunkIndex until totalChunks) {
       val chunk = chunks[i]
+      val currentProgress = generationRepository.progressForBook(bookId)
+      val knownPovType = currentProgress?.povType ?: "Unknown"
+      val knownPovCharacter = currentProgress?.povCharacterName ?: "None"
+
       val knownCharactersJson = Json.encodeToString(
         currentCharacters.map {
           SerializableCharacter(it.name, it.gender, it.age, it.energy, it.personality)
@@ -118,6 +122,8 @@ public class AnalysisWorker(
 
       val prompt = GeminiAnalysisPrompts.INCREMENTAL_CHARACTER_EXTRACTION_PROMPT.format(
         knownCharactersJson,
+        knownPovType,
+        knownPovCharacter,
         chunk,
       )
 
@@ -178,11 +184,20 @@ public class AnalysisWorker(
         }
         wordPronunciationRepository.insertAll(newPronunciations)
 
+        // Update POV info
+        generationRepository.updatePov(
+          bookId = bookId,
+          povType = extracted.povType,
+          povCharacterName = extracted.povCharacterName,
+          lastUpdated = Instant.now(),
+        )
+
         // Update voice mappings
         voiceMappingRepository.deleteForBook(bookId)
+        val updatedProgress = generationRepository.progressForBook(bookId)
         val newMappings = mutableListOf<VoiceMapping>()
         for (char in newCharacters) {
-          val mapping = VoiceMapper.mapToVoice(char, newMappings)
+          val mapping = VoiceMapper.mapToVoice(char, updatedProgress, newMappings)
           newMappings.add(mapping)
         }
         voiceMappingRepository.insertAll(newMappings)
@@ -241,6 +256,8 @@ public class AnalysisWorker(
   private data class ExtractedData(
     val characters: List<SerializableCharacter>,
     val pronunciations: List<SerializablePronunciation> = emptyList(),
+    val povType: String? = null,
+    val povCharacterName: String? = null,
   )
 
   public companion object {

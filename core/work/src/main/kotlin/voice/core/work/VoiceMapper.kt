@@ -1,6 +1,7 @@
 package voice.core.work
 
 import voice.core.data.Character
+import voice.core.data.GenerationProgress
 import voice.core.data.VoiceMapping
 import kotlin.uuid.Uuid
 
@@ -14,6 +15,7 @@ internal object VoiceMapper {
 
   fun mapToVoice(
     character: Character,
+    generationProgress: GenerationProgress? = null,
     existingMappings: List<VoiceMapping> = emptyList(),
   ): VoiceMapping {
     val name = character.name.lowercase()
@@ -22,9 +24,11 @@ internal object VoiceMapper {
     val energyTrait = character.energy?.lowercase() ?: "medium"
 
     val isNarrator = name == "narrator"
+    val povType = generationProgress?.povType?.lowercase() ?: "unknown"
+    val povCharacterName = generationProgress?.povCharacterName?.lowercase()
 
-    val voiceName = when {
-      isNarrator -> VOICE_CHARON
+    var voiceName = when {
+      isNarrator -> VOICE_CHARON // Default
       gender.contains("female") || gender.contains("woman") || gender.contains("girl") -> {
         when {
           energyTrait.contains("low") -> VOICE_AOIDE
@@ -86,6 +90,16 @@ internal object VoiceMapper {
           speed -= 0.05f
           pitch -= 0.05f
         }
+      }
+    } else {
+      // Narrator specific "storyteller" tuning
+      speed = 0.95f // Slightly slower and more measured
+      energy = 0.9f // More reflective
+
+      if (povType.contains("first-person")) {
+        // More personal/informal for First-Person
+        speed = 1.0f
+        energy = 1.0f
       }
     }
 
