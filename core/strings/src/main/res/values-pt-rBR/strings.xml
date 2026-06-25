@@ -180,4 +180,8 @@
     <string name="generation_settings.discard_confirmation.message">This will stop the current generation and delete any progress and audio files created so far.</string>
     <string name="generation_settings.discard_confirmation.confirm">Discard</string>
     <string name="generation_settings.discard_confirmation.cancel">Cancel</string>
+    <string name="book.cancel_import.dialog.title">Cancel Import</string>
+    <string name="book.cancel_import.dialog.message">This will cancel the ebook import and delete any generated files. The ebook file will not be deleted.</string>
+    <string name="book.cancel_import.bottom_sheet.title">Cancel Import</string>
+    <string name="book.cancel_import.action.confirm">Cancel Import</string>
 </resources>

@@ -346,7 +346,6 @@
     <string name="generation_settings.discard_confirmation.confirm">Discard</string>
     <!-- Negative button label for discarding generation. -->
     <string name="generation_settings.discard_confirmation.cancel">Cancel</string>
-
     <!-- Title for the cancel import confirmation dialog. -->
     <string name="book.cancel_import.dialog.title">Cancel Import</string>
     <!-- Message for the cancel import confirmation dialog. -->
