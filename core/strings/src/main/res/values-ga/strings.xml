@@ -190,4 +190,7 @@
     <string name="book.cancel_import.dialog.message">This will cancel the ebook import and delete any generated files. The ebook file will not be deleted.</string>
     <string name="book.cancel_import.bottom_sheet.title">Cancel Import</string>
     <string name="book.cancel_import.action.confirm">Cancel Import</string>
+    <string name="library.progress_tracking.action.configure_generation">Configure Generation</string>
+    <string name="generation_settings.character.traits">Traits: %1$s, %2$s, %3$s</string>
+    <string name="generation_settings.character.voice_info">Voice: %1$s (Speed: %2$s, Pitch: %3$s)</string>
 </resources>

@@ -19,6 +19,7 @@
     <string name="common.action.add">Aggiungi</string>
     <string name="common.action.close">Chiudi</string>
     <string name="common.action.delete">Elimina</string>
+    <string name="common.action.edit">Modifica</string>
     <string name="common.action.more">Altro</string>
     <string name="common.action.remove">Rimuovi</string>
     <string name="common.dialog.cancel">Annulla</string>
@@ -186,5 +187,4 @@
     <string name="library.progress_tracking.action.configure_generation">Configura generazione</string>
     <string name="generation_settings.character.traits">Tratti: %1$s, %2$s, %3$s</string>
     <string name="generation_settings.character.voice_info">Voce: %1$s (Velocità: %2$s, Tonalità: %3$s)</string>
-    <string name="common.action.edit">Modifica</string>
 </resources>

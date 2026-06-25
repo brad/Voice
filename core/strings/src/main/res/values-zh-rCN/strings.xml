@@ -19,6 +19,7 @@
     <string name="common.action.add">添加</string>
     <string name="common.action.close">关闭</string>
     <string name="common.action.delete">删除</string>
+    <string name="common.action.edit">编辑</string>
     <string name="common.action.more">更多</string>
     <string name="common.action.remove">删除</string>
     <string name="common.dialog.cancel">取消</string>
@@ -125,5 +126,4 @@
     <string name="library.progress_tracking.action.configure_generation">配置生成</string>
     <string name="generation_settings.character.traits">特征：%1$s, %2$s, %3$s</string>
     <string name="generation_settings.character.voice_info">声音：%1$s (速度：%2$s, 音调：%3$s)</string>
-    <string name="common.action.edit">编辑</string>
 </resources>
