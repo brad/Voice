@@ -163,7 +163,12 @@
     <string name="library.progress_tracking.status_generating">Génération en cours</string>
     <string name="library.progress_tracking.status_completed">Terminé</string>
     <string name="library.progress_tracking.status_failed">Échec</string>
-    <string name="library.progress_tracking.error_api_key_missing">Clé API Gemini manquante. Veuillez la configurer dans les Paramètres.</string>
+    <string name="library.progress_tracking.action.retry">Retry</string>
+    <string name="library.progress_tracking.error_details_copied">Error details copied to clipboard</string>
+    <string name="library.progress_tracking.action.copy_error">Copy error details</string>
+    <string name="library.progress_tracking.error_title">Error Details</string>
+    <string name="library.progress_tracking.action.share_error">Share as log file</string>
+    <string name="library.progress_tracking.error_summary_label">Error Summary:</string>
     <string name="library.progress_tracking.error_persistent_failure">Échec persistant de l\'API. Veuillez vérifier votre connexion internet ou votre clé API.</string>
     <string name="settings.gemini.api_key.title">Clé API Gemini</string>
     <string name="settings.gemini.api_key.summary">Clé API pour les services d\'IA Gemini</string>
