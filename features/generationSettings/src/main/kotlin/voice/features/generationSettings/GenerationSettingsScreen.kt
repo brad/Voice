@@ -212,9 +212,23 @@ private fun CharacterVoiceItem(
     headlineContent = { Text(character.name) },
     supportingContent = {
       Column {
-        Text(stringResource(StringsR.string.generation_settings_character_traits, character.gender ?: "", character.age ?: "", character.energy ?: "" ))
+        Text(
+          stringResource(
+            StringsR.string.generation_settings_character_traits,
+            character.gender ?: "",
+            character.age ?: "",
+            character.energy ?: "",
+          ),
+        )
         if (mapping != null) {
-          Text(stringResource(StringsR.string.generation_settings_character_voice_info, mapping.voiceName, mapping.speed, mapping.pitch))
+          Text(
+            stringResource(
+              StringsR.string.generation_settings_character_voice_info,
+              mapping.voiceName,
+              mapping.speed,
+              mapping.pitch,
+            ),
+          )
         }
       }
     },
@@ -226,7 +240,10 @@ private fun CharacterVoiceItem(
         onClick = { /* TODO: Edit voice settings */ },
         enabled = enabled,
       ) {
-        Icon(imageVector = VoiceIcons.Settings, contentDescription = stringResource(StringsR.string.common_action_edit))
+        Icon(
+          imageVector = VoiceIcons.Settings,
+          contentDescription = stringResource(StringsR.string.common_action_edit),
+        )
       }
     },
   )
