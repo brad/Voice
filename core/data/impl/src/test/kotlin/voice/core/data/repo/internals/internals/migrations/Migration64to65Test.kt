@@ -45,7 +45,11 @@ class Migration64to65Test {
             )
           }
 
-          override fun onUpgrade(db: SupportSQLiteDatabase, oldVersion: Int, newVersion: Int) {}
+          override fun onUpgrade(
+            db: SupportSQLiteDatabase,
+            oldVersion: Int,
+            newVersion: Int,
+          ) {}
         },
       )
       .build()
