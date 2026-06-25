@@ -143,6 +143,18 @@
     <string name="library.progress_tracking.status_completed">Completed</string>
     <!-- Human-readable generation status for failures. -->
     <string name="library.progress_tracking.status_failed">Failed</string>
+    <!-- Label for the retry action when generation fails -->
+    <string name="library.progress_tracking.action.retry">Retry</string>
+    <!-- Message shown when error details are copied to clipboard -->
+    <string name="library.progress_tracking.error_details_copied">Error details copied to clipboard</string>
+    <!-- Content description for copying error details -->
+    <string name="library.progress_tracking.action.copy_error">Copy error details</string>
+    <!-- Title for the error details dialog -->
+    <string name="library.progress_tracking.error_title">Error Details</string>
+    <!-- Action for sharing error details -->
+    <string name="library.progress_tracking.action.share_error">Share as log file</string>
+    <!-- Label for error summary -->
+    <string name="library.progress_tracking.error_summary_label">Error Summary:</string>
     <!-- Error message for when the Gemini API key is missing -->
     <string name="library.progress_tracking.error_api_key_missing">Gemini API key is missing. Please set it in Settings.</string>
     <!-- Error message when Gemini API is persistently failing -->

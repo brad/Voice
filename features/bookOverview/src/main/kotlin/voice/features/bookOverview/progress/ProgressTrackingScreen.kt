@@ -1,28 +1,53 @@
 package voice.features.bookOverview.progress
 
+import android.content.ClipData
+import android.content.Intent
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.retain.retain
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ClipEntry
+import androidx.compose.ui.platform.LocalClipboard
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavEntry
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.IntoSet
 import dev.zacsweers.metro.Provides
+import kotlinx.coroutines.launch
 import voice.core.common.rootGraphAs
 import voice.core.data.BookId
 import voice.core.data.GenerationStatus
@@ -50,10 +75,13 @@ private fun ProgressTrackingScreen(bookId: BookId) {
     rootGraphAs<BookOverviewGraph.Factory.Provider>()
       .bookOverviewGraphProviderFactory.create()
   }.progressTrackingViewModel
+  val scope = rememberCoroutineScope()
   ProgressTracking(
     bookId = bookId,
     viewState = viewModel.state(bookId),
     onConfigureGeneration = viewModel::onConfigureGeneration,
+    onRetry = { viewModel.onRetry(bookId, scope) },
+    onShareError = viewModel::shareError,
     onClose = viewModel::close,
   )
 }
@@ -63,8 +91,17 @@ private fun ProgressTracking(
   bookId: BookId,
   viewState: ProgressTrackingViewState,
   onConfigureGeneration: (BookId) -> Unit,
+  onRetry: () -> Unit,
+  onShareError: (String) -> android.net.Uri,
   onClose: () -> Unit,
 ) {
+  val snackbarHostState = remember { SnackbarHostState() }
+  val scope = rememberCoroutineScope()
+  val clipboard = LocalClipboard.current
+  val context = LocalContext.current
+  var showErrorDetails by remember { mutableStateOf(false) }
+  val copiedMessage = stringResource(StringsR.string.library_progress_tracking_error_details_copied)
+
   Scaffold(
     topBar = {
       TopAppBar(
@@ -79,6 +116,7 @@ private fun ProgressTracking(
         },
       )
     },
+    snackbarHost = { SnackbarHost(snackbarHostState) },
     contentWindowInsets = WindowInsets(0, 0, 0, 0),
   ) { padding ->
     LazyColumn(
@@ -101,14 +139,35 @@ private fun ProgressTracking(
         item {
           ListItem(
             headlineContent = {
-              Text(
-                text = when (viewState.errorMessage) {
-                  "Gemini API key is missing" -> stringResource(StringsR.string.library_progress_tracking_error_api_key_missing)
-                  "Persistent API failure" -> stringResource(StringsR.string.library_progress_tracking_error_persistent_failure)
-                  else -> viewState.errorMessage
-                },
-                color = androidx.compose.material3.MaterialTheme.colorScheme.error,
-              )
+              Column {
+                Text(
+                  text = stringResource(StringsR.string.library_progress_tracking_error_summary_label),
+                  style = MaterialTheme.typography.labelMedium,
+                )
+                Text(
+                  text = viewState.errorMessage.lineSequence().first(),
+                  color = MaterialTheme.colorScheme.error,
+                  maxLines = 2,
+                )
+                TextButton(
+                  onClick = { showErrorDetails = true },
+                  modifier = Modifier.align(Alignment.End),
+                ) {
+                  Text(stringResource(StringsR.string.common_action_more))
+                }
+              }
+            },
+          )
+        }
+        item {
+          ListItem(
+            headlineContent = {
+              Button(
+                onClick = onRetry,
+                modifier = Modifier.fillMaxWidth(),
+              ) {
+                Text(stringResource(StringsR.string.library_progress_tracking_action_retry))
+              }
             },
           )
         }
@@ -178,6 +237,59 @@ private fun ProgressTracking(
         )
       }
     }
+  }
+
+  if (showErrorDetails && viewState.errorMessage != null) {
+    AlertDialog(
+      onDismissRequest = { showErrorDetails = false },
+      title = { Text(stringResource(StringsR.string.library_progress_tracking_error_title)) },
+      text = {
+        Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+          Text(
+            text = viewState.errorMessage,
+            style = MaterialTheme.typography.bodySmall,
+          )
+        }
+      },
+      confirmButton = {
+        TextButton(onClick = { showErrorDetails = false }) {
+          Text(stringResource(StringsR.string.common_dialog_ok))
+        }
+      },
+      dismissButton = {
+        Row {
+          IconButton(
+            onClick = {
+              scope.launch {
+                clipboard.setClipEntry(ClipEntry(ClipData.newPlainText("Error", viewState.errorMessage)))
+                snackbarHostState.showSnackbar(copiedMessage)
+              }
+            },
+          ) {
+            Icon(
+              imageVector = VoiceIcons.ContentCopy,
+              contentDescription = stringResource(StringsR.string.library_progress_tracking_action_copy_error),
+            )
+          }
+          IconButton(
+            onClick = {
+              val uri = onShareError(viewState.errorMessage)
+              val intent = Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_STREAM, uri)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+              }
+              context.startActivity(Intent.createChooser(intent, null))
+            },
+          ) {
+            Icon(
+              imageVector = VoiceIcons.Share,
+              contentDescription = stringResource(StringsR.string.library_progress_tracking_action_share_error),
+            )
+          }
+        }
+      },
+    )
   }
 }
 
