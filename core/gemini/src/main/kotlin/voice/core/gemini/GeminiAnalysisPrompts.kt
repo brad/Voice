@@ -9,6 +9,8 @@ public object GeminiAnalysisPrompts {
     - Energy (their speaking energy level, e.g., "Low", "Medium", "High")
     - Personality (a few words describing their personality/tone)
 
+    Important: Provide all information that can be reasonably inferred from the text to ensure high-quality voice assignment. However, **do not invent details** that are not present or strongly implied. If a field truly cannot be identified, omit it or set it to null.
+
     Additionally, identify any unusual words, proper names, or technical terms that might require specific pronunciation guidance and provide their phonetic spelling (e.g., using simple phonetic respelling or IPA if clear).
 
     Format the output as a JSON object with a "characters" array and a "pronunciations" array.
@@ -35,6 +37,7 @@ public object GeminiAnalysisPrompts {
        - "THIRD_PERSON_LIMITED": Narrated objectively but focuses on the thoughts/feelings of one character at a time. Identify the focal character name.
        - "OMNISCIENT": Narrator knows everything about all characters and events, often switching focus freely.
     5. Return the FULL updated list of all characters identified so far, any new pronunciations found in THIS chunk, and the detected POV.
+    6. For each character, ensure all fields (gender, age, energy, personality) are included if the information is available or can be reasonably inferred. **Do not invent details**. If a detail is unknown, return null for that field.
 
     Format the output as a JSON object with:
     - "characters": array of character objects

@@ -231,22 +231,22 @@ public class AnalysisWorker(
   }
 
   @Serializable
-  private data class SerializableCharacter(
+  internal data class SerializableCharacter(
     val name: String,
-    val gender: String?,
-    val age: String?,
-    val energy: String?,
-    val personality: String?,
+    val gender: String? = null,
+    val age: String? = null,
+    val energy: String? = null,
+    val personality: String? = null,
   )
 
   @Serializable
-  private data class SerializablePronunciation(
+  internal data class SerializablePronunciation(
     val word: String,
     val phonetic: String,
   )
 
   @Serializable
-  private data class ExtractedData(
+  internal data class ExtractedData(
     val characters: List<SerializableCharacter>,
     val pronunciations: List<SerializablePronunciation> = emptyList(),
     val povType: PovType,
