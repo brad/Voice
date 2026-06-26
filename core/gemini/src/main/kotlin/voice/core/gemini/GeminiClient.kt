@@ -43,7 +43,7 @@ public class GeminiClient(
           statusMessage = response.message(),
           requestUrl = maskedUrl,
           requestBody = "GenerateContentRequest(model=$model)", // Simplified for now
-          responseBody = errorBody
+          responseBody = errorBody,
         )
       } catch (e: Exception) {
         if (e is GeminiApiException) throw e
@@ -74,7 +74,7 @@ public class GeminiClient(
       statusMessage = response.message(),
       requestUrl = maskedUrl,
       requestBody = null,
-      responseBody = errorBody
+      responseBody = errorBody,
     )
   }
 }

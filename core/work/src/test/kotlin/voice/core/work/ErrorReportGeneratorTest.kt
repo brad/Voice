@@ -20,7 +20,7 @@ class ErrorReportGeneratorTest {
       appInfoProvider = appInfoProvider,
       bookTitle = "Test Book",
       bookAuthor = "Test Author",
-      step = "Processing"
+      step = "Processing",
     )
 
     assertTrue(report.contains("Error Report"))
@@ -41,12 +41,12 @@ class ErrorReportGeneratorTest {
       statusMessage = "Bad Request",
       requestUrl = "https://api.gemini.com/v1/generate?key=***",
       requestBody = "GenerateContentRequest(model=gemini-pro)",
-      responseBody = "Invalid request parameters"
+      responseBody = "Invalid request parameters",
     )
 
     val report = ErrorReportGenerator.generate(
       throwable = exception,
-      appInfoProvider = appInfoProvider
+      appInfoProvider = appInfoProvider,
     )
 
     assertTrue(report.contains("Gemini API Details"))
