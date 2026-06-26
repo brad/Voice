@@ -12,7 +12,6 @@ import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -22,6 +21,7 @@ import voice.core.data.repo.AudioGenerationProgressRepository
 import voice.core.data.repo.BookContentRepo
 import voice.core.data.repo.CharacterRepository
 import voice.core.data.repo.GenerationRepository
+import voice.core.data.repo.NarrationPieceRepository
 import voice.core.data.repo.VoiceMappingRepository
 import voice.core.data.repo.WordPronunciationRepository
 import voice.core.gemini.GeminiApi
@@ -34,6 +34,7 @@ class GenerationWorkerTest {
   private val characterRepository: CharacterRepository = mockk(relaxed = true)
   private val voiceMappingRepository: VoiceMappingRepository = mockk(relaxed = true)
   private val wordPronunciationRepository: WordPronunciationRepository = mockk(relaxed = true)
+  private val narrationPieceRepository: NarrationPieceRepository = mockk(relaxed = true)
   private val audioGenerationProgressRepository: AudioGenerationProgressRepository = mockk(relaxed = true)
   private val generationRepository: GenerationRepository = mockk(relaxed = true)
   private val bookContentRepo: BookContentRepo = mockk(relaxed = true)
@@ -64,6 +65,7 @@ class GenerationWorkerTest {
             characterRepository,
             voiceMappingRepository,
             wordPronunciationRepository,
+            narrationPieceRepository,
             audioGenerationProgressRepository,
             generationRepository,
             bookContentRepo,
@@ -84,25 +86,5 @@ class GenerationWorkerTest {
     val worker = createWorker()
     val result = worker.doWork()
     assertEquals(ListenableWorker.Result.failure(), result)
-  }
-
-  @Test
-  fun `test chunkText splitting`() {
-    val worker = createWorker()
-    val text = "Paragraph one.\nParagraph two which is a bit longer."
-    val chunks = worker.chunkText(text, 20)
-
-    assertTrue(chunks.size >= 2)
-    chunks.forEach { assertTrue(it.length <= 25) } // Allowing some margin for trim/new-lines
-  }
-
-  @Test
-  fun `test chunkText with very long sentence`() {
-    val worker = createWorker()
-    val text = "Thisisaverylongsentencewithoutanyspacesorpunctuationsthatshouldbechunkedbycharactercounteventually."
-    val chunks = worker.chunkText(text, 10)
-
-    assertTrue(chunks.size >= 10)
-    chunks.forEach { assertTrue(it.length <= 10) }
   }
 }

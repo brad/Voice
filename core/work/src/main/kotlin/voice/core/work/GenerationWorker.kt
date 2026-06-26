@@ -10,24 +10,24 @@ import kotlinx.coroutines.flow.first
 import voice.core.common.AppInfoProvider
 import voice.core.data.AudioGenerationProgress
 import voice.core.data.BookId
-import voice.core.data.GenerationProgress
+import voice.core.data.Character
 import voice.core.data.GenerationStatus
+import voice.core.data.NarrationPiece
+import voice.core.data.VoiceMapping
 import voice.core.data.repo.AudioGenerationProgressRepository
 import voice.core.data.repo.BookContentRepo
 import voice.core.data.repo.CharacterRepository
 import voice.core.data.repo.GenerationRepository
+import voice.core.data.repo.NarrationPieceRepository
 import voice.core.data.repo.VoiceMappingRepository
 import voice.core.data.repo.WordPronunciationRepository
-import voice.core.epub.EpubExtractor
 import voice.core.gemini.Content
 import voice.core.gemini.GeminiApi
 import voice.core.gemini.GeminiClient
 import voice.core.gemini.GenerateContentRequest
 import voice.core.gemini.GenerationConfig
-import voice.core.gemini.MultiSpeakerVoiceConfig
 import voice.core.gemini.Part
 import voice.core.gemini.PrebuiltVoiceConfig
-import voice.core.gemini.SpeakerVoiceConfig
 import voice.core.gemini.SpeechConfig
 import voice.core.gemini.VoiceConfig
 import voice.core.logging.api.Logger
@@ -42,6 +42,7 @@ public class GenerationWorker(
   private val characterRepository: CharacterRepository,
   private val voiceMappingRepository: VoiceMappingRepository,
   private val wordPronunciationRepository: WordPronunciationRepository,
+  private val narrationPieceRepository: NarrationPieceRepository,
   private val audioGenerationProgressRepository: AudioGenerationProgressRepository,
   private val generationRepository: GenerationRepository,
   private val bookContentRepo: BookContentRepo,
@@ -59,7 +60,7 @@ public class GenerationWorker(
     var currentTitle: String? = null
     var currentAuthor: String? = null
     var currentChapterIdx: Int? = null
-    var currentChunkIdx: Int? = null
+    var currentPieceIdx: Int? = null
 
     try {
       val apiKey = apiKeyStore.data.first()
@@ -74,79 +75,107 @@ public class GenerationWorker(
       val model = modelStore.data.first().ifBlank { "gemini-3.1-flash-tts-preview" }
       val client = GeminiClient(geminiApi, apiKey)
 
-      val inputStream = try {
-        applicationContext.contentResolver.openInputStream(bookId.toUri())
-      } catch (e: Exception) {
-        null
-      } ?: run {
-        updateStatus(bookId, GenerationStatus.FAILED)
-        return Result.failure()
-      }
-
-      val epubData = try {
-        EpubExtractor().extract(inputStream)
-      } catch (e: Exception) {
-        updateStatus(bookId, GenerationStatus.FAILED)
-        return Result.failure()
-      }
-
-      currentTitle = epubData.title
-      currentAuthor = epubData.author
+      val generationProgress = generationRepository.progressForBook(bookId)
+      currentTitle = generationProgress?.title
+      currentAuthor = generationProgress?.author
 
       val characters = characterRepository.charactersForBook(bookId)
       val mappings = voiceMappingRepository.mappingsForBook(bookId)
       val pronunciations = wordPronunciationRepository.pronunciationsForBook(bookId)
+      val narrationPieces = narrationPieceRepository.getForBook(bookId)
+
+      if (narrationPieces.isEmpty()) {
+        Logger.e("No narration pieces found for book ${bookId.value}")
+        updateStatus(bookId, GenerationStatus.FAILED, "No narration pieces found.")
+        return Result.failure()
+      }
 
       val progress = audioGenerationProgressRepository.progressForBook(bookId)
-      val startChapterIndex = progress?.chapterIndex ?: 0
-      val startChunkIndex = progress?.chunkIndex ?: 0
+      val startPieceIndex = progress?.chunkIndex ?: 0 // Using chunkIndex as pieceIndex
 
       val outputDir = File(applicationContext.filesDir, "audiobooks/${bookId.value}")
       outputDir.mkdirs()
 
-      for (chapterIdx in startChapterIndex until epubData.chapters.size) {
+      val pronunciationInstructions = if (pronunciations.isNotEmpty()) {
+        "\n\nPronunciation Guide:\n" + pronunciations.joinToString("\n") { "${it.word} -> ${it.phonetic}" }
+      } else {
+        ""
+      }
+
+      // Group pieces into chapters
+      val chapters = mutableListOf<List<NarrationPiece>>()
+      var currentChapterPieces = mutableListOf<NarrationPiece>()
+      for (piece in narrationPieces) {
+        if (piece.isNewChapter && currentChapterPieces.isNotEmpty()) {
+          chapters.add(currentChapterPieces)
+          currentChapterPieces = mutableListOf()
+        }
+        currentChapterPieces.add(piece)
+      }
+      if (currentChapterPieces.isNotEmpty()) {
+        chapters.add(currentChapterPieces)
+      }
+
+      // Find which chapter to start from
+      var piecesProcessed = 0
+      var startChapterIdx = 0
+      for (i in chapters.indices) {
+        if (piecesProcessed + chapters[i].size > startPieceIndex) {
+          startChapterIdx = i
+          break
+        }
+        piecesProcessed += chapters[i].size
+      }
+
+      for (chapterIdx in startChapterIdx until chapters.size) {
         currentChapterIdx = chapterIdx
-        val chapter = epubData.chapters[chapterIdx]
-        val chapterText = chapter.content
-
-        val chunks = chunkText(chapterText, 4000)
-        val totalChunks = chunks.size
-
-        val currentChunkStart = if (chapterIdx == startChapterIndex) startChunkIndex else 0
-
+        val chapterPieces = chapters[chapterIdx]
         val chapterChunks = mutableListOf<File>()
 
-        for (chunkIdx in currentChunkStart until totalChunks) {
-          currentChunkIdx = chunkIdx
-          val chunkText = chunks[chunkIdx]
+        // Find start piece in this chapter
+        val chapterStartPieceIdx = if (chapterIdx == startChapterIdx) startPieceIndex - piecesProcessed else 0
 
-          val characterInstructions = characters.joinToString("\n") { char ->
-            val mapping = mappings.find { it.characterId == char.id }
-            val tuning = if (mapping != null) {
-              " (Speed: ${mapping.speed}, Pitch: ${mapping.pitch}, Energy: ${mapping.energy})"
-            } else {
-              ""
-            }
-            "- ${char.name}: ${char.personality ?: "Narrator"}$tuning"
+        // Group pieces in chapter by character, up to 4000 chars
+        var j = chapterStartPieceIdx
+        while (j < chapterPieces.size) {
+          currentPieceIdx = piecesProcessed + j
+          val firstPiece = chapterPieces[j]
+          val groupPieces = mutableListOf(firstPiece)
+          var groupText = firstPiece.text
+          j++
+
+          while (j < chapterPieces.size &&
+                 chapterPieces[j].characterName == firstPiece.characterName &&
+                 !chapterPieces[j].isNewChapter &&
+                 groupText.length + chapterPieces[j].text.length < 4000) {
+            groupPieces.add(chapterPieces[j])
+            groupText += "\n" + chapterPieces[j].text
+            j++
           }
 
-          val pronunciationInstructions = if (pronunciations.isNotEmpty()) {
-            "\n\nPronunciation Guide:\n" + pronunciations.joinToString("\n") { "${it.word} -> ${it.phonetic}" }
+          val character = characters.find { it.name == firstPiece.characterName }
+          val mapping = mappings.find { it.characterId == character?.id }
+          val tuning = if (mapping != null) {
+            " (Speed: ${mapping.speed}, Pitch: ${mapping.pitch}, Energy: ${mapping.energy})"
           } else {
             ""
           }
 
           val speakerPrompt = """
-            Perform a multi-speaker TTS generation for the following book excerpt.
-            Identify the speakers (including the Narrator) and assign them the appropriate voices from the configuration.
-            Character Profiles and Voice Tuning:
-            $characterInstructions$pronunciationInstructions
+            Perform a TTS generation for the following text.
+            Character Profile: ${firstPiece.characterName}: ${character?.personality ?: "Narrator"}$tuning$pronunciationInstructions
 
-            Excerpt:
-            $chunkText
+            Text:
+            $groupText
           """.trimIndent()
 
-          val speechConfig = SpeechConfigBuilder.build(mappings, characters)
+          val voiceName = mapping?.voiceName ?: "Charon"
+          val speechConfig = SpeechConfig(
+            voiceConfig = VoiceConfig(
+              prebuiltVoiceConfig = PrebuiltVoiceConfig(voiceName = voiceName),
+            ),
+          )
+
           val request = GenerateContentRequest(
             contents = listOf(Content(parts = listOf(Part(text = speakerPrompt)))),
             generationConfig = GenerationConfig(
@@ -154,10 +183,12 @@ public class GenerationWorker(
               speechConfig = speechConfig,
             ),
           )
+
           val response = client.generateContent(model, request)
           val audioData = response.candidates.firstOrNull()?.content?.parts?.firstOrNull()?.inlineData?.data
             ?: throw Exception("No audio data in response")
-          val chunkFile = File(outputDir, "ch_${chapterIdx}_chunk_$chunkIdx.raw")
+
+          val chunkFile = File(outputDir, "ch_${chapterIdx}_piece_${piecesProcessed + j - groupPieces.size}.raw")
           FileOutputStream(chunkFile).use { fos ->
             fos.write(Base64.decode(audioData, Base64.DEFAULT))
           }
@@ -167,8 +198,8 @@ public class GenerationWorker(
             AudioGenerationProgress(
               bookId = bookId,
               chapterIndex = chapterIdx,
-              chunkIndex = chunkIdx + 1,
-              totalChunks = totalChunks,
+              chunkIndex = piecesProcessed + j,
+              totalChunks = narrationPieces.size,
               lastUpdated = Instant.now(),
             ),
           )
@@ -180,6 +211,8 @@ public class GenerationWorker(
           mergePcmFilesToWav(chapterChunks, chapterFile)
           chapterChunks.forEach { it.delete() }
         }
+
+        piecesProcessed += chapterPieces.size
       }
 
       updateStatus(bookId, GenerationStatus.COMPLETED)
@@ -189,7 +222,7 @@ public class GenerationWorker(
       val internalId = BookId(outputDir.toURI().toString())
       val generatedContent = bookContentRepo.get(internalId)
       if (generatedContent != null) {
-        bookContentRepo.put(generatedContent.copy(name = epubData.title))
+        bookContentRepo.put(generatedContent.copy(name = currentTitle ?: "Unknown Audiobook"))
       }
 
       return Result.success()
@@ -201,56 +234,13 @@ public class GenerationWorker(
           appInfoProvider = appInfoProvider,
           bookTitle = currentTitle,
           bookAuthor = currentAuthor,
-          step = "Audio Generation (Ch $currentChapterIdx, Chunk $currentChunkIdx)",
+          step = "Audio Generation (Ch $currentChapterIdx, Piece $currentPieceIdx)",
         )
         updateStatus(bookId, GenerationStatus.FAILED, report)
         return Result.failure()
       }
       return Result.retry()
     }
-  }
-
-  internal fun chunkText(
-    text: String,
-    maxChars: Int,
-  ): List<String> {
-    val chunks = mutableListOf<String>()
-    var currentChunk = StringBuilder()
-
-    val paragraphs = text.split("\n")
-    for (paragraph in paragraphs) {
-      if (paragraph.isBlank()) continue
-
-      if (paragraph.length > maxChars) {
-        val sentences = paragraph.split(Regex("(?<=[.!?])\\s+"))
-        for (sentence in sentences) {
-          if (currentChunk.length + sentence.length > maxChars) {
-            if (currentChunk.isNotEmpty()) {
-              chunks.add(currentChunk.toString().trim())
-              currentChunk = StringBuilder()
-            }
-            if (sentence.length > maxChars) {
-              sentence.chunked(maxChars).forEach { chunks.add(it) }
-            } else {
-              currentChunk.append(sentence).append(" ")
-            }
-          } else {
-            currentChunk.append(sentence).append(" ")
-          }
-        }
-      } else if (currentChunk.length + paragraph.length > maxChars) {
-        chunks.add(currentChunk.toString().trim())
-        currentChunk = StringBuilder(paragraph).append("\n")
-      } else {
-        currentChunk.append(paragraph).append("\n")
-      }
-    }
-
-    if (currentChunk.isNotEmpty()) {
-      chunks.add(currentChunk.toString().trim())
-    }
-
-    return chunks
   }
 
   private fun mergePcmFilesToWav(
@@ -325,6 +315,7 @@ public class GenerationWorker(
     private val characterRepository: CharacterRepository,
     private val voiceMappingRepository: VoiceMappingRepository,
     private val wordPronunciationRepository: WordPronunciationRepository,
+    private val narrationPieceRepository: NarrationPieceRepository,
     private val audioGenerationProgressRepository: AudioGenerationProgressRepository,
     private val generationRepository: GenerationRepository,
     private val bookContentRepo: BookContentRepo,
@@ -340,9 +331,10 @@ public class GenerationWorker(
     ): ListenableWorker {
       return GenerationWorker(
         context, parameters, characterRepository, voiceMappingRepository,
-        wordPronunciationRepository, audioGenerationProgressRepository,
-        generationRepository, bookContentRepo, geminiApi, apiKeyStore,
-        modelStore, mediaScanTrigger, appInfoProvider,
+        wordPronunciationRepository, narrationPieceRepository,
+        audioGenerationProgressRepository, generationRepository,
+        bookContentRepo, geminiApi, apiKeyStore, modelStore,
+        mediaScanTrigger, appInfoProvider,
       )
     }
   }

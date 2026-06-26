@@ -17,7 +17,10 @@ public object GeminiAnalysisPrompts {
   """
 
   public const val INCREMENTAL_CHARACTER_EXTRACTION_PROMPT: String = """
-    You are analyzing a book to identify characters, word pronunciations, and narrative point of view (POV) for audiobook generation.
+    You are analyzing a book to prepare it for audiobook generation.
+
+    Book Title: %s
+    Book Author: %s
 
     Known Characters (from previous chunks):
     %s
@@ -32,18 +35,25 @@ public object GeminiAnalysisPrompts {
        - If a character is new, add them.
        - Resolve different names for the same character to one primary name.
     3. Identify any unusual words, proper names, or technical terms in this chunk that might require specific pronunciation guidance and provide their phonetic spelling.
-    4. Determine the narrative Point of View (POV) of this chunk:
-       - "FIRST_PERSON": Narrated by a character (uses "I", "me", "my"). Identify the character name if possible.
-       - "THIRD_PERSON_LIMITED": Narrated objectively but focuses on the thoughts/feelings of one character at a time. Identify the focal character name.
-       - "OMNISCIENT": Narrator knows everything about all characters and events, often switching focus freely.
-    5. Return the FULL updated list of all characters identified so far, any new pronunciations found in THIS chunk, and the detected POV.
-    6. For each character, ensure all fields (gender, age, energy, personality) are included if the information is available or can be reasonably inferred. **Do not invent details**. If a detail is unknown, return null for that field.
+    4. Determine the narrative Point of View (POV) of this chunk.
+    5. Extract the narrative content for audiobook generation:
+       - **Filter out** non-narrative content like copyright pages, table of contents, indices, bibliographies, and other front/back matter that shouldn't be read aloud.
+       - Identify chapter, part, or section breaks.
+       - Assign a character (the one speaking or the Narrator) to each piece of text.
+       - If this is the VERY FIRST piece of the book, it MUST start with exactly "[Title], by [Author]".
+       - Break the text into logical pieces (paragraphs or groups of paragraphs) spoken by the same character.
+    6. Return the FULL updated list of all characters identified so far, any new pronunciations found in THIS chunk, the detected POV, and the list of narration pieces for THIS chunk.
 
     Format the output as a JSON object with:
     - "characters": array of character objects
     - "pronunciations": array of pronunciation objects
     - "povType": "FIRST_PERSON", "THIRD_PERSON_LIMITED", or "OMNISCIENT"
     - "povCharacterName": name of the POV/focal character (optional)
+    - "narrationPieces": array of objects with:
+        - "text": the text to be read
+        - "characterName": the name of the character assigned to read this text (must match a name in "characters")
+        - "isNewChapter": boolean, true if this piece starts a new chapter/part/section
+        - "chapterTitle": string, the title of the new chapter/part/section (optional)
   """
 
   public val CHARACTER_EXTRACTION_SCHEMA: ResponseSchema = ResponseSchema(
@@ -85,7 +95,21 @@ public object GeminiAnalysisPrompts {
         type = "string",
         description = "Name of the POV or focal character",
       ),
+      "narrationPieces" to ResponseSchema(
+        type = "array",
+        description = "List of narrative text pieces with assigned characters",
+        items = ResponseSchema(
+          type = "object",
+          properties = mapOf(
+            "text" to ResponseSchema(type = "string", description = "The text to be read"),
+            "characterName" to ResponseSchema(type = "string", description = "Assigned character name"),
+            "isNewChapter" to ResponseSchema(type = "boolean", description = "Whether this starts a new chapter"),
+            "chapterTitle" to ResponseSchema(type = "string", description = "Title of the new chapter"),
+          ),
+          required = listOf("text", "characterName", "isNewChapter"),
+        ),
+      ),
     ),
-    required = listOf("characters", "pronunciations", "povType"),
+    required = listOf("characters", "pronunciations", "povType", "narrationPieces"),
   )
 }

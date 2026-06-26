@@ -14,6 +14,7 @@ import voice.core.data.repo.AnalysisProgressRepository
 import voice.core.data.repo.AudioGenerationProgressRepository
 import voice.core.data.repo.CharacterRepository
 import voice.core.data.repo.GenerationRepository
+import voice.core.data.repo.NarrationPieceRepository
 import voice.core.data.repo.VoiceMappingRepository
 import voice.core.data.repo.WordPronunciationRepository
 import java.io.File
@@ -37,6 +38,7 @@ public class WorkManagerAudiobookGenerationManager(
   private val characterRepository: CharacterRepository,
   private val voiceMappingRepository: VoiceMappingRepository,
   private val wordPronunciationRepository: WordPronunciationRepository,
+  private val narrationPieceRepository: NarrationPieceRepository,
 ) : AudiobookGenerationManager {
 
   public override fun generateAudiobook(bookId: BookId) {
@@ -79,6 +81,7 @@ public class WorkManagerAudiobookGenerationManager(
     characterRepository.deleteForBook(bookId)
     voiceMappingRepository.deleteForBook(bookId)
     wordPronunciationRepository.deleteForBook(bookId)
+    narrationPieceRepository.deleteForBook(bookId)
 
     val outputDir = File(context.filesDir, "audiobooks/${bookId.value}")
     outputDir.deleteRecursively()

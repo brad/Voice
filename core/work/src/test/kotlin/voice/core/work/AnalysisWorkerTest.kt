@@ -20,6 +20,7 @@ import voice.core.common.AppInfoProvider
 import voice.core.data.repo.AnalysisProgressRepository
 import voice.core.data.repo.CharacterRepository
 import voice.core.data.repo.GenerationRepository
+import voice.core.data.repo.NarrationPieceRepository
 import voice.core.data.repo.VoiceMappingRepository
 import voice.core.data.repo.WordPronunciationRepository
 import voice.core.gemini.GeminiApi
@@ -33,6 +34,7 @@ class AnalysisWorkerTest {
   private val generationRepository: GenerationRepository = mockk(relaxed = true)
   private val voiceMappingRepository: VoiceMappingRepository = mockk(relaxed = true)
   private val wordPronunciationRepository: WordPronunciationRepository = mockk(relaxed = true)
+  private val narrationPieceRepository: NarrationPieceRepository = mockk(relaxed = true)
   private val geminiApi: GeminiApi = mockk()
   private val apiKeyStore: DataStore<String> = mockk()
   private val modelStore: DataStore<String> = mockk()
@@ -62,6 +64,7 @@ class AnalysisWorkerTest {
             generationRepository,
             voiceMappingRepository,
             wordPronunciationRepository,
+            narrationPieceRepository,
             geminiApi,
             apiKeyStore,
             modelStore,
@@ -92,6 +95,7 @@ class AnalysisWorkerTest {
             generationRepository,
             voiceMappingRepository,
             wordPronunciationRepository,
+            narrationPieceRepository,
             geminiApi,
             apiKeyStore,
             modelStore,
@@ -120,7 +124,8 @@ class AnalysisWorkerTest {
           }
         ],
         "pronunciations": [],
-        "povType": "OMNISCIENT"
+        "povType": "OMNISCIENT",
+        "narrationPieces": []
       }
     """
     val decoded = kotlinx.serialization.json.Json.decodeFromString<AnalysisWorker.ExtractedData>(json)
