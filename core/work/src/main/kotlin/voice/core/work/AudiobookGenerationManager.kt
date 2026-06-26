@@ -24,6 +24,7 @@ public interface AudiobookGenerationManager {
   public fun cancelGeneration(bookId: BookId)
   public suspend fun discardGeneration(bookId: BookId)
   public suspend fun cancelImport(bookId: BookId)
+  public suspend fun retry(bookId: BookId)
 }
 
 @ContributesBinding(AppScope::class)
@@ -81,6 +82,34 @@ public class WorkManagerAudiobookGenerationManager(
 
     val outputDir = File(context.filesDir, "audiobooks/${bookId.value}")
     outputDir.deleteRecursively()
+  }
+
+  public override suspend fun retry(bookId: BookId) {
+    val progress = generationRepository.progressForBook(bookId) ?: return
+    if (progress.status != GenerationStatus.FAILED) return
+
+    val analysisProgress = analysisProgressRepository.progressForBook(bookId)
+    val isAnalysisComplete = analysisProgress != null && analysisProgress.currentChunkIndex >= analysisProgress.totalChunks
+
+    if (!isAnalysisComplete) {
+      val request = OneTimeWorkRequestBuilder<AnalysisWorker>()
+        .setInputData(workDataOf(AnalysisWorker.KEY_BOOK_ID to bookId.value))
+        .build()
+      workManager.enqueueUniqueWork(
+        "epub-analysis-${bookId.value}",
+        ExistingWorkPolicy.REPLACE,
+        request,
+      )
+    } else {
+      val request = OneTimeWorkRequestBuilder<GenerationWorker>()
+        .setInputData(workDataOf(GenerationWorker.KEY_BOOK_ID to bookId.value))
+        .build()
+      workManager.enqueueUniqueWork(
+        uniqueWorkName(bookId),
+        ExistingWorkPolicy.REPLACE,
+        request,
+      )
+    }
   }
 
   private fun uniqueWorkName(bookId: BookId): String {

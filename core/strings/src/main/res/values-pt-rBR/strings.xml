@@ -79,8 +79,12 @@
     <string name="library.progress_tracking.status_generating">Generating</string>
     <string name="library.progress_tracking.status_completed">Completed</string>
     <string name="library.progress_tracking.status_failed">Failed</string>
-    <string name="library.progress_tracking.error_api_key_missing">Gemini API key is missing. Please set it in Settings.</string>
-    <string name="library.progress_tracking.error_persistent_failure">Persistent API failure. Please check your internet connection or API key.</string>
+    <string name="library.progress_tracking.action.retry">Retry</string>
+    <string name="library.progress_tracking.error_details_copied">Error details copied to clipboard</string>
+    <string name="library.progress_tracking.action.copy_error">Copy error details</string>
+    <string name="library.progress_tracking.error_title">Error Details</string>
+    <string name="library.progress_tracking.action.share_error">Share as log file</string>
+    <string name="library.progress_tracking.error_summary_label">Error Summary:</string>
     <string name="library.folders.title">Pastas de audiolivros</string>
     <string name="library.folders.moved.dialog.title">Pastas de audiolivros movidas</string>
     <string name="library.folders.moved.dialog.message">Agora você pode gerenciar as pastas de audiolivros nas Preferências.</string>

@@ -3097,4 +3097,112 @@ object VoiceIcons {
         }
       }
       .build()
+
+  /*
+   * Source: https://fonts.gstatic.com/render/v1/Material+Symbols+Outlined/24dp/content_copy.kt?var=opsz,wght,FILL,GRAD,ROND@24,400,0,0,50
+   */
+  val ContentCopy: ImageVector =
+    ImageVector.Builder(
+      name = "ContentCopy",
+      defaultWidth = 24.dp,
+      defaultHeight = 24.dp,
+      viewportWidth = 24f,
+      viewportHeight = 24f,
+    )
+      .apply {
+        path(
+          fill = SolidColor(Color.Black),
+          fillAlpha = 1f,
+          stroke = null,
+          strokeAlpha = 1f,
+          strokeLineWidth = 1f,
+          strokeLineCap = StrokeCap.Butt,
+          strokeLineJoin = StrokeJoin.Bevel,
+          strokeLineMiter = 1f,
+          pathFillType = PathFillType.NonZero,
+        ) {
+          moveTo(16f, 1f)
+          horizontalLineTo(4f)
+          quadToRelative(-0.83f, 0f, -1.41f, 0.59f)
+          reflectiveQuadTo(2f, 3f)
+          verticalLineToRelative(14f)
+          horizontalLineToRelative(2f)
+          verticalLineTo(3f)
+          horizontalLineToRelative(12f)
+          verticalLineTo(1f)
+          close()
+          moveToRelative(4f, 4f)
+          horizontalLineTo(8f)
+          quadToRelative(-0.83f, 0f, -1.41f, 0.59f)
+          reflectiveQuadTo(6f, 7f)
+          verticalLineToRelative(14f)
+          quadToRelative(0f, 0.83f, 0.59f, 1.41f)
+          reflectiveQuadTo(8f, 23f)
+          horizontalLineToRelative(12f)
+          quadToRelative(0.83f, 0f, 1.41f, -0.59f)
+          reflectiveQuadTo(22f, 21f)
+          verticalLineTo(7f)
+          quadToRelative(0f, -0.83f, -0.59f, -1.41f)
+          reflectiveQuadTo(20f, 5f)
+          close()
+          moveToRelative(0f, 16f)
+          horizontalLineTo(8f)
+          verticalLineTo(7f)
+          horizontalLineToRelative(12f)
+          verticalLineTo(21f)
+          close()
+        }
+      }
+      .build()
+
+  /*
+   * Source: https://fonts.gstatic.com/render/v1/Material+Symbols+Outlined/24dp/share.kt?var=opsz,wght,FILL,GRAD,ROND@24,400,0,0,50
+   */
+  val Share: ImageVector =
+    ImageVector.Builder(
+      name = "Share",
+      defaultWidth = 24.dp,
+      defaultHeight = 24.dp,
+      viewportWidth = 24f,
+      viewportHeight = 24f,
+    )
+      .apply {
+        path(
+          fill = SolidColor(Color.Black),
+          fillAlpha = 1f,
+          stroke = null,
+          strokeAlpha = 1f,
+          strokeLineWidth = 1f,
+          strokeLineCap = StrokeCap.Butt,
+          strokeLineJoin = StrokeJoin.Bevel,
+          strokeLineMiter = 1f,
+          pathFillType = PathFillType.NonZero,
+        ) {
+          moveTo(18f, 22f)
+          quadToRelative(-1.25f, 0f, -2.12f, -0.88f)
+          reflectiveQuadTo(15f, 19f)
+          quadToRelative(0f, -0.1f, 0.03f, -0.28f)
+          reflectiveQuadToRelative(0.07f, -0.32f)
+          lineToRelative(-7.05f, -4.1f)
+          quadToRelative(-0.42f, 0.35f, -0.93f, 0.52f)
+          reflectiveQuadTo(6f, 15f)
+          quadToRelative(-1.25f, 0f, -2.12f, -0.88f)
+          reflectiveQuadTo(3f, 12f)
+          reflectiveQuadToRelative(0.88f, -2.12f)
+          reflectiveQuadTo(6f, 9f)
+          quadToRelative(0.58f, 0f, 1.05f, 0.18f)
+          reflectiveQuadToRelative(0.9f, 0.52f)
+          lineToRelative(7.1f, -4.1f)
+          quadToRelative(-0.03f, -0.15f, -0.04f, -0.3f)
+          reflectiveQuadTo(15f, 5f)
+          quadToRelative(0f, -1.25f, 0.88f, -2.12f)
+          reflectiveQuadTo(18f, 2f)
+          reflectiveQuadToRelative(2.12f, 0.88f)
+          reflectiveQuadTo(21f, 5f)
+          reflectiveQuadToRelative(-0.88f, 2.12f)
+          reflectiveQuadTo(18f, 22f)
+          close()
+        }
+      }
+      .build()
 }

@@ -102,8 +102,12 @@
     <string name="library.progress_tracking.status_generating">正在生成</string>
     <string name="library.progress_tracking.status_completed">已完成</string>
     <string name="library.progress_tracking.status_failed">失败</string>
-    <string name="library.progress_tracking.error_api_key_missing">缺少 Gemini API 密钥。请在设置中进行配置。</string>
-    <string name="library.progress_tracking.error_persistent_failure">API 持续失败。请检查您的网络连接或 API 密钥。</string>
+    <string name="library.progress_tracking.action.retry">Retry</string>
+    <string name="library.progress_tracking.error_details_copied">Error details copied to clipboard</string>
+    <string name="library.progress_tracking.action.copy_error">Copy error details</string>
+    <string name="library.progress_tracking.error_title">Error Details</string>
+    <string name="library.progress_tracking.action.share_error">Share as log file</string>
+    <string name="library.progress_tracking.error_summary_label">Error Summary:</string>
     <string name="settings.gemini.api_key.title">Gemini API 密钥</string>
     <string name="settings.gemini.api_key.summary">Gemini AI 服务的 API 密钥</string>
     <string name="settings.gemini.analysis_model.title">解析模型</string>
