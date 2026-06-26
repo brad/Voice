@@ -12,3 +12,7 @@ dependencies {
   implementation(libs.okhttp)
   implementation(libs.metro.runtime)
 }
+
+dependencies {
+  testImplementation(libs.bundles.testing.jvm)
+}

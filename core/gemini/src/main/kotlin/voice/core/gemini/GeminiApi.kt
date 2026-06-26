@@ -1,5 +1,6 @@
 package voice.core.gemini
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import retrofit2.Response
 import retrofit2.http.Body
@@ -97,4 +98,21 @@ public data class Model(
   val displayName: String? = null,
   val description: String? = null,
   val supportedGenerationMethods: List<String>? = null,
+)
+
+@Serializable
+public data class GeminiErrorResponse(val error: GeminiError)
+
+@Serializable
+public data class GeminiError(
+  val code: Int,
+  val message: String,
+  val status: String,
+  val details: List<GeminiErrorDetail>? = null,
+)
+
+@Serializable
+public data class GeminiErrorDetail(
+  @SerialName("@type") val type: String? = null,
+  val retryDelay: String? = null,
 )
