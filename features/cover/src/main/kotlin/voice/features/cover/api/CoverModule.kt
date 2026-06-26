@@ -13,6 +13,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.create
 import voice.core.featureflag.FeatureFlag
 import voice.core.featureflag.UserAgentFeatureFlagQualifier
+import java.util.concurrent.TimeUnit
 
 @ContributesTo(AppScope::class)
 interface CoverModule {
@@ -23,6 +24,9 @@ interface CoverModule {
     @UserAgentFeatureFlagQualifier
     userAgent: FeatureFlag<String>,
   ): OkHttpClient = OkHttpClient.Builder()
+    .connectTimeout(60, TimeUnit.SECONDS)
+    .readTimeout(60, TimeUnit.SECONDS)
+    .writeTimeout(60, TimeUnit.SECONDS)
     .addInterceptor { chain ->
       chain.proceed(
         chain.request()
