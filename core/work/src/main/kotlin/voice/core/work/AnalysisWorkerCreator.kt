@@ -7,6 +7,7 @@ import voice.core.common.AppInfoProvider
 import voice.core.data.repo.AnalysisProgressRepository
 import voice.core.data.repo.CharacterRepository
 import voice.core.data.repo.GenerationRepository
+import voice.core.data.repo.NarrationPieceRepository
 import voice.core.data.repo.VoiceMappingRepository
 import voice.core.data.repo.WordPronunciationRepository
 import voice.core.data.store.GeminiAnalysisModelStore
@@ -20,6 +21,7 @@ public class AnalysisWorkerCreator(
   private val generationRepository: GenerationRepository,
   private val voiceMappingRepository: VoiceMappingRepository,
   private val wordPronunciationRepository: WordPronunciationRepository,
+  private val narrationPieceRepository: NarrationPieceRepository,
   private val geminiApi: GeminiApi,
   @GeminiApiKeyStore private val apiKeyStore: DataStore<String>,
   @GeminiAnalysisModelStore private val modelStore: DataStore<String>,
@@ -32,6 +34,7 @@ public class AnalysisWorkerCreator(
     generationRepository,
     voiceMappingRepository,
     wordPronunciationRepository,
+    narrationPieceRepository,
     geminiApi,
     apiKeyStore,
     modelStore,

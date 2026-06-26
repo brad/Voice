@@ -15,12 +15,14 @@ import voice.core.data.BookId
 import voice.core.data.Character
 import voice.core.data.GenerationProgress
 import voice.core.data.GenerationStatus
+import voice.core.data.NarrationPiece
 import voice.core.data.PovType
 import voice.core.data.VoiceMapping
 import voice.core.data.WordPronunciation
 import voice.core.data.repo.AnalysisProgressRepository
 import voice.core.data.repo.CharacterRepository
 import voice.core.data.repo.GenerationRepository
+import voice.core.data.repo.NarrationPieceRepository
 import voice.core.data.repo.VoiceMappingRepository
 import voice.core.data.repo.WordPronunciationRepository
 import voice.core.epub.EpubExtractor
@@ -43,6 +45,7 @@ public class AnalysisWorker(
   private val generationRepository: GenerationRepository,
   private val voiceMappingRepository: VoiceMappingRepository,
   private val wordPronunciationRepository: WordPronunciationRepository,
+  private val narrationPieceRepository: NarrationPieceRepository,
   private val geminiApi: GeminiApi,
   private val apiKeyStore: DataStore<String>,
   private val modelStore: DataStore<String>,
@@ -109,12 +112,16 @@ public class AnalysisWorker(
       )
       val fullText = epubData.chapters.joinToString("\n\n") { it.content }
 
-      val chunkSize = 32000
+      val chunkSize = 16000
       val chunks = fullText.chunked(chunkSize)
       val totalChunks = chunks.size
 
       val progress = analysisProgressRepository.progressForBook(bookId)
       val startChunkIndex = progress?.currentChunkIndex ?: 0
+
+      if (startChunkIndex == 0) {
+        narrationPieceRepository.deleteForBook(bookId)
+      }
 
       var currentCharacters = characterRepository.charactersForBook(bookId)
 
@@ -127,6 +134,8 @@ public class AnalysisWorker(
         )
 
         val prompt = GeminiAnalysisPrompts.INCREMENTAL_CHARACTER_EXTRACTION_PROMPT.format(
+          currentTitle,
+          currentAuthor ?: "Unknown",
           knownCharactersJson,
           chunk,
         )
@@ -203,6 +212,21 @@ public class AnalysisWorker(
         }
         voiceMappingRepository.insertAll(newMappings)
 
+        // Save narration pieces
+        val existingPiecesCount = narrationPieceRepository.getForBook(bookId).size
+        val newNarrationPieces = extracted.narrationPieces.mapIndexed { index, piece ->
+          NarrationPiece(
+            id = Uuid.random(),
+            bookId = bookId,
+            index = existingPiecesCount + index,
+            text = piece.text,
+            characterName = piece.characterName,
+            isNewChapter = piece.isNewChapter,
+            chapterTitle = piece.chapterTitle,
+          )
+        }
+        narrationPieceRepository.insertAll(newNarrationPieces)
+
         analysisProgressRepository.insert(
           AnalysisProgress(
             bookId = bookId,
@@ -261,11 +285,20 @@ public class AnalysisWorker(
   )
 
   @Serializable
+  internal data class SerializableNarrationPiece(
+    val text: String,
+    val characterName: String,
+    val isNewChapter: Boolean,
+    val chapterTitle: String? = null,
+  )
+
+  @Serializable
   internal data class ExtractedData(
     val characters: List<SerializableCharacter>,
     val pronunciations: List<SerializablePronunciation> = emptyList(),
     val povType: PovType,
     val povCharacterName: String? = null,
+    val narrationPieces: List<SerializableNarrationPiece> = emptyList(),
   )
 
   public companion object {
@@ -278,6 +311,7 @@ public class AnalysisWorker(
     private val generationRepository: GenerationRepository,
     private val voiceMappingRepository: VoiceMappingRepository,
     private val wordPronunciationRepository: WordPronunciationRepository,
+    private val narrationPieceRepository: NarrationPieceRepository,
     private val geminiApi: GeminiApi,
     private val apiKeyStore: DataStore<String>,
     private val modelStore: DataStore<String>,
@@ -295,6 +329,7 @@ public class AnalysisWorker(
         generationRepository,
         voiceMappingRepository,
         wordPronunciationRepository,
+        narrationPieceRepository,
         geminiApi,
         apiKeyStore,
         modelStore,

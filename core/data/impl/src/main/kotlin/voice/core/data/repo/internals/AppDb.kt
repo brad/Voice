@@ -11,6 +11,7 @@ import voice.core.data.Bookmark
 import voice.core.data.Chapter
 import voice.core.data.Character
 import voice.core.data.GenerationProgress
+import voice.core.data.NarrationPiece
 import voice.core.data.RecentBookSearch
 import voice.core.data.VoiceMapping
 import voice.core.data.WordPronunciation
@@ -22,6 +23,7 @@ import voice.core.data.repo.internals.dao.BookmarkDao
 import voice.core.data.repo.internals.dao.ChapterDao
 import voice.core.data.repo.internals.dao.CharacterDao
 import voice.core.data.repo.internals.dao.GenerationProgressDao
+import voice.core.data.repo.internals.dao.NarrationPieceDao
 import voice.core.data.repo.internals.dao.RecentBookSearchDao
 import voice.core.data.repo.internals.dao.VoiceMappingDao
 import voice.core.data.repo.internals.dao.WordPronunciationDao
@@ -40,6 +42,7 @@ import voice.core.data.repo.internals.migrations.Migration56
     GenerationProgress::class,
     AnalysisProgress::class,
     AudioGenerationProgress::class,
+    NarrationPiece::class,
   ],
   version = AppDb.VERSION,
   autoMigrations = [
@@ -72,9 +75,10 @@ public abstract class AppDb : RoomDatabase() {
   public abstract fun generationProgressDao(): GenerationProgressDao
   public abstract fun analysisProgressDao(): AnalysisProgressDao
   public abstract fun audioGenerationProgressDao(): AudioGenerationProgressDao
+  public abstract fun narrationPieceDao(): NarrationPieceDao
 
   internal companion object {
-    const val VERSION = 65
+    const val VERSION = 66
     const val DATABASE_NAME = "autoBookDB"
   }
 }

@@ -8,6 +8,7 @@ import voice.core.data.repo.AudioGenerationProgressRepository
 import voice.core.data.repo.BookContentRepo
 import voice.core.data.repo.CharacterRepository
 import voice.core.data.repo.GenerationRepository
+import voice.core.data.repo.NarrationPieceRepository
 import voice.core.data.repo.VoiceMappingRepository
 import voice.core.data.repo.WordPronunciationRepository
 import voice.core.data.store.GeminiApiKeyStore
@@ -20,6 +21,7 @@ public class GenerationWorkerCreator(
   private val characterRepository: CharacterRepository,
   private val voiceMappingRepository: VoiceMappingRepository,
   private val wordPronunciationRepository: WordPronunciationRepository,
+  private val narrationPieceRepository: NarrationPieceRepository,
   private val audioGenerationProgressRepository: AudioGenerationProgressRepository,
   private val generationRepository: GenerationRepository,
   private val bookContentRepo: BookContentRepo,
@@ -34,6 +36,7 @@ public class GenerationWorkerCreator(
     characterRepository,
     voiceMappingRepository,
     wordPronunciationRepository,
+    narrationPieceRepository,
     audioGenerationProgressRepository,
     generationRepository,
     bookContentRepo,
