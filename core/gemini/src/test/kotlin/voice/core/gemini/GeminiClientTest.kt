@@ -38,10 +38,10 @@ class GeminiClientTest {
     val startTime = testScheduler.currentTime
 
     try {
-        @Suppress("UNUSED_VARIABLE")
-        val response = client.generateContent("model", GenerateContentRequest(emptyList()), maxRetries = 1)
+      @Suppress("UNUSED_VARIABLE")
+      val response = client.generateContent("model", GenerateContentRequest(emptyList()), maxRetries = 1)
     } catch (e: GeminiApiException) {
-        assertEquals(429, e.code)
+      assertEquals(429, e.code)
     }
 
     val duration = testScheduler.currentTime - startTime
@@ -74,10 +74,10 @@ class GeminiClientTest {
     val startTime = testScheduler.currentTime
 
     try {
-        @Suppress("UNUSED_VARIABLE")
-        val response = client.generateContent("model", GenerateContentRequest(emptyList()), maxRetries = 1)
+      @Suppress("UNUSED_VARIABLE")
+      val response = client.generateContent("model", GenerateContentRequest(emptyList()), maxRetries = 1)
     } catch (e: GeminiApiException) {
-        assertEquals(429, e.code)
+      assertEquals(429, e.code)
     }
 
     val duration = testScheduler.currentTime - startTime
