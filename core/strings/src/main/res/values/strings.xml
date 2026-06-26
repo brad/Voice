@@ -156,7 +156,6 @@
     <!-- Label for error summary -->
     <string name="library.progress_tracking.error_summary_label">Error Summary:</string>
     <!-- Error message when Gemini API is persistently failing -->
-    <string name="library.progress_tracking.error_persistent_failure">Persistent API failure. Please check your internet connection or API key.</string>
     <!-- Title for screens and rows that manage audiobook folders. -->
     <string name="library.folders.title">Audiobook folders</string>
     <!-- Title for the one-time dialog shown from the old audiobook folders shortcut. -->

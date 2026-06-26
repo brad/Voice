@@ -63,7 +63,10 @@ class ProgressTrackingViewModel(
     navigator.goTo(Destination.GenerationSettings(bookId))
   }
 
-  fun onRetry(bookId: BookId, scope: kotlinx.coroutines.CoroutineScope) {
+  fun onRetry(
+    bookId: BookId,
+    scope: kotlinx.coroutines.CoroutineScope,
+  ) {
     scope.launch {
       audiobookGenerationManager.retry(bookId)
     }
@@ -77,7 +80,7 @@ class ProgressTrackingViewModel(
     return FileProvider.getUriForFile(
       context,
       "${context.packageName}.coverprovider",
-      logFile
+      logFile,
     )
   }
 

@@ -88,7 +88,6 @@
     <string name="library.progress_tracking.error_title">Error Details</string>
     <string name="library.progress_tracking.action.share_error">Share as log file</string>
     <string name="library.progress_tracking.error_summary_label">Error Summary:</string>
-    <string name="library.progress_tracking.error_persistent_failure">Persistent API failure. Please check your internet connection or API key.</string>
     <string name="library.folders.title">Папкі з аўдыякнігамі</string>
     <string name="library.folders.moved.dialog.title">Папкі аўдыякніг перамешчаны</string>
     <string name="library.folders.moved.dialog.message">Цяпер вы можаце кіраваць папкамі аўдыякніг у наладах.</string>

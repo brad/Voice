@@ -82,7 +82,6 @@
     <string name="library.progress_tracking.error_title">Error Details</string>
     <string name="library.progress_tracking.action.share_error">Share as log file</string>
     <string name="library.progress_tracking.error_summary_label">Error Summary:</string>
-    <string name="library.progress_tracking.error_persistent_failure">Persistent API failure. Please check your internet connection or API key.</string>
     <string name="library.folders.title">ஆடியோபுக் கோப்புறைகள்</string>
     <string name="library.folders.moved.dialog.title">ஒலிப்புத்தகக் கோப்புறைகள் நகர்த்தப்பட்டன</string>
     <string name="library.folders.moved.dialog.message">இப்போது ஒலிப்புத்தகக் கோப்புறைகளை விருப்பங்களில் நிர்வகிக்கலாம்.</string>
