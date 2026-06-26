@@ -146,31 +146,17 @@ public class GenerationWorker(
             $chunkText
           """.trimIndent()
 
-          val speakerVoiceConfigs = mappings.map { mapping ->
-            val character = characters.find { it.id == mapping.characterId }
-            SpeakerVoiceConfig(
-              speaker = character?.name ?: "Narrator",
-              voiceConfig = VoiceConfig(
-                prebuiltVoiceConfig = PrebuiltVoiceConfig(voiceName = mapping.voiceName),
-              ),
-            )
-          }
-
+          val speechConfig = SpeechConfigBuilder.build(mappings, characters)
           val request = GenerateContentRequest(
             contents = listOf(Content(parts = listOf(Part(text = speakerPrompt)))),
             generationConfig = GenerationConfig(
               responseModalities = listOf("AUDIO"),
-              speechConfig = SpeechConfig(
-                multiSpeakerVoiceConfig = MultiSpeakerVoiceConfig(speakerVoiceConfigs),
-              ),
+              speechConfig = speechConfig,
             ),
           )
-
-          Logger.d("Generating audio for chapter $chapterIdx chunk $chunkIdx/$totalChunks")
           val response = client.generateContent(model, request)
           val audioData = response.candidates.firstOrNull()?.content?.parts?.firstOrNull()?.inlineData?.data
             ?: throw Exception("No audio data in response")
-
           val chunkFile = File(outputDir, "ch_${chapterIdx}_chunk_$chunkIdx.raw")
           FileOutputStream(chunkFile).use { fos ->
             fos.write(Base64.decode(audioData, Base64.DEFAULT))
