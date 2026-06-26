@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import voice.core.common.AppInfoProvider
 import voice.core.data.AnalysisProgress
 import voice.core.data.BookId
 import voice.core.data.Character
@@ -45,92 +46,99 @@ public class AnalysisWorker(
   private val geminiApi: GeminiApi,
   private val apiKeyStore: DataStore<String>,
   private val modelStore: DataStore<String>,
+  private val appInfoProvider: AppInfoProvider,
 ) : CoroutineWorker(context, params) {
 
   override suspend fun doWork(): Result {
     val bookIdString = inputData.getString(KEY_BOOK_ID) ?: return Result.failure()
     val bookId = BookId(bookIdString)
 
-    val apiKey = apiKeyStore.data.first()
-    if (apiKey.isBlank()) {
-      Logger.e("Gemini API key is missing")
-      updateStatus(bookId, GenerationStatus.FAILED, "Gemini API key is missing")
-      return Result.failure()
-    }
+    var currentTitle: String? = null
+    var currentAuthor: String? = null
 
-    val model = modelStore.data.first().ifBlank { "gemini-3.1-flash-lite" }
-    val client = GeminiClient(geminiApi, apiKey)
+    try {
+      val apiKey = apiKeyStore.data.first()
+      if (apiKey.isBlank()) {
+        Logger.e("Gemini API key is missing")
+        updateStatus(bookId, GenerationStatus.FAILED, "Gemini API key is missing")
+        return Result.failure()
+      }
 
-    val inputStream = try {
-      applicationContext.contentResolver.openInputStream(bookId.toUri())
-    } catch (e: Exception) {
-      null
-    } ?: run {
+      val model = modelStore.data.first().ifBlank { "gemini-3.1-flash-lite" }
+      val client = GeminiClient(geminiApi, apiKey)
+
+      val inputStream = try {
+        applicationContext.contentResolver.openInputStream(bookId.toUri())
+      } catch (e: Exception) {
+        null
+      } ?: run {
+        generationRepository.insert(
+          GenerationProgress(
+            bookId = bookId,
+            status = GenerationStatus.FAILED,
+            lastUpdated = Instant.now(),
+          ),
+        )
+        return Result.failure()
+      }
+
+      val epubData = try {
+        EpubExtractor().extract(inputStream)
+      } catch (e: Exception) {
+        generationRepository.insert(
+          GenerationProgress(
+            bookId = bookId,
+            status = GenerationStatus.FAILED,
+            lastUpdated = Instant.now(),
+          ),
+        )
+        return Result.failure()
+      }
+
+      currentTitle = epubData.title
+      currentAuthor = epubData.author
+
       generationRepository.insert(
         GenerationProgress(
           bookId = bookId,
-          status = GenerationStatus.FAILED,
+          status = GenerationStatus.ANALYZING,
           lastUpdated = Instant.now(),
+          title = epubData.title,
+          author = epubData.author,
         ),
       )
-      return Result.failure()
-    }
+      val fullText = epubData.chapters.joinToString("\n\n") { it.content }
 
-    val epubData = try {
-      EpubExtractor().extract(inputStream)
-    } catch (e: Exception) {
-      generationRepository.insert(
-        GenerationProgress(
-          bookId = bookId,
-          status = GenerationStatus.FAILED,
-          lastUpdated = Instant.now(),
-        ),
-      )
-      return Result.failure()
-    }
+      val chunkSize = 32000
+      val chunks = fullText.chunked(chunkSize)
+      val totalChunks = chunks.size
 
-    generationRepository.insert(
-      GenerationProgress(
-        bookId = bookId,
-        status = GenerationStatus.ANALYZING,
-        lastUpdated = Instant.now(),
-        title = epubData.title,
-        author = epubData.author,
-      ),
-    )
-    val fullText = epubData.chapters.joinToString("\n\n") { it.content }
+      val progress = analysisProgressRepository.progressForBook(bookId)
+      val startChunkIndex = progress?.currentChunkIndex ?: 0
 
-    val chunkSize = 32000
-    val chunks = fullText.chunked(chunkSize)
-    val totalChunks = chunks.size
+      var currentCharacters = characterRepository.charactersForBook(bookId)
 
-    val progress = analysisProgressRepository.progressForBook(bookId)
-    val startChunkIndex = progress?.currentChunkIndex ?: 0
+      for (i in startChunkIndex until totalChunks) {
+        val chunk = chunks[i]
+        val knownCharactersJson = Json.encodeToString(
+          currentCharacters.map {
+            SerializableCharacter(it.name, it.gender, it.age, it.energy, it.personality)
+          },
+        )
 
-    var currentCharacters = characterRepository.charactersForBook(bookId)
+        val prompt = GeminiAnalysisPrompts.INCREMENTAL_CHARACTER_EXTRACTION_PROMPT.format(
+          knownCharactersJson,
+          chunk,
+        )
 
-    for (i in startChunkIndex until totalChunks) {
-      val chunk = chunks[i]
-      val knownCharactersJson = Json.encodeToString(
-        currentCharacters.map {
-          SerializableCharacter(it.name, it.gender, it.age, it.energy, it.personality)
-        },
-      )
+        val request = GenerateContentRequest(
+          contents = listOf(Content(parts = listOf(Part(text = prompt)))),
+          generationConfig = GenerationConfig(
+            responseMimeType = "application/json",
+            responseSchema = GeminiAnalysisPrompts.CHARACTER_EXTRACTION_SCHEMA,
+          ),
+        )
 
-      val prompt = GeminiAnalysisPrompts.INCREMENTAL_CHARACTER_EXTRACTION_PROMPT.format(
-        knownCharactersJson,
-        chunk,
-      )
-
-      val request = GenerateContentRequest(
-        contents = listOf(Content(parts = listOf(Part(text = prompt)))),
-        generationConfig = GenerationConfig(
-          responseMimeType = "application/json",
-          responseSchema = GeminiAnalysisPrompts.CHARACTER_EXTRACTION_SCHEMA,
-        ),
-      )
-
-      try {
         val response = client.generateContent(model, request)
         val responseText = response.candidates.firstOrNull()?.content?.parts?.firstOrNull()?.text
           ?: throw Exception("Empty response from Gemini")
@@ -203,18 +211,25 @@ public class AnalysisWorker(
             lastUpdated = Instant.now(),
           ),
         )
-      } catch (e: Exception) {
-        Logger.e(e, "Error during character extraction for chunk ")
-        if (runAttemptCount >= 3) {
-          updateStatus(bookId, GenerationStatus.FAILED, e.message ?: "Persistent API failure")
-          return Result.failure()
-        }
-        return Result.retry()
       }
-    }
 
-    updateStatus(bookId, GenerationStatus.ANALYZED)
-    return Result.success()
+      updateStatus(bookId, GenerationStatus.ANALYZED)
+      return Result.success()
+    } catch (e: Exception) {
+      Logger.e(e, "Error during character extraction")
+      if (runAttemptCount >= 3) {
+        val report = ErrorReportGenerator.generate(
+          throwable = e,
+          appInfoProvider = appInfoProvider,
+          bookTitle = currentTitle,
+          bookAuthor = currentAuthor,
+          step = "Character Analysis",
+        )
+        updateStatus(bookId, GenerationStatus.FAILED, report)
+        return Result.failure()
+      }
+      return Result.retry()
+    }
   }
 
   private suspend fun updateStatus(
@@ -266,6 +281,7 @@ public class AnalysisWorker(
     private val geminiApi: GeminiApi,
     private val apiKeyStore: DataStore<String>,
     private val modelStore: DataStore<String>,
+    private val appInfoProvider: AppInfoProvider,
   ) : WorkerCreator {
     override fun create(
       context: Context,
@@ -282,6 +298,7 @@ public class AnalysisWorker(
         geminiApi,
         apiKeyStore,
         modelStore,
+        appInfoProvider,
       )
     }
   }

@@ -74,7 +74,7 @@ object Logger {
     }
   }
 
-  private fun getStackTraceString(t: Throwable): String {
+  public fun getStackTraceString(t: Throwable): String {
     // Don't replace this with Log.getStackTraceString() - it hides
     // UnknownHostException, which is not what we want.
     val sw = StringWriter(256)

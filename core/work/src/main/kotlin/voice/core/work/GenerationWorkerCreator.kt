@@ -3,6 +3,7 @@ package voice.core.work
 import androidx.datastore.core.DataStore
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoSet
+import voice.core.common.AppInfoProvider
 import voice.core.data.repo.AudioGenerationProgressRepository
 import voice.core.data.repo.BookContentRepo
 import voice.core.data.repo.CharacterRepository
@@ -26,6 +27,7 @@ public class GenerationWorkerCreator(
   @GeminiApiKeyStore private val apiKeyStore: DataStore<String>,
   @GeminiGenerationModelStore private val modelStore: DataStore<String>,
   private val mediaScanTrigger: MediaScanTrigger,
+  private val appInfoProvider: AppInfoProvider,
 ) : WorkerCreatorWithClass {
   override val workerClass: Class<out androidx.work.ListenableWorker> = GenerationWorker::class.java
   override val creator: WorkerCreator = GenerationWorker.Creator(
@@ -39,5 +41,6 @@ public class GenerationWorkerCreator(
     apiKeyStore,
     modelStore,
     mediaScanTrigger,
+    appInfoProvider,
   )
 }
