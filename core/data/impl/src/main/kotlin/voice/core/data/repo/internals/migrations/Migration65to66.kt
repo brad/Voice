@@ -3,8 +3,8 @@ package voice.core.data.repo.internals.migrations
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.room.migration.Migration
 import dev.zacsweers.metro.AppScope
-import dev.zacsweers.metro.ContributesIntoSet
 import dev.zacsweers.metro.binding
+import dev.zacsweers.metro.ContributesIntoSet
 
 @ContributesIntoSet(
   scope = AppScope::class,
@@ -24,7 +24,7 @@ public class Migration65to66 : IncrementalMigration(65) {
         `chapterTitle` TEXT,
         PRIMARY KEY(`id`)
       )
-      """.trimIndent()
+      """.trimIndent(),
     )
     db.execSQL("CREATE INDEX IF NOT EXISTS `index_narration_pieces_bookId` ON `narration_pieces` (`bookId`)")
     db.execSQL("CREATE INDEX IF NOT EXISTS `index_narration_pieces_bookId_index` ON `narration_pieces` (`bookId`, `index`)")

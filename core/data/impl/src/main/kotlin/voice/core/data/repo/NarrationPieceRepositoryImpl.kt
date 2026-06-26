@@ -7,9 +7,7 @@ import voice.core.data.NarrationPiece
 import voice.core.data.repo.internals.dao.NarrationPieceDao
 
 @ContributesBinding(AppScope::class)
-public class NarrationPieceRepositoryImpl(
-  private val dao: NarrationPieceDao,
-) : NarrationPieceRepository {
+public class NarrationPieceRepositoryImpl(private val dao: NarrationPieceDao) : NarrationPieceRepository {
   override suspend fun insertAll(pieces: List<NarrationPiece>) {
     dao.insertAll(pieces)
   }
