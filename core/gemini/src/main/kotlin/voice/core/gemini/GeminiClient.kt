@@ -1,6 +1,7 @@
 package voice.core.gemini
 
 import kotlinx.coroutines.delay
+import kotlinx.serialization.json.Json
 import voice.core.logging.api.Logger
 import java.io.IOException
 
@@ -8,6 +9,8 @@ public class GeminiClient(
   private val api: GeminiApi,
   private val apiKey: String,
 ) {
+  private val json = Json { ignoreUnknownKeys = true }
+
   public suspend fun generateContent(
     model: String,
     request: GenerateContentRequest,
@@ -22,8 +25,10 @@ public class GeminiClient(
         }
 
         val code = response.code()
+        val errorBody = response.errorBody()?.string()
+
         if (code == 529 || code == 429) {
-          val retryAfter = response.headers()["Retry-After"]?.toLongOrNull() ?: (2L shl retryCount)
+          val retryAfter = parseRetryAfter(errorBody) ?: response.headers()["Retry-After"]?.toLongOrNull() ?: (2L shl retryCount)
           if (retryCount < maxRetries) {
             Logger.w("Gemini API error $code. Retrying in $retryAfter seconds...")
             delay(retryAfter * 1000)
@@ -32,7 +37,6 @@ public class GeminiClient(
           }
         }
 
-        val errorBody = response.errorBody()?.string()
         val requestUrl = response.raw().request.url.toString()
         // We don't log the full request body here to avoid leaking the API key if it's in the URL,
         // but it's passed in the query param "key" which we should ideally mask.
@@ -56,6 +60,20 @@ public class GeminiClient(
         }
         throw e
       }
+    }
+  }
+
+  private fun parseRetryAfter(errorBody: String?): Long? {
+    if (errorBody == null) return null
+    return try {
+      val errorResponse = json.decodeFromString<GeminiErrorResponse>(errorBody)
+      val retryDelayStr = errorResponse.error.details
+        ?.find { it.type == "type.googleapis.com/google.rpc.RetryInfo" }
+        ?.retryDelay
+
+      retryDelayStr?.removeSuffix("s")?.toDoubleOrNull()?.toLong()
+    } catch (e: Exception) {
+      null
     }
   }
 
