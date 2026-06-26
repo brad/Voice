@@ -145,9 +145,10 @@ public class GenerationWorker(
           j++
 
           while (j < chapterPieces.size &&
-                 chapterPieces[j].characterName == firstPiece.characterName &&
-                 !chapterPieces[j].isNewChapter &&
-                 groupText.length + chapterPieces[j].text.length < 4000) {
+            chapterPieces[j].characterName == firstPiece.characterName &&
+            !chapterPieces[j].isNewChapter &&
+            groupText.length + chapterPieces[j].text.length < 4000
+          ) {
             groupPieces.add(chapterPieces[j])
             groupText += "\n" + chapterPieces[j].text
             j++
