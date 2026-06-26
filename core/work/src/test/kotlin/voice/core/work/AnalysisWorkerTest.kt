@@ -16,6 +16,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import voice.core.common.AppInfoProvider
 import voice.core.data.repo.AnalysisProgressRepository
 import voice.core.data.repo.CharacterRepository
 import voice.core.data.repo.GenerationRepository
@@ -35,6 +36,7 @@ class AnalysisWorkerTest {
   private val geminiApi: GeminiApi = mockk()
   private val apiKeyStore: DataStore<String> = mockk()
   private val modelStore: DataStore<String> = mockk()
+  private val appInfoProvider: AppInfoProvider = mockk(relaxed = true)
 
   @Before
   fun setUp() {
@@ -63,6 +65,7 @@ class AnalysisWorkerTest {
             geminiApi,
             apiKeyStore,
             modelStore,
+            appInfoProvider,
           )
         }
       })
@@ -92,6 +95,7 @@ class AnalysisWorkerTest {
             geminiApi,
             apiKeyStore,
             modelStore,
+            appInfoProvider,
           )
         }
       })

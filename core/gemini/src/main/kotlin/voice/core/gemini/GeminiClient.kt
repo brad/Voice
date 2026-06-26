@@ -31,8 +31,22 @@ public class GeminiClient(
             continue
           }
         }
-        throw IOException("Gemini API error: ${response.code()} ${response.message()}")
+
+        val errorBody = response.errorBody()?.string()
+        val requestUrl = response.raw().request.url.toString()
+        // We don't log the full request body here to avoid leaking the API key if it's in the URL,
+        // but it's passed in the query param "key" which we should ideally mask.
+        val maskedUrl = requestUrl.replace(Regex("key=[^&]+"), "key=***")
+
+        throw GeminiApiException(
+          code = response.code(),
+          statusMessage = response.message(),
+          requestUrl = maskedUrl,
+          requestBody = "GenerateContentRequest(model=$model)", // Simplified for now
+          responseBody = errorBody
+        )
       } catch (e: Exception) {
+        if (e is GeminiApiException) throw e
         if (retryCount < maxRetries && e is IOException) {
           val backoff = (2L shl retryCount)
           Logger.w(e, "Gemini API network error. Retrying in $backoff seconds...")
@@ -50,6 +64,17 @@ public class GeminiClient(
     if (response.isSuccessful) {
       return response.body()?.models ?: emptyList()
     }
-    throw IOException("Gemini API error: ${response.code()} ${response.message()}")
+
+    val errorBody = response.errorBody()?.string()
+    val requestUrl = response.raw().request.url.toString()
+    val maskedUrl = requestUrl.replace(Regex("key=[^&]+"), "key=***")
+
+    throw GeminiApiException(
+      code = response.code(),
+      statusMessage = response.message(),
+      requestUrl = maskedUrl,
+      requestBody = null,
+      responseBody = errorBody
+    )
   }
 }

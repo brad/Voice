@@ -10,3 +10,8 @@ public interface WorkerCreator {
     parameters: WorkerParameters,
   ): ListenableWorker
 }
+
+public interface WorkerCreatorWithClass {
+  public val workerClass: Class<out ListenableWorker>
+  public val creator: WorkerCreator
+}
