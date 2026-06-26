@@ -105,4 +105,21 @@ class AnalysisWorkerTest {
     }
     assertEquals(ListenableWorker.Result.failure(), result)
   }
+
+  @Test
+  fun `test SerializableCharacter decoding with missing fields`() {
+    val json = """
+      {
+        "characters": [
+          {
+            "name": "John Doe"
+          }
+        ],
+        "pronunciations": [],
+        "povType": "OMNISCIENT"
+      }
+    """
+    val decoded = kotlinx.serialization.json.Json.decodeFromString<AnalysisWorker.ExtractedData>(json)
+    assertEquals("John Doe", decoded.characters[0].name)
+  }
 }
