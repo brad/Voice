@@ -71,7 +71,7 @@
     <string name="library.progress_tracking.last_updated">Ultima actualizare</string>
     <string name="library.progress_tracking.not_started">Nepornit</string>
     <string name="library.progress_tracking.analysis_value">%1$d / %2$d fragmente</string>
-    <string name="library.progress_tracking.generation_value">Capitolul %1$d · Fragment %2$d / %3</string>
+    <string name="library.progress_tracking.generation_value">Capitolul %1$d · Fragment %2$d / %3$d</string>
     <string name="library.progress_tracking.status_pending">În așteptare</string>
     <string name="library.progress_tracking.status_analyzing">Analizare</string>
     <string name="library.progress_tracking.status_analyzed">Analizat</string>
