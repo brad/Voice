@@ -4,7 +4,6 @@ import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.Provides
 import dev.zacsweers.metro.SingleIn
-import java.util.concurrent.TimeUnit
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -14,6 +13,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.create
 import voice.core.featureflag.FeatureFlag
 import voice.core.featureflag.UserAgentFeatureFlagQualifier
+import java.util.concurrent.TimeUnit
 
 @ContributesTo(AppScope::class)
 interface CoverModule {
