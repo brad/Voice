@@ -16,7 +16,7 @@ class SpeechConfigBuilderTest {
     val bookId = BookId("test")
     val char = Character(Uuid.random(), bookId, "Narrator", null, null, null, null)
     val mappings = listOf(
-      VoiceMapping(Uuid.random(), char.id, "Charon", 1.0f, 1.0f, 1.0f)
+      VoiceMapping(Uuid.random(), char.id, "Charon", 1.0f, 1.0f, 1.0f),
     )
     val characters = listOf(char)
 
@@ -34,7 +34,7 @@ class SpeechConfigBuilderTest {
     val char2 = Character(Uuid.random(), bookId, "Joe", null, null, null, null)
     val mappings = listOf(
       VoiceMapping(Uuid.random(), char1.id, "Charon", 1.0f, 1.0f, 1.0f),
-      VoiceMapping(Uuid.random(), char2.id, "Puck", 1.0f, 1.0f, 1.0f)
+      VoiceMapping(Uuid.random(), char2.id, "Puck", 1.0f, 1.0f, 1.0f),
     )
     val characters = listOf(char1, char2)
 
@@ -58,7 +58,7 @@ class SpeechConfigBuilderTest {
     val mappings = listOf(
       VoiceMapping(Uuid.random(), char1.id, "Charon", 1.0f, 1.0f, 1.0f),
       VoiceMapping(Uuid.random(), char2.id, "Puck", 1.0f, 1.0f, 1.0f),
-      VoiceMapping(Uuid.random(), char3.id, "Kore", 1.0f, 1.0f, 1.0f)
+      VoiceMapping(Uuid.random(), char3.id, "Kore", 1.0f, 1.0f, 1.0f),
     )
     val characters = listOf(char1, char2, char3)
 
