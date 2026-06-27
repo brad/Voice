@@ -82,6 +82,7 @@
     <string name="library.progress_tracking.status_generating">Generowanie</string>
     <string name="library.progress_tracking.status_completed">Zakończono</string>
     <string name="library.progress_tracking.status_failed">Błąd</string>
+    <string name="library.progress_tracking.status_rate_limited">Rate limited. Retrying soon...</string>
     <string name="library.progress_tracking.action.retry">Ponów</string>
     <string name="library.progress_tracking.action.cancel">Cancel</string>
     <string name="library.progress_tracking.error_details_copied">Szczegóły błędu skopiowano do schowka</string>

@@ -75,6 +75,7 @@
     <string name="library.progress_tracking.status_generating">Genererer</string>
     <string name="library.progress_tracking.status_completed">Fuldført</string>
     <string name="library.progress_tracking.status_failed">Fejlet</string>
+    <string name="library.progress_tracking.status_rate_limited">Rate limited. Retrying soon...</string>
     <string name="library.progress_tracking.action.retry">Prøv igen</string>
     <string name="library.progress_tracking.action.cancel">Cancel</string>
     <string name="library.progress_tracking.error_details_copied">Fejldetaljer kopieret til udklipsholder</string>

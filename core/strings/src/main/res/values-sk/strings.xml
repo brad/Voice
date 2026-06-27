@@ -82,6 +82,7 @@
     <string name="library.progress_tracking.status_generating">Generovanie</string>
     <string name="library.progress_tracking.status_completed">Dokončené</string>
     <string name="library.progress_tracking.status_failed">Zlyhalo</string>
+    <string name="library.progress_tracking.status_rate_limited">Rate limited. Retrying soon...</string>
     <string name="library.progress_tracking.action.retry">Skúsiť znova</string>
     <string name="library.progress_tracking.action.cancel">Cancel</string>
     <string name="library.progress_tracking.error_details_copied">Podrobnosti o chybe boli skopírované do schránky</string>
