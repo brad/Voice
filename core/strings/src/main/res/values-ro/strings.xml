@@ -78,7 +78,9 @@
     <string name="library.progress_tracking.status_generating">Generare</string>
     <string name="library.progress_tracking.status_completed">Finalizat</string>
     <string name="library.progress_tracking.status_failed">Eșuat</string>
+    <string name="library.progress_tracking.status_rate_limited">Rate limited. Retrying soon...</string>
     <string name="library.progress_tracking.action.retry">Reîncearcă</string>
+    <string name="library.progress_tracking.action.cancel">Cancel</string>
     <string name="library.progress_tracking.error_details_copied">Detaliile erorii au fost copiate în clipboard</string>
     <string name="library.progress_tracking.action.copy_error">Copiază detaliile erorii</string>
     <string name="library.progress_tracking.error_title">Detaliile erorii</string>

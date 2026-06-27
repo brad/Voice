@@ -32,6 +32,12 @@ public interface GenerationProgressDao {
     povCharacterName: String?,
   )
 
+  @Query("UPDATE generation_progress SET retryAfter = :retryAfter WHERE bookId = :bookId")
+  public suspend fun updateRetryAfter(
+    bookId: BookId,
+    retryAfter: Instant?,
+  )
+
   @Query("UPDATE generation_progress SET status = :status, lastUpdated = :lastUpdated, errorMessage = :errorMessage WHERE bookId = :bookId")
   public suspend fun updateStatus(
     bookId: BookId,

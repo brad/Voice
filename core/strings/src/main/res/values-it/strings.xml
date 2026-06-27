@@ -163,7 +163,9 @@
     <string name="library.progress_tracking.status_generating">Generazione in corso</string>
     <string name="library.progress_tracking.status_completed">Completato</string>
     <string name="library.progress_tracking.status_failed">Fallito</string>
+    <string name="library.progress_tracking.status_rate_limited">Rate limited. Retrying soon...</string>
     <string name="library.progress_tracking.action.retry">Riprova</string>
+    <string name="library.progress_tracking.action.cancel">Cancel</string>
     <string name="library.progress_tracking.error_details_copied">Dettagli errore copiati negli appunti</string>
     <string name="library.progress_tracking.action.copy_error">Copia dettagli errore</string>
     <string name="library.progress_tracking.error_title">Dettagli errore</string>

@@ -15,6 +15,7 @@ public class GeminiClient(
     model: String,
     request: GenerateContentRequest,
     maxRetries: Int = 5,
+    onRetry: suspend (Long) -> Unit = {},
   ): GenerateContentResponse {
     var retryCount = 0
     while (true) {
@@ -31,7 +32,9 @@ public class GeminiClient(
           val retryAfter = parseRetryAfter(errorBody) ?: response.headers()["Retry-After"]?.toLongOrNull() ?: (2L shl retryCount)
           if (retryCount < maxRetries) {
             Logger.w("Gemini API error $code. Retrying in $retryAfter seconds...")
+            onRetry(retryAfter)
             delay(retryAfter * 1000)
+            onRetry(0)
             retryCount++
             continue
           }
@@ -54,7 +57,9 @@ public class GeminiClient(
         if (retryCount < maxRetries && e is IOException) {
           val backoff = (2L shl retryCount)
           Logger.w(e, "Gemini API network error. Retrying in $backoff seconds...")
+          onRetry(backoff)
           delay(backoff * 1000)
+          onRetry(0)
           retryCount++
           continue
         }

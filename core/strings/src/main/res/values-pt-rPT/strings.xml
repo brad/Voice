@@ -79,7 +79,9 @@
     <string name="library.progress_tracking.status_generating">A gerar</string>
     <string name="library.progress_tracking.status_completed">Concluído</string>
     <string name="library.progress_tracking.status_failed">Falhou</string>
+    <string name="library.progress_tracking.status_rate_limited">Rate limited. Retrying soon...</string>
     <string name="library.progress_tracking.action.retry">Repetir</string>
+    <string name="library.progress_tracking.action.cancel">Cancel</string>
     <string name="library.progress_tracking.error_details_copied">Detalhes do erro copiados para a área de transferência</string>
     <string name="library.progress_tracking.action.copy_error">Copiar detalhes do erro</string>
     <string name="library.progress_tracking.error_title">Detalhes do Erro</string>

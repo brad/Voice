@@ -143,8 +143,12 @@
     <string name="library.progress_tracking.status_completed">Completed</string>
     <!-- Human-readable generation status for failures. -->
     <string name="library.progress_tracking.status_failed">Failed</string>
+    <!-- Human-readable generation status when rate limited. -->
+    <string name="library.progress_tracking.status_rate_limited">Rate limited. Retrying soon...</string>
     <!-- Label for the retry action when generation fails -->
     <string name="library.progress_tracking.action.retry">Retry</string>
+    <!-- Label for the cancel action in progress tracking. -->
+    <string name="library.progress_tracking.action.cancel">Cancel</string>
     <!-- Message shown when error details are copied to clipboard -->
     <string name="library.progress_tracking.error_details_copied">Error details copied to clipboard</string>
     <!-- Content description for copying error details -->

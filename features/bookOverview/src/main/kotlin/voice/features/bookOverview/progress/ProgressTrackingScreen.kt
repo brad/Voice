@@ -81,6 +81,7 @@ private fun ProgressTrackingScreen(bookId: BookId) {
     viewState = viewModel.state(bookId),
     onConfigureGeneration = viewModel::onConfigureGeneration,
     onRetry = { viewModel.onRetry(bookId, scope) },
+    onCancel = { viewModel.onCancel(bookId, scope) },
     onShareError = viewModel::shareError,
     onClose = viewModel::close,
   )
@@ -92,6 +93,7 @@ private fun ProgressTracking(
   viewState: ProgressTrackingViewState,
   onConfigureGeneration: (BookId) -> Unit,
   onRetry: () -> Unit,
+  onCancel: () -> Unit,
   onShareError: (String) -> android.net.Uri,
   onClose: () -> Unit,
 ) {
@@ -106,6 +108,17 @@ private fun ProgressTracking(
     topBar = {
       TopAppBar(
         title = { Text(stringResource(StringsR.string.library_progress_tracking_title)) },
+        actions = {
+          val isRunning =
+            viewState.status == GenerationStatus.ANALYZING ||
+              viewState.status == GenerationStatus.GENERATING ||
+              viewState.status == GenerationStatus.PENDING
+          if (isRunning) {
+            TextButton(onClick = onCancel) {
+              Text(stringResource(StringsR.string.library_progress_tracking_action_cancel))
+            }
+          }
+        },
         navigationIcon = {
           IconButton(onClick = onClose) {
             Icon(
@@ -131,7 +144,13 @@ private fun ProgressTracking(
             Text(stringResource(StringsR.string.library_progress_tracking_overall_status))
           },
           supportingContent = {
-            Text(text = viewState.status.label())
+            val isRateLimited = viewState.retryAfter != null && viewState.retryAfter.isAfter(java.time.Instant.now())
+            val label = if (isRateLimited) {
+              stringResource(StringsR.string.library_progress_tracking_status_rate_limited)
+            } else {
+              viewState.status.label()
+            }
+            Text(text = label)
           },
         )
       }
