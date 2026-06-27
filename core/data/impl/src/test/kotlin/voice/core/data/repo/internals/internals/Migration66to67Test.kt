@@ -30,7 +30,7 @@ class Migration66to67Test {
     // Insert data into generation_progress (version 66 schema)
     db.execSQL(
       "INSERT INTO generation_progress (bookId, status, lastUpdated, title, author, errorMessage, povType, povCharacterName) " +
-        "VALUES ('book1', 'ANALYZING', '2023-01-01T00:00:00Z', 'Title', 'Author', NULL, 'THIRD_PERSON_LIMITED', 'Char')"
+        "VALUES ('book1', 'ANALYZING', '2023-01-01T00:00:00Z', 'Title', 'Author', NULL, 'THIRD_PERSON_LIMITED', 'Char')",
     )
     db.close()
 

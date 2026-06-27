@@ -10,4 +10,10 @@ internal fun Cursor.getFloat(columnName: String) = getFloat(getColumnIndexOrThro
 internal fun Cursor.getInt(columnName: String) = getInt(getColumnIndexOrThrow(columnName))
 internal fun Cursor.getIntOrNull(columnName: String) = getIntOrNull(getColumnIndexOrThrow(columnName))
 internal fun Cursor.getStringOrNull(columnName: String) = getStringOrNull(getColumnIndexOrThrow(columnName))
-internal fun Cursor.getLongOrNull(columnName: String) = if (isNull(getColumnIndexOrThrow(columnName))) null else getLong(getColumnIndexOrThrow(columnName))
+internal fun Cursor.getLongOrNull(
+  columnName: String,
+) = if (isNull(getColumnIndexOrThrow(columnName))) {
+  null
+} else {
+  getLong(getColumnIndexOrThrow(columnName))
+}
