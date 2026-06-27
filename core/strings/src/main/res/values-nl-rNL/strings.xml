@@ -77,6 +77,7 @@
     <string name="library.progress_tracking.status_completed">Voltooid</string>
     <string name="library.progress_tracking.status_failed">Mislukt</string>
     <string name="library.progress_tracking.action.retry">Opnieuw proberen</string>
+    <string name="library.progress_tracking.action.cancel">Cancel</string>
     <string name="library.progress_tracking.error_details_copied">Foutdetails gekopieerd naar klembord</string>
     <string name="library.progress_tracking.action.copy_error">Foutdetails kopiëren</string>
     <string name="library.progress_tracking.error_title">Foutdetails</string>

@@ -161,6 +161,7 @@
     <string name="library.progress_tracking.status_completed">Abgeschlossen</string>
     <string name="library.progress_tracking.status_failed">Fehlgeschlagen</string>
     <string name="library.progress_tracking.action.retry">Wiederholen</string>
+    <string name="library.progress_tracking.action.cancel">Cancel</string>
     <string name="library.progress_tracking.error_details_copied">Fehlerdetails in die Zwischenablage kopiert</string>
     <string name="library.progress_tracking.action.copy_error">Fehlerdetails kopieren</string>
     <string name="library.progress_tracking.error_title">Fehlerdetails</string>

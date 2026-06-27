@@ -83,6 +83,7 @@
     <string name="library.progress_tracking.status_completed">Завершено</string>
     <string name="library.progress_tracking.status_failed">Ошибка</string>
     <string name="library.progress_tracking.action.retry">Повторить</string>
+    <string name="library.progress_tracking.action.cancel">Cancel</string>
     <string name="library.progress_tracking.error_details_copied">Сведения об ошибке скопированы в буфер обмена</string>
     <string name="library.progress_tracking.action.copy_error">Копировать сведения об ошибке</string>
     <string name="library.progress_tracking.error_title">Сведения об ошибке</string>

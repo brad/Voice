@@ -83,6 +83,7 @@
     <string name="library.progress_tracking.status_completed">Dokončeno</string>
     <string name="library.progress_tracking.status_failed">Selhalo</string>
     <string name="library.progress_tracking.action.retry">Zkusit znovu</string>
+    <string name="library.progress_tracking.action.cancel">Cancel</string>
     <string name="library.progress_tracking.error_details_copied">Podrobnosti o chybě byly zkopírovány do schránky</string>
     <string name="library.progress_tracking.action.copy_error">Kopírovat podrobnosti o chybě</string>
     <string name="library.progress_tracking.error_title">Podrobnosti o chybě</string>

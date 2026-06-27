@@ -76,6 +76,7 @@
     <string name="library.progress_tracking.status_completed">Fuldført</string>
     <string name="library.progress_tracking.status_failed">Fejlet</string>
     <string name="library.progress_tracking.action.retry">Prøv igen</string>
+    <string name="library.progress_tracking.action.cancel">Cancel</string>
     <string name="library.progress_tracking.error_details_copied">Fejldetaljer kopieret til udklipsholder</string>
     <string name="library.progress_tracking.action.copy_error">Kopier fejldetaljer</string>
     <string name="library.progress_tracking.error_title">Fejldetaljer</string>

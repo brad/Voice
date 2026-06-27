@@ -76,6 +76,7 @@
     <string name="library.progress_tracking.status_completed">Befejezve</string>
     <string name="library.progress_tracking.status_failed">Sikertelen</string>
     <string name="library.progress_tracking.action.retry">Újra</string>
+    <string name="library.progress_tracking.action.cancel">Cancel</string>
     <string name="library.progress_tracking.error_details_copied">Hiba részletei a vágólapra másolva</string>
     <string name="library.progress_tracking.action.copy_error">Hiba részleteinek másolása</string>
     <string name="library.progress_tracking.error_title">Hiba részletei</string>

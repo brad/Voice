@@ -76,6 +76,7 @@
     <string name="library.progress_tracking.status_completed">Completed</string>
     <string name="library.progress_tracking.status_failed">Failed</string>
     <string name="library.progress_tracking.action.retry">Retry</string>
+    <string name="library.progress_tracking.action.cancel">Cancel</string>
     <string name="library.progress_tracking.error_details_copied">Error details copied to clipboard</string>
     <string name="library.progress_tracking.action.copy_error">Copy error details</string>
     <string name="library.progress_tracking.error_title">Error Details</string>
