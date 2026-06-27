@@ -111,8 +111,8 @@ private fun ProgressTracking(
         actions = {
           val isRunning =
             viewState.status == GenerationStatus.ANALYZING ||
-            viewState.status == GenerationStatus.GENERATING ||
-            viewState.status == GenerationStatus.PENDING
+              viewState.status == GenerationStatus.GENERATING ||
+              viewState.status == GenerationStatus.PENDING
           if (isRunning) {
             TextButton(onClick = onCancel) {
               Text(stringResource(StringsR.string.library_progress_tracking_action_cancel))
