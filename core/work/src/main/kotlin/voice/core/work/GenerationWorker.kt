@@ -185,7 +185,10 @@ public class GenerationWorker(
             ),
           )
 
-          val response = client.generateContent(model, request)
+          val response = client.generateContent(model, request) { delaySeconds ->
+            val retryAfter = if (delaySeconds > 0) Instant.now().plusSeconds(delaySeconds) else null
+            generationRepository.updateRetryAfter(bookId, retryAfter)
+          }
           val audioData = response.candidates.firstOrNull()?.content?.parts?.firstOrNull()?.inlineData?.data
             ?: throw Exception("No audio data in response")
 

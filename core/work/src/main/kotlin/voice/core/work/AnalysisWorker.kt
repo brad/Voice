@@ -148,7 +148,10 @@ public class AnalysisWorker(
           ),
         )
 
-        val response = client.generateContent(model, request)
+        val response = client.generateContent(model, request) { delaySeconds ->
+          val retryAfter = if (delaySeconds > 0) Instant.now().plusSeconds(delaySeconds) else null
+          generationRepository.updateRetryAfter(bookId, retryAfter)
+        }
         val responseText = response.candidates.firstOrNull()?.content?.parts?.firstOrNull()?.text
           ?: throw Exception("Empty response from Gemini")
 

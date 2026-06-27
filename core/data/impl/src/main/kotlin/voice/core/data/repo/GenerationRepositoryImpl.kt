@@ -22,6 +22,11 @@ public class GenerationRepositoryImpl(private val dao: GenerationProgressDao) : 
 
   override suspend fun deleteForBook(bookId: BookId): Unit = dao.deleteForBook(bookId)
 
+  override suspend fun updateRetryAfter(
+    bookId: BookId,
+    retryAfter: Instant?,
+  ): Unit = dao.updateRetryAfter(bookId, retryAfter)
+
   override suspend fun updatePov(
     bookId: BookId,
     povType: PovType,

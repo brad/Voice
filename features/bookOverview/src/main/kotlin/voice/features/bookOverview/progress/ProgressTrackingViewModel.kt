@@ -50,6 +50,7 @@ class ProgressTrackingViewModel(
       generationChapter = audioProgress?.chapterIndex?.plus(1),
       generationChunk = audioProgress?.chunkIndex,
       generationTotalChunks = audioProgress?.totalChunks,
+      retryAfter = generationProgress?.retryAfter,
       errorMessage = generationProgress?.errorMessage,
       lastUpdated = listOfNotNull(
         generationProgress?.lastUpdated,
@@ -84,6 +85,22 @@ class ProgressTrackingViewModel(
     )
   }
 
+  fun onCancel(
+    bookId: BookId,
+    scope: kotlinx.coroutines.CoroutineScope,
+  ) {
+    scope.launch {
+      val progress = generationRepository.progressForBook(bookId)
+      val isImport = progress?.status == GenerationStatus.ANALYZING || progress?.status == GenerationStatus.PENDING
+      if (isImport) {
+        audiobookGenerationManager.cancelImport(bookId)
+      } else {
+        audiobookGenerationManager.cancelGeneration(bookId)
+      }
+      navigator.goBack()
+    }
+  }
+
   fun close() {
     navigator.goBack()
   }
@@ -97,5 +114,6 @@ internal data class ProgressTrackingViewState(
   val generationChunk: Int?,
   val generationTotalChunks: Int?,
   val errorMessage: String?,
+  val retryAfter: Instant?,
   val lastUpdated: Instant?,
 )

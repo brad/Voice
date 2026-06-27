@@ -15,4 +15,5 @@ public data class GenerationProgress(
   val errorMessage: String? = null,
   val povType: PovType? = null,
   val povCharacterName: String? = null,
+  val retryAfter: Instant? = null,
 )

@@ -17,6 +17,10 @@ public interface GenerationRepository {
     povType: PovType,
     povCharacterName: String?,
   )
+  public suspend fun updateRetryAfter(
+    bookId: BookId,
+    retryAfter: Instant?,
+  )
   public suspend fun updateStatus(
     bookId: BookId,
     status: GenerationStatus,
