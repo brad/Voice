@@ -81,7 +81,7 @@ public class GeminiClient(
           requestUrl = maskedUrl,
           requestBody = requestBodyJson,
           responseBody = null,
-          cause = e
+          cause = e,
         )
       }
     }
