@@ -24,9 +24,9 @@ interface CoverModule {
     @UserAgentFeatureFlagQualifier
     userAgent: FeatureFlag<String>,
   ): OkHttpClient = OkHttpClient.Builder()
-    .connectTimeout(60, TimeUnit.SECONDS)
-    .readTimeout(60, TimeUnit.SECONDS)
-    .writeTimeout(60, TimeUnit.SECONDS)
+    .connectTimeout(300, TimeUnit.SECONDS)
+    .readTimeout(300, TimeUnit.SECONDS)
+    .writeTimeout(300, TimeUnit.SECONDS)
     .addInterceptor { chain ->
       chain.proceed(
         chain.request()

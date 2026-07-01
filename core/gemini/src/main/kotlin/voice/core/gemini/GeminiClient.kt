@@ -1,6 +1,7 @@
 package voice.core.gemini
 
 import kotlinx.coroutines.delay
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import voice.core.logging.api.Logger
 import java.io.IOException
@@ -10,6 +11,10 @@ public class GeminiClient(
   private val apiKey: String,
 ) {
   private val json = Json { ignoreUnknownKeys = true }
+  private val prettyJson = Json {
+    ignoreUnknownKeys = true
+    prettyPrint = true
+  }
 
   public suspend fun generateContent(
     model: String,
@@ -18,7 +23,16 @@ public class GeminiClient(
     onRetry: suspend (Long) -> Unit = {},
   ): GenerateContentResponse {
     var retryCount = 0
+    val requestBodyJson = try {
+      prettyJson.encodeToString(request)
+    } catch (e: Exception) {
+      "Error encoding request: ${e.message}"
+    }
+
     while (true) {
+      val baseUrl = "https://generativelanguage.googleapis.com/v1beta/models/$model:generateContent"
+      val maskedUrl = "$baseUrl?key=***"
+
       try {
         val response = api.generateContent(model, apiKey, request)
         if (response.isSuccessful) {
@@ -40,20 +54,16 @@ public class GeminiClient(
           }
         }
 
-        val requestUrl = response.raw().request.url.toString()
-        // We don't log the full request body here to avoid leaking the API key if it's in the URL,
-        // but it's passed in the query param "key" which we should ideally mask.
-        val maskedUrl = requestUrl.replace(Regex("key=[^&]+"), "key=***")
-
         throw GeminiApiException(
           code = response.code(),
           statusMessage = response.message(),
           requestUrl = maskedUrl,
-          requestBody = "GenerateContentRequest(model=$model)", // Simplified for now
+          requestBody = requestBodyJson,
           responseBody = errorBody,
         )
       } catch (e: Exception) {
         if (e is GeminiApiException) throw e
+
         if (retryCount < maxRetries && e is IOException) {
           val backoff = (2L shl retryCount)
           Logger.w(e, "Gemini API network error. Retrying in $backoff seconds...")
@@ -63,7 +73,16 @@ public class GeminiClient(
           retryCount++
           continue
         }
-        throw e
+
+        // Wrap other exceptions (like timeout or networking after retries) to include request context
+        throw GeminiApiException(
+          code = -1,
+          statusMessage = e.message ?: e.javaClass.simpleName,
+          requestUrl = maskedUrl,
+          requestBody = requestBodyJson,
+          responseBody = null,
+          cause = e,
+        )
       }
     }
   }
@@ -84,13 +103,14 @@ public class GeminiClient(
 
   public suspend fun listModels(): List<Model> {
     val response = api.listModels(apiKey)
+    val baseUrl = "https://generativelanguage.googleapis.com/v1beta/models"
+    val maskedUrl = "$baseUrl?key=***"
+
     if (response.isSuccessful) {
       return response.body()?.models ?: emptyList()
     }
 
     val errorBody = response.errorBody()?.string()
-    val requestUrl = response.raw().request.url.toString()
-    val maskedUrl = requestUrl.replace(Regex("key=[^&]+"), "key=***")
 
     throw GeminiApiException(
       code = response.code(),
